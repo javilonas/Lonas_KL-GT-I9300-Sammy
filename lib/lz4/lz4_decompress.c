@@ -288,7 +288,7 @@ _output_error:
 	return (int) (-(((char *)ip) - source));
 }
 
-+int lz4_decompress(const unsigned char *src, size_t *src_len,
+int lz4_decompress(const unsigned char *src, size_t *src_len,
 		unsigned char *dest, size_t actual_dest_len)
 {
 	int ret = -1;
