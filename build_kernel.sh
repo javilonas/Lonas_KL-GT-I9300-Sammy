@@ -38,8 +38,8 @@ if [ "${1}" != "" ];then
   export KERNELDIR=`readlink -f ${1}`
 fi
 
-TOOLCHAIN="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.7/bin/arm-linux-androideabi-"
-TOOLCHAIN_PATCH="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.7/bin"
+TOOLCHAIN="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/bin/arm-linux-androideabi-"
+TOOLCHAIN_PATCH="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/bin"
 ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy/ramdisk"
 RAMFS_TMP="/home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3"
 
@@ -56,6 +56,10 @@ rm -rf $KERNELDIR/arch/arm/boot/zImage
 
 echo "#################### Make defconfig ####################"
 make lonas_defconfig
+
+nice -n 10 make -j4 ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
+
+make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
 
 make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN || exit -1
 
