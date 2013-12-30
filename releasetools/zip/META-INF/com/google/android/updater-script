@@ -1,0 +1,23 @@
+ui_print("################################################");
+ui_print("#             KERNEL MADE IN SPAIN             #");
+ui_print("#      http://www.esp-desarrolladores.com      #");
+ui_print("#                Lonas_KL v.5.2                #");
+ui_print("################################################");
+ui_print(" ");
+ui_print(" ");
+ui_print(". Flasheando kernel Lonas_CM .");
+ui_print(" ");
+ui_print(" ");
+ui_print("Version: [Lonas_KL v.5.2] ");
+ui_print(" ");
+ui_print(" ");
+assert(package_extract_file("boot.img", "/tmp/boot.img"),
+write_raw_image("/tmp/boot.img", "/dev/block/mmcblk0p5"),
+delete("/tmp/boot.img"));
+ui_print(" ");
+ui_print("Terminando...");
+ui_print(" ");
+ui_print(" ");
+ui_print("Puedes Seguirme!! Twitter >> #Javilonas ");
+ui_print(" ");
+ui_print(" ");
