@@ -58,7 +58,7 @@ typedef struct mali_runtime_resumeTag{
 	int vol;
 }mali_runtime_resume_table;
 
-mali_runtime_resume_table mali_runtime_resume = {266, 900000};
+mali_runtime_resume_table mali_runtime_resume = {266, 875000};
 
 /* lock/unlock CPU freq by Mali */
 extern int cpufreq_lock_by_mali(unsigned int freq);
