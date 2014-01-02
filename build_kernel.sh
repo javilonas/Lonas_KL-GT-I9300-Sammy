@@ -61,11 +61,11 @@ nice -n 10 make -j4 ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exi
 
 make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
 
-make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN || exit -1
-
 mkdir -p $KERNELDIR/ramdisk/lib/modules
 find -name '*.ko' -exec cp -av {} $KERNELDIR/ramdisk/lib/modules/ \;
 $TOOLCHAIN_PATCH/arm-linux-androideabi-strip --strip-unneeded $KERNELDIR/ramdisk/lib/modules/*.ko
+
+make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN || exit -1
 
 echo "#################### Build Ramdisk ####################"
 rm -f $KERNELDIR/releasetools/tar/$CONFIG_LOCALVERSION-$KBUILD_BUILD_VERSION.tar
@@ -95,6 +95,7 @@ cd -
 
 echo "#################### Compilar Kernel ####################"
 cd $KERNELDIR
+
 nice -n 10 make -j4 ARCH=arm CROSS_COMPILE=$TOOLCHAIN zImage || exit 1
 
 echo "#################### Generar boot.img ####################"
