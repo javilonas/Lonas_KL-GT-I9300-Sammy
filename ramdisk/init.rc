@@ -40,7 +40,6 @@ sysclktz 0
 loglevel 3
 
 # setup the global environment
-    export TERMINFO /system/etc/terminfo
     export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
     export LD_LIBRARY_PATH /vendor/lib:/system/lib
     export ANDROID_BOOTLOGO 1
@@ -677,8 +676,6 @@ on boot
     chmod 0644 /efs/h2k.dat
     mkdir /data/misc/radio/hatp 0775 radio system
 
-    start sysinit
-
     class_start core
     class_start main
 
@@ -838,10 +835,6 @@ service drm /system/bin/drmserver
 #    group drm system inet drmrpc
 # ]
 
-service sysinit /system/bin/logwrapper /system/xbin/busybox run-parts /system/etc/init.d
-    disabled
-    oneshot
-
 service media /system/bin/mediaserver
     class main
     user media
@@ -855,7 +848,14 @@ service powersnd /system/bin/samsungpowersoundplay
     disabled
     oneshot
 
-service bootanim /system/bin/bootanimation
+service bootanim /system/sbin/bootanimation
+    class main
+    user graphics
+    group graphics system
+    disabled
+    oneshot
+
+service samsungani /system/sbin/samsungani
     class main
     user graphics
     group graphics system
@@ -980,4 +980,4 @@ on property:persist.sys.drs.enforce=0
 service lonas-init /sbin/lonas-init.sh
     class core
     user root
-    oneshot	
+    oneshot

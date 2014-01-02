@@ -405,6 +405,13 @@ service cpboot-daemon /sbin/cbd -d
     user root
     group radio cache inet misc audio sdcard_rw log sdcard_r
 
+# Workaround for broken incall audio
+service bootsnd /sbin/tinyplay /sbin/silence.wav -D 0 -d 0 -p 880
+    class late_start
+    user root
+    group audio
+    oneshot
+
 # mobicore
 service mcDriverDaemon /system/bin/mcDriverDaemon -r /system/app/FFFFFFFF000000000000000000000001.drbin
     class core

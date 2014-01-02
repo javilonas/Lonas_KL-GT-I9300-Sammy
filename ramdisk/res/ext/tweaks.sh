@@ -17,7 +17,6 @@ echo "3000000" > /proc/sys/kernel/sched_wakeup_granularity_ns
 echo "1500000" > /proc/sys/kernel/sched_min_granularity_ns
 
 # Miscellaneous tweaks
-echo "80" > /proc/sys/vm/swappiness
 echo "524288" > /proc/sys/fs/file-max
 echo "32000" > /proc/sys/fs/inotify/max_queued_events
 echo "256" > /proc/sys/fs/inotify/max_user_instances
