@@ -367,11 +367,11 @@ KBUILD_CPPFLAGS := -D__KERNEL__
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
-		   -Wno-format-security \
-		   -fno-delete-null-pointer-checks \
-		   -marm -march=armv7-a \
-		   -mcpu=cortex-a9 -mfpu=neon -mtune=cortex-a9 -fno-pic \
-		   -munaligned-access
+		   -Wno-format-security -Wno-array-bounds \
+                   -fno-delete-null-pointer-checks -fno-schedule-insns2 -ffast-math \
+                   -mtune=cortex-a9 -march=armv7-a -mcpu=cortex-a9 -mfpu=neon -marm \
+                   -munaligned-access
+
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
