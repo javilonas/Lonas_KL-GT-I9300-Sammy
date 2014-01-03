@@ -645,7 +645,7 @@ exit:
 	return NOTIFY_OK;
 }
 
-static struct notifier_block s5p_ehci_cpu_notifier = {
+static struct notifier_block __cpuinitdata s5p_ehci_cpu_notifier = {
 	.notifier_call = s5p_ehci_cpu_notify,
 };
 #endif
