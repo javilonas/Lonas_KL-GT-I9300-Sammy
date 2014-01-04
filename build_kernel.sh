@@ -34,8 +34,8 @@ if [ "${1}" != "" ];then
   export KERNELDIR=`readlink -f ${1}`
 fi
 
-TOOLCHAIN="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/bin/arm-linux-androideabi-"
-TOOLCHAIN_PATCH="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/bin"
+TOOLCHAIN="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin/arm-eabi-"
+TOOLCHAIN_PATCH="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin"
 ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy/ramdisk"
 RAMFS_TMP="/home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3"
 
@@ -61,7 +61,8 @@ make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAI
 
 mkdir -p $KERNELDIR/ramdisk/lib/modules
 find . -name '*.ko' -exec cp -av {} $KERNELDIR/ramdisk/lib/modules/ \;
-$TOOLCHAIN_PATCH/arm-linux-androideabi-strip --strip-unneeded $KERNELDIR/ramdisk/lib/modules/*.ko
+$TOOLCHAIN_PATCH/arm-eabi-strip --strip-unneeded $KERNELDIR/ramdisk/lib/modules/*.ko
+unzip /home/lonas/Kernel_Lonas/proprietary-modules/proprietary-modules.zip -d -y $KERNELDIR/ramdisk/lib/modules
 
 echo "#################### Update Ramdisk ####################"
 rm -f $KERNELDIR/releasetools/tar/$CONFIG_LOCALVERSION-$KBUILD_BUILD_VERSION.tar
