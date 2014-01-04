@@ -1,9 +1,34 @@
+ui_print(" ");
+ui_print(" ");
+assert(getprop("ro.product.device") == "m0" || getprop("ro.build.product") == "m0" || 
+       getprop("ro.product.device") == "i9300" || getprop("ro.build.product") == "i9300" || 
+       getprop("ro.product.device") == "GT-I9300" || getprop("ro.build.product") == "GT-I9300");
+ui_print(" ");
+ui_print(" ");
 ui_print("################################################");
 ui_print("#             KERNEL MADE IN SPAIN             #");
 ui_print("#      http://www.esp-desarrolladores.com      #");
 ui_print("#                Lonas_KL v.5.2                #");
 ui_print("################################################");
 ui_print(" ");
+ui_print(" ");
+mount("ext4", "EMMC", "/dev/block/mmcblk0p8", "/cache");
+mount("ext4", "EMMC", "/dev/block/mmcblk0p12", "/data");
+mount("ext4", "EMMC", "/dev/block/mmcblk0p9", "/system");
+mount("ext4", "EMMC", "/dev/block/mmcblk1p1", "/sdcard");
+ui_print(" ");
+ui_print(" ");
+show_progress(0.100000, 0);
+delete_recursive("/cache");
+show_progress(0.100000, 20);
+delete_recursive("/data/dalvik-cache");
+show_progress(0.100000, 40);
+delete_recursive("/data/.lpowercc");
+delete("/system/app/LPowerCC.apk");
+unmount("/cache");
+unmount("/data");
+unmount("/system");
+unmount("/sdcard");
 ui_print(" ");
 ui_print(". Flasheando kernel Lonas_CM .");
 ui_print(" ");
@@ -12,8 +37,11 @@ ui_print("Version: [Lonas_KL v.5.2] ");
 ui_print(" ");
 ui_print(" ");
 assert(package_extract_file("boot.img", "/tmp/boot.img"),
+show_progress(0.100000, 70);
 write_raw_image("/tmp/boot.img", "/dev/block/mmcblk0p5"),
+show_progress(0.100000, 90);
 delete("/tmp/boot.img"));
+show_progress(0.100000, 100);
 ui_print(" ");
 ui_print("Terminando...");
 ui_print(" ");
