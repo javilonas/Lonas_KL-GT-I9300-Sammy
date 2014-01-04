@@ -4301,29 +4301,11 @@ dhd_preinit_ioctls(dhd_pub_t *dhd)
 
 #ifdef PKT_FILTER_SUPPORT
 	/* Setup default defintions for pktfilter , enable in suspend */
-	dhd->pktfilter_count = 6;
+	dhd->pktfilter_count = 1;
 	/* Setup filter to allow only unicast */
 	dhd->pktfilter[DHD_UNICAST_FILTER_NUM] = "100 0 0 0 0x01 0x00";
-	dhd->pktfilter[DHD_BROADCAST_FILTER_NUM] = NULL;
-	dhd->pktfilter[DHD_MULTICAST4_FILTER_NUM] = NULL;
-	dhd->pktfilter[DHD_MULTICAST6_FILTER_NUM] = NULL;
-	/* Add filter to pass multicastDNS packet and NOT filter out as Broadcast */
-	dhd->pktfilter[DHD_MDNS_FILTER_NUM] = "104 0 0 0 0xFFFFFFFFFFFF 0x01005E0000FB";
-	/* apply APP pktfilter */
-	dhd->pktfilter[DHD_ARP_FILTER_NUM] = "105 0 0 12 0xFFFF 0x0806";
 
 #ifdef CUSTOMER_HW4
-#ifdef GAN_LITE_NAT_KEEPALIVE_FILTER
-	dhd->pktfilter_count = 4;
-	/* Setup filter to block broadcast and NAT Keepalive packets */
-	/* discard all broadcast packets */
-	dhd->pktfilter[DHD_UNICAST_FILTER_NUM] = "100 0 0 0 0xffffff 0xffffff";
-	/* discard NAT Keepalive packets */
-	dhd->pktfilter[DHD_BROADCAST_FILTER_NUM] = "102 0 0 36 0xffffffff 0x11940009";
-	/* discard NAT Keepalive packets */
-	dhd->pktfilter[DHD_MULTICAST4_FILTER_NUM] = "104 0 0 38 0xffffffff 0x11940009";
-	dhd->pktfilter[DHD_MULTICAST6_FILTER_NUM] = NULL;
-#else
 #ifdef BLOCK_IPV6_PACKET
 	/* Setup filter to allow only IPv4 unicast frames */
 	dhd->pktfilter[DHD_UNICAST_FILTER_NUM] = "100 0 0 0 "
@@ -4332,9 +4314,9 @@ dhd_preinit_ioctls(dhd_pub_t *dhd)
 		HEX_PREF_STR ZERO_ADDR_STR ZERO_ADDR_STR ETHER_TYPE_STR ZERO_TYPE_STR;
 #endif /* BLOCK_IPV6_PACKET */
 #ifdef PASS_IPV4_SUSPEND
-	dhd->pktfilter[DHD_MDNS_FILTER_NUM] = "104 0 0 0 0xFFFFFF 0x01005E";
+		dhd->pktfilter_count = 2;
+		dhd->pktfilter[1] = "104 0 0 0 0xFFFFFF 0x01005E";
 #endif /* PASS_IPV4_SUSPEND */
-#endif /* GAN_LITE_NAT_KEEPALIVE_FILTER */
 #endif /* CUSTOMER_HW4 */
 	dhd_set_packet_filter(dhd);
 
@@ -5613,52 +5595,7 @@ int net_os_set_suspend_bcn_li_dtim(struct net_device *dev, int val)
 #ifdef PKT_FILTER_SUPPORT
 int net_os_rxfilter_add_remove(struct net_device *dev, int add_remove, int num)
 {
-#if defined(CUSTOMER_HW4) && defined(GAN_LITE_NAT_KEEPALIVE_FILTER)
 	return 0;
-#else
-	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
-	char *filterp = NULL;
-	int filter_id = 0;
-	int ret = 0;
-
-	if (!dhd || (num == DHD_UNICAST_FILTER_NUM) ||
-		(num == DHD_MDNS_FILTER_NUM))
-		return ret;
-	if (num >= dhd->pub.pktfilter_count)
-		return -EINVAL;
-	switch (num) {
-		case DHD_BROADCAST_FILTER_NUM:
-			filterp = "101 0 0 0 0xFFFFFFFFFFFF 0xFFFFFFFFFFFF";
-			filter_id = 101;
-			break;
-		case DHD_MULTICAST4_FILTER_NUM:
-			filterp = "102 0 0 0 0xFFFFFF 0x01005E";
-			filter_id = 102;
-			break;
-		case DHD_MULTICAST6_FILTER_NUM:
-#if defined(BLOCK_IPV6_PACKET) && defined(CUSTOMER_HW4)
-			/* customer want to use NO IPV6 packets only */
-			return ret;
-#endif /* BLOCK_IPV6_PACKET && CUSTOMER_HW4 */
-			filterp = "103 0 0 0 0xFFFF 0x3333";
-			filter_id = 103;
-			break;
-		default:
-			return -EINVAL;
-	}
-
-	/* Add filter */
-	if (add_remove) {
-		dhd->pub.pktfilter[num] = filterp;
-		dhd_pktfilter_offload_set(&dhd->pub, dhd->pub.pktfilter[num]);
-	} else { /* Delete filter */
-		if (dhd->pub.pktfilter[num] != NULL) {
-			dhd_pktfilter_offload_delete(&dhd->pub, filter_id);
-			dhd->pub.pktfilter[num] = NULL;
-		}
-	}
-	return ret;
-#endif /* CUSTOMER_HW4 && GAN_LITE_NAT_KEEPALIVE_FILTER */
 }
 
 int dhd_os_enable_packet_filter(dhd_pub_t *dhdp, int val)
