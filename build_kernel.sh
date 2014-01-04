@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Build Script: Javilonas, 14-12-2013
 # Javilonas <admin@lonasdigital.com>
 
@@ -15,12 +15,8 @@ if [ -e ramdisk.cpio ]; then
 	rm ramdisk.cpio
 fi
 
-if [ -e ramdisk.cpio.xz ]; then
+if [ -e ramdisk.cpio.gz ]; then
 	rm ramdisk.cpio.gz
-fi
-
-if [ -e ramdisk.cpio.xz ]; then
-	rm ramdisk.cpio.xz
 fi
 
 make clean
@@ -57,17 +53,17 @@ rm -rf $KERNELDIR/arch/arm/boot/zImage
 echo "#################### Make defconfig ####################"
 make lonas_defconfig
 
-nice -n 10 make -j4 ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
+# nice -n 10 make -j6 ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
 
-make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
-
-mkdir -p $KERNELDIR/ramdisk/lib/modules
-find -name '*.ko' -exec cp -av {} $KERNELDIR/ramdisk/lib/modules/ \;
-$TOOLCHAIN_PATCH/arm-linux-androideabi-strip --strip-unneeded $KERNELDIR/ramdisk/lib/modules/*.ko
+# make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
 
 make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN || exit -1
 
-echo "#################### Build Ramdisk ####################"
+mkdir -p $KERNELDIR/ramdisk/lib/modules
+find . -name '*.ko' -exec cp -av {} $KERNELDIR/ramdisk/lib/modules/ \;
+$TOOLCHAIN_PATCH/arm-linux-androideabi-strip --strip-unneeded $KERNELDIR/ramdisk/lib/modules/*.ko
+
+echo "#################### Update Ramdisk ####################"
 rm -f $KERNELDIR/releasetools/tar/$CONFIG_LOCALVERSION-$KBUILD_BUILD_VERSION.tar
 rm -f $KERNELDIR/releasetools/zip/$CONFIG_LOCALVERSION-$KBUILD_BUILD_VERSION.zip
 cp -f $KERNELDIR/arch/arm/boot/zImage .
@@ -75,10 +71,8 @@ cp -f $KERNELDIR/arch/arm/boot/zImage .
 rm -rf $RAMFS_TMP
 rm -rf $RAMFS_TMP.cpio
 rm -rf $RAMFS_TMP.cpio.gz
-rm -rf $RAMFS_TMP.cpio.xz
 rm -rf $KERNELDIR/*.cpio
 rm -rf $KERNELDIR/*.cpio.gz
-rm -rf $KERNELDIR/*.cpio.xz
 cd $ROOTFS_PATH
 cp -ax $ROOTFS_PATH $RAMFS_TMP
 find $RAMFS_TMP -name .git -exec rm -rf {} \;
@@ -87,19 +81,19 @@ find $RAMFS_TMP -name .EMPTY_DIRECTORY -exec rm -rf {} \;
 rm -rf $RAMFS_TMP/tmp/*
 rm -rf $RAMFS_TMP/.hg
 
+echo "#################### Build Ramdisk ####################"
 cd $RAMFS_TMP
 find | fakeroot cpio -H newc -o > $RAMFS_TMP.cpio 2>/dev/null
 ls -lh $RAMFS_TMP.cpio
-xz --check=crc32 $BCJ --lzma2=$LZMA2OPTS,dict=8MiB $RAMFS_TMP.cpio
-cd -
+gzip -9 -f $RAMFS_TMP.cpio
 
 echo "#################### Compilar Kernel ####################"
 cd $KERNELDIR
 
-nice -n 10 make -j4 ARCH=arm CROSS_COMPILE=$TOOLCHAIN zImage || exit 1
+nice -n 10 make -j6 ARCH=arm CROSS_COMPILE=$TOOLCHAIN zImage || exit 1
 
 echo "#################### Generar boot.img ####################"
-./mkbootimg --kernel zImage --ramdisk $RAMFS_TMP.cpio.xz --board smdk4x12 --base 0x10000000 --pagesize 2048 --ramdiskaddr 0x11000000 -o $KERNELDIR/boot.img
+./mkbootimg --kernel $KERNELDIR/arch/arm/boot/zImage --ramdisk $RAMFS_TMP.cpio.gz --board smdk4x12 --base 0x10000000 --pagesize 2048 --ramdiskaddr 0x11000000 -o $KERNELDIR/boot.img
 
 echo "#################### Preparando flasheables ####################"
 
@@ -120,5 +114,5 @@ rm $KERNELDIR/releasetools/tar/boot.img
 rm $KERNELDIR/boot.img
 rm $KERNELDIR/zImage
 rm -rf /home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3
-rm /home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3.cpio.xz
+rm /home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3.cpio.gz
 echo "#################### Terminado ####################"
