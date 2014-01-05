@@ -2112,6 +2112,12 @@ config CORESIGHT_ETM_DEFAULT_ENABLE
 	  Turns on ETM tracing by default. Otherwise, tracing is
 	  disabled by default but can be enabled by other means.
 
+config CHARGE_LEVEL
+        bool "Charge level interface"
+        default y
+        help
+          Allows configuration of ac and usb charging levels
+
 config CPU_FREQ_TETHERING
 	bool "Lock cpu freq & bus clock when tethering mode turn on"
 	depends on QC_MODEM
