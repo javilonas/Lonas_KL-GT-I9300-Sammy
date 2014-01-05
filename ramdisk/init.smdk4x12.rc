@@ -488,10 +488,10 @@ on property:ro.dumpstate.dmesg=1
     write /proc/sys/kernel/dmesg_restrict 0
 
 # Runtime Compcache
- service rtccd /system/bin/rtccd2 -a 100M
-     class core
-     user root
-     oneshot
+service rtccd /system/bin/rtccd2 -a 100M
+    class core
+    user root
+    oneshot
 
 # Secure Storage startup
 service prepare-ssdaemon /system/bin/sh /system/bin/ss-presetup.sh

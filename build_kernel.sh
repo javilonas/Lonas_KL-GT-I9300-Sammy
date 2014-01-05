@@ -62,7 +62,7 @@ make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAI
 mkdir -p $KERNELDIR/ramdisk/lib/modules
 find . -name '*.ko' -exec cp -av {} $KERNELDIR/ramdisk/lib/modules/ \;
 $TOOLCHAIN_PATCH/arm-eabi-strip --strip-unneeded $KERNELDIR/ramdisk/lib/modules/*.ko
-#unzip /home/lonas/Kernel_Lonas/proprietary-modules/proprietary-modules.zip -d -y $KERNELDIR/ramdisk/lib/modules
+#unzip /home/lonas/Kernel_Lonas/proprietary-modules/proprietary-modules.zip -d $KERNELDIR/ramdisk/lib/modules
 
 echo "#################### Update Ramdisk ####################"
 rm -f $KERNELDIR/releasetools/tar/$CONFIG_LOCALVERSION-$KBUILD_BUILD_VERSION.tar
