@@ -111,6 +111,13 @@ on boot
     setprop ro.product.device smdk4x12
     # setprop ro.radio.noril yes
 
+# Workaround for broken incall audio
+service bootsnd /sbin/tinyplay /sbin/silence.wav -D 0 -d 0 -p 880
+    class late_start
+    user root
+    group audio
+    oneshot
+
 # mobicore
     mkdir /data/app/mcRegistry 0775 system system
     chmod 0700 /dev/mobicore
@@ -405,13 +412,6 @@ service cpboot-daemon /sbin/cbd -d
     user root
     group radio cache inet misc audio sdcard_rw log sdcard_r
 
-# Workaround for broken incall audio
-service bootsnd /sbin/tinyplay /sbin/silence.wav -D 0 -d 0 -p 880
-    class late_start
-    user root
-    group audio
-    oneshot
-
 # mobicore
 service mcDriverDaemon /system/bin/mcDriverDaemon -r /system/app/FFFFFFFF000000000000000000000001.drbin
     class core
@@ -487,11 +487,11 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
 on property:ro.dumpstate.dmesg=1
     write /proc/sys/kernel/dmesg_restrict 0
 
-# Runtime Compcache
-service rtccd /system/bin/rtccd2 -a 100M
-    class core
-    user root
-    oneshot
+ Runtime Compcache
+ service rtccd /system/bin/rtccd2 -a 100M
+     class core
+     user root
+     oneshot
 
 # Secure Storage startup
 service prepare-ssdaemon /system/bin/sh /system/bin/ss-presetup.sh

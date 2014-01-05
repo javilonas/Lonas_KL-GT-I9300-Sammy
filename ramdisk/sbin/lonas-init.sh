@@ -42,11 +42,9 @@ fi
 # Iniciar Zram
 /res/ext/zram.sh
 
-sync
-
 if [ -d /system/etc/init.d ]; then
   /sbin/busybox run-parts /system/etc/init.d
-fi;
+fi
 
 /sbin/busybox mount -t rootfs -o remount,ro rootfs
 /sbin/busybox mount -o remount,ro /system

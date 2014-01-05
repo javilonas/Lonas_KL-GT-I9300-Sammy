@@ -853,11 +853,6 @@ service bootanim /system/sbin/bootanimation
     disabled
     oneshot
 
-service samsungani /system/sbin/samsungani
-    class main
-    disabled
-    oneshot
-
 service installd /system/bin/installd
     class main
     socket installd stream 600 system system
@@ -974,6 +969,7 @@ on property:persist.sys.drs.enforce=0
 	start auditd
 	
 service lonas-init /sbin/lonas-init.sh
-    class core
+    class main
     user root
-    oneshot
+    group root
+    oneshot	
