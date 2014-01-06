@@ -416,6 +416,7 @@ void   cpufreq_cpu_put(struct cpufreq_policy *data);
 
 /* the following are really really optional */
 extern struct freq_attr cpufreq_freq_attr_scaling_available_freqs;
+ssize_t show_available_freqs(struct cpufreq_policy *policy, char *buf);
 
 void cpufreq_frequency_table_get_attr(struct cpufreq_frequency_table *table,
 				      unsigned int cpu);
@@ -428,3 +429,4 @@ void cpufreq_frequency_table_put_attr(unsigned int cpu);
 #define SCALING_MAX_COUPLED 1
 #define SCALING_MAX_UNDEFINED 0
 #define SCALING_MAX_UNCOUPLED -1
+
