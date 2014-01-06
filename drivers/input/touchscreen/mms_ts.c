@@ -516,7 +516,7 @@ static void release_all_fingers(struct mms_ts_info *info)
 	struct i2c_client *client = info->client;
 	int i;
 
-	printk(KERN_DEBUG "[TSP] %s\n", __func__);
+	//printk(KERN_DEBUG "[TSP] %s\n", __func__);
 
 	for (i = 0; i < MAX_FINGERS; i++) {
 		if (info->finger_state[i] == 1)
