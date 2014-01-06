@@ -1,0 +1,16 @@
+scaling_governor=pegasusq
+internal_iosched=row
+sd_iosched=row
+internal_read_ahead_kb=512
+sd_read_ahead_kb=1024
+logger_mode=off
+touchboost_switch=on
+touchboost_freq=800000
+zram_size=100
+swappiness=80
+min_free_kbytes=8192
+vfs_cache_pressure=50
+dirty_ratio=80
+dirty_background_ratio=70
+dirty_writeback_centisecs=1500
+dirty_expire_centisecs=500

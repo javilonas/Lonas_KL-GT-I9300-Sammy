@@ -513,7 +513,7 @@ static ssize_t store_sampling_rate(struct device *device,
         return count;
 }
 
-static ssize_t show_mif_volt_table(struct device *device,
+static ssize_t show_LP_mif_volt_table(struct device *device,
                 struct device_attribute *attr, char *buf)
 {        
         struct device_opp *dev_opp = ERR_PTR(-ENODEV);
@@ -538,7 +538,7 @@ static ssize_t show_mif_volt_table(struct device *device,
         struct device_opp *dev_opp = find_device_opp(bus_ctrl.dev);                        \
         struct opp *temp_opp;                                                                
 
-static ssize_t store_mif_volt_table(struct device *device,
+static ssize_t store_LP_mif_volt_table(struct device *device,
                 struct device_attribute *attr,
                 const char *buf, size_t count)
 {
@@ -584,7 +584,7 @@ static ssize_t store_mif_volt_table(struct device *device,
         return count;
 }
 
-static ssize_t show_int_volt_table(struct device *device,
+static ssize_t show_LP_int_volt_table(struct device *device,
                 struct device_attribute *attr, char *buf)
 {
         BUSVOLT_SYSFS_FUNC_DECL()
@@ -602,7 +602,7 @@ static ssize_t show_int_volt_table(struct device *device,
         return len;
 }
 
-static ssize_t store_int_volt_table(struct device *device,
+static ssize_t store_LP_int_volt_table(struct device *device,
                 struct device_attribute *attr,
                 const char *buf, size_t count)
 {
@@ -665,8 +665,8 @@ static DEVICE_ATTR(cpu_slope_size, S_IRUGO | S_IWUGO, show_cpu_slope_size, store
 static DEVICE_ATTR(dmc_max_threshold, S_IRUGO | S_IWUGO, show_dmc_max_threshold, store_dmc_max_threshold);
 static DEVICE_ATTR(load_history_size, S_IRUGO | S_IWUGO, show_load_history_size, store_load_history_size);
 static DEVICE_ATTR(sampling_rate, S_IRUGO | S_IWUGO, show_sampling_rate, store_sampling_rate);
-static DEVICE_ATTR(mif_volt_table, S_IRUGO | S_IWUGO, show_mif_volt_table, store_mif_volt_table);
-static DEVICE_ATTR(int_volt_table, S_IRUGO | S_IWUGO, show_int_volt_table, store_int_volt_table);
+static DEVICE_ATTR(LP_mif_volt_table, S_IRUGO | S_IWUGO, show_LP_mif_volt_table, store_LP_mif_volt_table);
+static DEVICE_ATTR(LP_int_volt_table, S_IRUGO | S_IWUGO, show_LP_int_volt_table, store_LP_int_volt_table);
 
 static struct attribute *busfreq_attributes[] = {
 	&dev_attr_min_freq.attr,
@@ -681,8 +681,8 @@ static struct attribute *busfreq_attributes[] = {
 	&dev_attr_dmc_max_threshold.attr,
 	&dev_attr_load_history_size.attr,
 	&dev_attr_sampling_rate.attr,
-	&dev_attr_mif_volt_table.attr,
-	&dev_attr_int_volt_table.attr,
+	&dev_attr_LP_mif_volt_table.attr,
+	&dev_attr_LP_int_volt_table.attr,
 
 	NULL
 };
