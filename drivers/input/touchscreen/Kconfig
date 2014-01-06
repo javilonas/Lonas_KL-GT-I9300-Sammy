@@ -1109,4 +1109,13 @@ source "drivers/input/touchscreen/wacom/Kconfig"
 
 source "drivers/input/touchscreen/rmi4/Kconfig"
 
+config TOUCHSCREEN_GESTURES
+        bool "Enable detection of touch gestures"
+        depends on TOUCHSCREEN_MELFAS
+        ---help---
+          This option enables the mxt224_u1 touchscreen device to
+          detect and report touch gestures.
+          Definition of the gesture paths and reporting of the
+          detections are available through sysfs entries.
+
 endif
