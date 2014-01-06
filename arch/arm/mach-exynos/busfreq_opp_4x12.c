@@ -49,15 +49,11 @@
 #include <plat/gpio-cfg.h>
 #include <plat/cpu.h>
 
-#define UP_THRESHOLD			30
 #define IDLE_THRESHOLD			4
 #define UP_CPU_THRESHOLD		11
 #define MAX_CPU_THRESHOLD		20
 #define CPU_SLOPE_SIZE			7
-#define PPMU_THRESHOLD                 5
 
-unsigned int up_threshold        = UP_THRESHOLD;
-unsigned int ppmu_threshold      = PPMU_THRESHOLD;
 unsigned int idle_threshold      = IDLE_THRESHOLD;
 unsigned int up_cpu_threshold    = UP_CPU_THRESHOLD;
 unsigned int max_cpu_threshold   = MAX_CPU_THRESHOLD;
@@ -216,29 +212,29 @@ static unsigned int exynos4212_mif_volt[PD_ASV_GROUP][LV_END] = {
 	{ 1000000, 1000000,  950000,  950000, 900000, 900000, 900000 }, /* ASV4 */
 	{ 1000000, 1000000,  950000,  950000, 900000, 900000, 900000 }, /* ASV5 */
 	{ 1000000, 1000000,  950000,  950000, 900000, 900000, 900000 }, /* ASV6 */
-	{  950000,	950000,  900000,  900000, 900000, 900000, 900000 }, /* ASV7 */
-	{  950000,	950000,  900000,  900000, 900000, 900000, 850000 }, /* ASV8 */
-	{  950000,	950000,  900000,  900000, 900000, 900000, 850000 }, /* ASV9 */
-	{  950000,	950000,  900000,  900000, 900000, 850000, 850000 }, /* ASV10 */
-	{  950000,	950000,  900000,  900000, 900000, 850000, 850000 }, /* RESERVED */
-	{  950000,	950000,  900000,  900000, 900000, 850000, 850000 }, /* RESERVED */
+	{  950000,  950000,  900000,  900000, 900000, 900000, 900000 }, /* ASV7 */
+	{  950000,  950000,  900000,  900000, 900000, 900000, 850000 }, /* ASV8 */
+	{  950000,  950000,  900000,  900000, 900000, 900000, 850000 }, /* ASV9 */
+	{  950000,  950000,  900000,  900000, 900000, 850000, 850000 }, /* ASV10 */
+	{  950000,  950000,  900000,  900000, 900000, 850000, 850000 }, /* RESERVED */
+	{  950000,  950000,  900000,  900000, 900000, 850000, 850000 }, /* RESERVED */
 };
 
 static unsigned int exynos4212_int_volt[PD_ASV_GROUP][LV_END] = {	
 	/* 266      200       200     160    160      133     100 */
 	{ 1100000, 1012500, 1012500, 975000, 975000, 937500, 925000 }, /* RESERVED */	
 	{ 1062500, 1000000, 1000000, 962500, 962500, 925000, 912500 }, /* ASV1 */
-	{ 1050000,	987500,  987500, 950000, 950000, 912500, 900000 }, /* ASV2 */
-	{ 1050000,	975000,  975000, 937500, 937500, 900000, 887500 }, /* ASV3 */
-	{ 1062500,	987500,  987500, 950000, 950000, 912500, 900000 }, /* ASV4 */
-	{ 1050000,	975000,  975000, 937500, 937500, 900000, 887500 }, /* ASV5 */
-	{ 1050000,	975000,  975000, 937500, 937500, 900000, 887500 }, /* ASV6 */
-	{ 1037500,	962500,  962500, 925000, 925000, 900000, 887500 }, /* ASV7 */
-	{ 1037500,	950000,  950000, 912500, 912500, 887500, 875000 }, /* ASV8 */
-	{ 1037500,	937500,  937500, 900000, 900000, 887500, 875000 }, /* ASV9 */
-	{ 1037500,	937500,  937500, 900000, 900000, 875000, 862500 }, /* ASV10 */
-	{ 1035000,	925000,  925000, 887500, 887500, 862500, 850000 }, /* RESERVED */
-	{ 1035000,	912500,  912500, 875000, 875000, 850000, 850000 }, /* RESERVED */
+	{ 1050000,  987500,  987500, 950000, 950000, 912500, 900000 }, /* ASV2 */
+	{ 1050000,  975000,  975000, 937500, 937500, 900000, 887500 }, /* ASV3 */
+	{ 1062500,  987500,  987500, 950000, 950000, 912500, 900000 }, /* ASV4 */
+	{ 1050000,  975000,  975000, 937500, 937500, 900000, 887500 }, /* ASV5 */
+	{ 1050000,  975000,  975000, 937500, 937500, 900000, 887500 }, /* ASV6 */
+	{ 1037500,  962500,  962500, 925000, 925000, 900000, 887500 }, /* ASV7 */
+	{ 1037500,  950000,  950000, 912500, 912500, 887500, 875000 }, /* ASV8 */
+	{ 1037500,  937500,  937500, 900000, 900000, 887500, 875000 }, /* ASV9 */
+	{ 1037500,  937500,  937500, 900000, 900000, 875000, 862500 }, /* ASV10 */
+	{ 1035000,  925000,  925000, 887500, 887500, 862500, 850000 }, /* RESERVED */
+	{ 1035000,  912500,  912500, 875000, 875000, 850000, 850000 }, /* RESERVED */
 };
 
 static unsigned int exynos4412_mif_volt[ASV_GROUP][LV_END] = {
@@ -856,7 +852,6 @@ struct opp *exynos4x12_monitor(struct busfreq_data *data)
 {
 	struct opp *opp = data->curr_opp;
 	int i;
-	unsigned int cpu_load_average = 0;
 	unsigned int dmc0_load_average = 0;
 	unsigned int dmc1_load_average = 0;
 	unsigned int dmc_load_average;
@@ -891,13 +886,11 @@ struct opp *exynos4x12_monitor(struct busfreq_data *data)
 		data->index = 0;
 
 	for (i = 0; i < load_history_size; i++) {
-		cpu_load_average += data->load_history[PPMU_CPU][i];
 		dmc0_load_average += data->load_history[PPMU_DMC0][i];
 		dmc1_load_average += data->load_history[PPMU_DMC1][i];
 	}
 
 	/* Calculate average Load */
-	cpu_load_average /= load_history_size;
 	dmc0_load_average /= load_history_size;
 	dmc1_load_average /= load_history_size;
 
@@ -1104,9 +1097,11 @@ int exynos4x12_init(struct device *dev, struct busfreq_data *data)
 		opp_disable(dev, 440293);
 		maxfreq = 440220;
 	} else {
+		opp_disable(dev, 400266);
 		/* opp_disable(dev, 267200); */
 	}
 
+	data->int_table = (unsigned int *)&exynos4_int_volt[asv_group_index];
 	data->table = exynos4_busfreq_table;
 	data->table_size = LV_END;
 
