@@ -46,6 +46,9 @@ fi
 /res/ext/tweaks.sh
 /res/ext/tweaks_build.sh
 
+# Iniciar libera_ram
+/res/ext/libera_ram.sh
+
 # soporte LPowerCC
 /sbin/busybox rm /data/.lpowercc/lpowercc.xml
 /sbin/busybox rm /data/.lpowercc/action.cache

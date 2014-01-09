@@ -16,7 +16,7 @@ echo 0 > /proc/sys/kernel/kptr_restrict
 echo 0 > /sys/module/cpuidle_exynos4/parameters/log_en
 
 # replace kernel version info for repacked kernels
-cat /proc/version | grep infra && (kmemhelper -t string -n linux_proc_banner -o 15 `cat /res/version`)
+/sbin/busybox cat /proc/version | grep infra && (kmemhelper -t string -n linux_proc_banner -o 15 `cat /res/version`)
 
 # Tweak kernel scheduler, less aggressive settings
 echo "256" > /proc/sys/kernel/random/write_wakeup_threshold
