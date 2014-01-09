@@ -9,6 +9,15 @@ echo "3" > /proc/sys/vm/drop_caches
 sleep 1
 echo "0" > /proc/sys/vm/drop_caches
 
+#enable kmem interface for everyone
+echo 0 > /proc/sys/kernel/kptr_restrict
+
+#disable cpuidle log
+echo 0 > /sys/module/cpuidle_exynos4/parameters/log_en
+
+# replace kernel version info for repacked kernels
+cat /proc/version | grep infra && (kmemhelper -t string -n linux_proc_banner -o 15 `cat /res/version`)
+
 # Tweak kernel scheduler, less aggressive settings
 echo "256" > /proc/sys/kernel/random/write_wakeup_threshold
 echo "128" > /proc/sys/kernel/random/read_wakeup_threshold
@@ -37,6 +46,25 @@ echo "1" > /proc/sys/vm/oom_kill_allocating_task
 echo "2" > /sys/devices/system/cpu/sched_mc_power_savings
 echo "0" > /proc/sys/kernel/randomize_va_space
 echo "3" > /sys/module/cpuidle_exynos4/parameters/enable_mask
+
+# pegasusq tweaks
+echo "20000" > /sys/devices/system/cpu/cpufreq/pegasusq/sampling_rate
+echo "20" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate
+echo "40" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate
+echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1
+echo "200000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0
+echo "600000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1
+echo "300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0
+echo "700000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1
+echo "400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0
+echo "150" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1
+echo "150" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0
+echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_1
+echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_0
+echo "400" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_1
+echo "400" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_4_0
+echo "2" > /sys/devices/system/cpu/cpufreq/pegasusq/sampling_down_factor
+echo "37" > /sys/devices/system/cpu/cpufreq/pegasusq/freq_step
  
 # IPv6 privacy tweak
 echo "2" > /proc/sys/net/ipv6/conf/all/use_tempaddr

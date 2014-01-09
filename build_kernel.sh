@@ -19,6 +19,7 @@ if [ -e ramdisk.cpio.gz ]; then
 	rm ramdisk.cpio.gz
 fi
 
+make distclean
 make clean
 
 echo "#################### Preparando Entorno ####################"
@@ -51,7 +52,7 @@ find -name '*.ko' -exec rm -rf {} \;
 rm -rf $KERNELDIR/arch/arm/boot/zImage
 
 echo "#################### Make defconfig ####################"
-make lonas_defconfig
+make ARCH=arm CROSS_COMPILE=$TOOLCHAIN lonas_defconfig
 
 # nice -n 10 make -j6 ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
 
@@ -84,7 +85,7 @@ rm -rf $RAMFS_TMP/.hg
 
 echo "#################### Build Ramdisk ####################"
 cd $RAMFS_TMP
-find | fakeroot cpio -H newc -o > $RAMFS_TMP.cpio 2>/dev/null
+find . | fakeroot cpio -o -H newc > $RAMFS_TMP.cpio 2>/dev/null
 ls -lh $RAMFS_TMP.cpio
 gzip -9 -f $RAMFS_TMP.cpio
 
