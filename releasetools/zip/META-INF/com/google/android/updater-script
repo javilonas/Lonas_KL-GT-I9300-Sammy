@@ -30,7 +30,7 @@ unmount("/data");
 unmount("/system");
 unmount("/sdcard");
 ui_print(" ");
-ui_print(". Flasheando kernel Lonas_CM .");
+ui_print(". Flasheando kernel Lonas_KL .");
 ui_print(" ");
 ui_print(" ");
 ui_print("Version: [Lonas_KL v.5.2] ");

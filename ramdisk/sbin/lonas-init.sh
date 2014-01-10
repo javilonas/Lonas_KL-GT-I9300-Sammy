@@ -46,6 +46,9 @@ fi
 /res/ext/tweaks.sh
 /res/ext/tweaks_build.sh
 
+# Iniciar Zram
+/res/ext/zram.sh
+
 # Iniciar libera_ram
 /res/ext/libera_ram.sh
 

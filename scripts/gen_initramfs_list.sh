@@ -247,7 +247,7 @@ case "$arg" in
 		echo "$output_file" | grep -q "\.lzma$" && [ -x "/bin/lzma" ] \
                 && compr="lzma -9 -f"
 		echo "$output_file" | grep -q "\.xz$" && [ -x "/bin/xz" ] \
-                && compr="xz --check=crc32 --lzma2=dict=1MiB"
+                && compr="xz --check=crc32 --lzma2=dict=8MiB"
 		echo "$output_file" | grep -q "\.lzo$" && [ -x "/bin/lzop" ] \
                 && compr="lzop -9 -f"
 		echo "$output_file" | grep -q "\.lz4$" && [ -x "/bin/lz4" ] \
