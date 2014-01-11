@@ -1096,7 +1096,6 @@ static int s3cfb_wait_for_vsync_thread(void *data)
                         msecs_to_jiffies(100));
 
         if (ret > 0) {
-#if defined(CONFIG_FB_S5P_VSYNC_SEND_UEVENTS)
             char *envp[2];
             char buf[64];
 
@@ -1105,7 +1104,6 @@ static int s3cfb_wait_for_vsync_thread(void *data)
             envp[0] = buf;
             envp[1] = NULL;
             kobject_uevent_env(&fbdev->dev->kobj, KOBJ_CHANGE, envp);
-#endif
 #if defined(CONFIG_FB_S5P_VSYNC_SYSFS)
             sysfs_notify(&fbdev->dev->kobj, NULL, "vsync_time");
 #endif
