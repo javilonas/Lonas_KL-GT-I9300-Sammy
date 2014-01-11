@@ -1104,9 +1104,6 @@ static int s3cfb_wait_for_vsync_thread(void *data)
             envp[0] = buf;
             envp[1] = NULL;
             kobject_uevent_env(&fbdev->dev->kobj, KOBJ_CHANGE, envp);
-#if defined(CONFIG_FB_S5P_VSYNC_SYSFS)
-            sysfs_notify(&fbdev->dev->kobj, NULL, "vsync_time");
-#endif
         }
     }
 
