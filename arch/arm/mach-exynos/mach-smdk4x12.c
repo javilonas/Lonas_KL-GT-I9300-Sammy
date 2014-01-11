@@ -4333,7 +4333,7 @@ static void __init smdk4x12_machine_init(void)
 	register_reboot_notifier(&exynos4_reboot_notifier);
 }
 
-MACHINE_START(SMDK4212, "SMDK4X12")
+MACHINE_START(SMDK4212, "smdk4x12")
 	.boot_params	= S5P_PA_SDRAM + 0x100,
 	.init_irq	= exynos4_init_irq,
 	.map_io		= smdk4x12_map_io,
@@ -4341,7 +4341,7 @@ MACHINE_START(SMDK4212, "SMDK4X12")
 	.timer		= &exynos4_timer,
 MACHINE_END
 
-MACHINE_START(SMDK4412, "SMDK4X12")
+MACHINE_START(SMDK4412, "smdk4x12")
 	.boot_params	= S5P_PA_SDRAM + 0x100,
 	.init_irq	= exynos4_init_irq,
 	.map_io		= smdk4x12_map_io,
