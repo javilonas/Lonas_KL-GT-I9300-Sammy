@@ -29,6 +29,7 @@
 #include <linux/memory.h>
 #include <linux/pm_runtime.h>
 #include <linux/delay.h>
+#include <linux/kthread.h>
 #include <linux/sw_sync.h>
 #include <plat/clock.h>
 #include <plat/media.h>
@@ -72,6 +73,8 @@ extern int gd2evf_power_ext(int onoff);
 extern int mdnie_update_ext(int mode);
 static bool current_mipi_lcd = true;
 #endif
+
+extern int s3cfb_vsync_timestamp_changed(struct s3cfb_global *fbdev, ktime_t prev_timestamp);
 
 struct s3cfb_fimd_desc		*fbfimd;
 
@@ -151,7 +154,8 @@ static irqreturn_t s3cfb_irq_frame(int irq, void *dev_id)
 #endif
 
 	fbdev[0]->wq_count++;
-	wake_up(&fbdev[0]->wq);
+	fbdev[0]->vsync_timestamp = ktime_get();
+	wake_up_interruptible(&fbdev[0]->wq);
 
 	spin_unlock(&fbdev[0]->vsync_slock);
 
@@ -1068,6 +1072,32 @@ exit:
 static DEVICE_ATTR(lcd_switch, 0220, NULL, lcd_switch_store);
 #endif
 
+static int s3cfb_wait_for_vsync_thread(void *data)
+{
+    struct s3cfb_global *fbdev = data;
+
+    while (!kthread_should_stop()) {
+        ktime_t prev_timestamp = fbdev->vsync_timestamp;
+
+        int ret = wait_event_interruptible_timeout(fbdev->wq,
+                        s3cfb_vsync_timestamp_changed(fbdev, prev_timestamp),
+                        msecs_to_jiffies(100));
+
+        if (ret > 0) {
+            char *envp[2];
+            char buf[64];
+
+            snprintf(buf, sizeof(buf), "VSYNC=%llu",
+            ktime_to_ns(fbdev->vsync_timestamp));
+            envp[0] = buf;
+            envp[1] = NULL;
+            kobject_uevent_env(&fbdev->dev->kobj, KOBJ_CHANGE, envp);
+        }
+    }
+
+    return 0;
+}
+
 static int s3cfb_probe(struct platform_device *pdev)
 {
 	struct s3c_platform_fb *pdata = NULL;
@@ -1299,6 +1329,12 @@ static int s3cfb_probe(struct platform_device *pdev)
 		pdata->lcd_on(pdev);
 #endif
 
+	fbdev[0]->vsync_thread = kthread_run(s3cfb_wait_for_vsync_thread, fbdev[0], "s3cfb-vsync");
+	if (fbdev[0]->vsync_thread == ERR_PTR(-ENOMEM)) {
+		dev_err(fbdev[0]->dev, "failed to run vsync thread\n");
+		fbdev[0]->vsync_thread = NULL;
+	}
+
 	ret = device_create_file(&(pdev->dev), &dev_attr_win_power);
 	if (ret < 0)
 		dev_err(fbdev[0]->dev, "failed to add sysfs entries\n");
@@ -1377,6 +1413,9 @@ static int s3cfb_remove(struct platform_device *pdev)
 		if (fbdev[i]->vsync_info.thread)
 			kthread_stop(fbdev[i]->vsync_info.thread);
 #endif
+
+		if (fbdev[i]->vsync_thread)
+			kthread_stop(fbdev[i]->vsync_thread);
 
 		kfree(fbdev[i]->fb);
 		kfree(fbdev[i]);
