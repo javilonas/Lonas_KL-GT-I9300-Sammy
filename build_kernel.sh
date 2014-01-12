@@ -38,9 +38,11 @@ TOOLCHAIN="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
 TOOLCHAIN_PATCH="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin"
 ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy/ramdisk"
 RAMFS_TMP="/home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3"
-CONFIG_LOCALVERSION="Lonas-KL-5.2-Sammy"
+CONFIG_LOCALVERSION="Lonas-KL-5.2"
+VERSION_KL="Sammy"
+REVISION="RC"
 
-export KBUILD_BUILD_VERSION="1"
+export KBUILD_BUILD_VERSION="2"
 
 echo "ramfs_tmp = $RAMFS_TMP"
 
@@ -65,8 +67,8 @@ $TOOLCHAIN_PATCH/arm-eabi-strip --strip-unneeded $KERNELDIR/ramdisk/lib/modules/
 #unzip /home/lonas/Kernel_Lonas/proprietary-modules/proprietary-modules.zip -d $KERNELDIR/ramdisk/lib/modules
 
 echo "#################### Update Ramdisk ####################"
-rm -f $KERNELDIR/releasetools/tar/$CONFIG_LOCALVERSION-$KBUILD_BUILD_VERSION.tar
-rm -f $KERNELDIR/releasetools/zip/$CONFIG_LOCALVERSION-$KBUILD_BUILD_VERSION.zip
+rm -f $KERNELDIR/releasetools/tar/$CONFIG_LOCALVERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.tar
+rm -f $KERNELDIR/releasetools/zip/$CONFIG_LOCALVERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.zip
 cp -f $KERNELDIR/arch/arm/boot/zImage .
 
 rm -rf $RAMFS_TMP
@@ -103,10 +105,10 @@ cp boot.img $KERNELDIR/releasetools/tar
 
 cd $KERNELDIR
 cd releasetools/zip
-zip -0 -r $CONFIG_LOCALVERSION-$KBUILD_BUILD_VERSION.zip *
+zip -0 -r $CONFIG_LOCALVERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.zip *
 cd ..
 cd tar
-tar cf $CONFIG_LOCALVERSION-$KBUILD_BUILD_VERSION.tar boot.img && ls -lh $CONFIG_LOCALVERSION-$KBUILD_BUILD_VERSION.tar
+tar cf $CONFIG_LOCALVERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.tar boot.img && ls -lh $CONFIG_LOCALVERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.tar
 
 echo "#################### Eliminando restos ####################"
 
