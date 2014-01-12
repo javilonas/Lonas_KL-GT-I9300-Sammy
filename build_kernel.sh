@@ -38,7 +38,7 @@ TOOLCHAIN="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
 TOOLCHAIN_PATCH="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin"
 ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy/ramdisk"
 RAMFS_TMP="/home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3"
-CONFIG_LOCALVERSION="Lonas_KL-5.2"
+CONFIG_LOCALVERSION="Lonas-KL-5.2"
 
 export KBUILD_BUILD_VERSION="Sammy"
 
