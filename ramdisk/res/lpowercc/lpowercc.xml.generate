@@ -165,31 +165,6 @@ done < /sys/devices/system/cpu/busfreq/LP_mif_volt_table
 echo '
     </settingsPane>
   </settingsTab>
-  <settingsTab name="GPU">
-    <settingsPane description="Aplicar la configuración de arranque sólo si la que desea llega a ser estable, de lo contrario el equipo termina en un Bucle de reinicios o directamente no arrancará. Si se desactiva, los valores mostrados no corresponden a los valores reales actuales, los valores correctos de los perfiles están guardados" 
-                  name="GPU control switch">
-      <checkbox description="Si está activado, los ajustes siguientes se aplicarán en el arranque." 
-                name="Establecer voltajes de la GPU en el arranque" 
-                action="controlswitch GPU" 
-                label="Establecer en el arranque"/>
-    </settingsPane>' >> $XML
-
-echo '
-    <settingsPane description="" name="GPU voltage control">' >> $XML
-
-while read FREQ UVOLT; do
-  echo "
-      <seekBar  description=\"Voltage por defecto: $UVOLTµV\" 
-	        name=\"${FREQ} MHz step\" 
-                action=\"gpuvolt ${FREQ}\"
-                unit=\"µV\" min=\"600000\" reversed=\"false\" step=\"500\" max=\"1300000\"/>" >> $XML
-  GPUFREQLIST="$GPUFREQLIST $FREQ"
-done < /sys/class/misc/gpu_voltage_control/gpu_control
-
-echo '
-    </settingsPane>' >> $XML
-echo '
-  </settingsTab>
   <settingsTab name="Cargador">
     <settingsPane description="Interfaz desde donde podrá seleccionar entre varios perfiles de carga AC/USB, dependiendo del que seleccione la batería cargará mas lento o mas rápido."  
                   name="Información">
