@@ -109,7 +109,7 @@ static ssize_t touchboost_freq_store(struct device *dev, struct device_attribute
 
 // define objects
 static DEVICE_ATTR(touchboost_switch, S_IRUGO | S_IWUGO, touchboost_switch_show, touchboost_switch_store);
-static DEVICE_ATTR(touchboost_freq  , S_IRUGO | S_IWUGO, touchboost_freq_show  , touchboost_freq_store  );
+static DEVICE_ATTR(touchboost_freq, S_IRUGO | S_IWUGO, touchboost_freq_show, touchboost_freq_store);
 
 // define attributes
 static struct attribute *touchboost_switch_attributes[] = {
