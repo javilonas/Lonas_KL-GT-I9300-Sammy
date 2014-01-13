@@ -94,7 +94,7 @@ mali_dvfs_table mali_dvfs[MALI_DVFS_STEPS]={
 #else
 			/* step 0 */{134  ,1000000	, 950000   ,85   , 90},
 			/* step 1 */{267  ,1000000	,1050000   ,85   ,100},
-			/* step 2 */{400  ,1000000  ,1200000   ,85   ,100} };
+			/* step 2 */{400  ,1000000	,1200000   ,85   ,100} };
 #endif
 
 #ifdef EXYNOS4_ASV_ENABLED
