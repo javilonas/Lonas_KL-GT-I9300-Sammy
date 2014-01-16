@@ -91,8 +91,8 @@ int logger_mode_init(void)
 			kobject_put(logger_mode_kobj);
 	}
 
-	// initialize logger mode to 1 (enabled) as default
-	logger_mode = 1;
+	// initialize logger mode to 0 (disable) as default
+	logger_mode = 0;
 
         return (logger_mode_retval);
 }

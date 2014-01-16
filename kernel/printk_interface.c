@@ -91,8 +91,8 @@ int printk_mode_init(void)
 			kobject_put(printk_mode_kobj);
 	}
 
-	// initialize printk mode to 1 (enabled) as default
-	printk_mode = 1;
+	// initialize printk mode to 0 (disable) as default
+	printk_mode = 0;
 
         return (printk_mode_retval);
 }
