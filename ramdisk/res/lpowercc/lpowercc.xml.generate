@@ -370,6 +370,15 @@ Recuerde que son 100 MB x 4, no abuse del ZRAM.">
                 label="Activar Android logger"/>
 
     </settingsPane>
+    <settingsPane name="Linux Printk logging" 
+                  description="">
+
+      <checkbox description="Se recomienda activar si tiene activa la herramienta Android logger" 
+                name="Activar Linux Printk logging" 
+                action="generic01 /sys/kernel/printk_mode/printk_mode" 
+                label="Activar Linux Printk logging"/>
+
+    </settingsPane>
     <settingsPane name="Touch Boost" 
                   description="Touch Boost nos permitirá mantener por defecto la fecuencia de 600 Mhz al pulsar la pantalla, de modo que puede verse un ahorro mayor en la batería, pero también puede probocar algún que otro lag.">
     
