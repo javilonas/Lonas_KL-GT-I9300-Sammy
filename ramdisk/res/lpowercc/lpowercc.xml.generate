@@ -284,7 +284,7 @@ Recuerde que son 100 MB x 4, no abuse del ZRAM.">
     <settingsPane name="Swappiness" 
                   description="Un valor bajo significa que el kernel va a tratar de evitar el intercambio tanto como sea posible, por contra en un valor más alto intentará de usar el espacio de intercambio de un modo mas agresivo, en resumen: al bajar su valor, le indicamos que use mas caché y menos swap y al subirlo le estamos indicamos al sistema, que use menos Swap y mas caché y memoria RAM. un Valor 0 desactivaría el intercambio de memoria (swap o zram)">   
 
-      <seekBar  description="Por defecto: 90." 
+      <seekBar  description="Por defecto: 80." 
                 name="Virtual machine swappiness" 
                 action="generic /proc/sys/vm/swappiness"
                 unit="%" min="0" reversed="false" step="5" max="100"/>
