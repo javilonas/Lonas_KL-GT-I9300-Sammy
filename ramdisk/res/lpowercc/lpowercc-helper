@@ -213,6 +213,6 @@ if [ -f $OVERRIDE_PROFILE_DATA -o "$REVISION" != "`cat $REVISION_PATH`" ]; then
 
 	rm $OVERRIDE_PROFILE_DATA
 	echo $REVISION > $REVISION_PATH
-	/res/uci.sh $1 $2 $3 $4 $5 $6
+	/res/init_uci.sh $1 $2 $3 $4 $5 $6
 	exit 0
 fi

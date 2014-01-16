@@ -3,9 +3,31 @@
 # Script inicio lonas-init.sh
 #
 
+# If rom comes without mount command in /system/bin folder, create busybox symlinks for mount/umount
+if [ ! -f /system/bin/mount ]; then
+/sbin/busybox mount -o remount,rw rootfs /
+/sbin/busybox ln /sbin/busybox /sbin/mount
+/sbin/busybox ln /sbin/busybox /sbin/umount
+/sbin/busybox mount -o remount,ro rootfs /
+fi
+
+# Correct /sbin and /res directory and file permissions
+/sbin/busybox mount -o remount,rw rootfs /
+
+# change permissions of /sbin folder and scripts in /res/bc
+/sbin/busybox chmod -R 755 /sbin
+/sbin/busybox chmod 755 /res/ext/*
+
+/sbin/busybox sync
+/sbin/busybox mount -o remount,ro rootfs /
+
+sync
+
+sleep 1
+
+# Inicio lonas-init.sh
 /sbin/busybox mount -o remount,rw /system
 /sbin/busybox mount -t rootfs -o remount,rw rootfs
-
 
 if [ ! -f /system/xbin/busybox ]; then
 /sbin/busybox ln -s /sbin/busybox /system/xbin/busybox
@@ -51,6 +73,9 @@ fi
 
 # Iniciar libera_ram
 /res/ext/libera_ram.sh
+
+# iniciar Usb Storage
+/res/ext/usb_storage.sh
 
 # soporte LPowerCC
 /sbin/busybox rm /data/.lpowercc/lpowercc.xml

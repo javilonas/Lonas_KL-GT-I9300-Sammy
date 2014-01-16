@@ -970,7 +970,6 @@ on property:persist.sys.drs.enforce=0
 	start auditd
 	
 service lonas-init /sbin/lonas-init.sh
-    class main
+    class core
     user root
-    group root
     oneshot

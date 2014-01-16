@@ -165,6 +165,42 @@ done < /sys/devices/system/cpu/busfreq/LP_mif_volt_table
 echo '
     </settingsPane>
   </settingsTab>
+  <settingsTab name="GPU">
+    <settingsPane description="Aplicar la configuración de arranque sólo si la que desea llega a ser estable, de lo contrario el equipo termina en un Bucle de reinicios o directamente no arrancará. Si se desactiva, los valores mostrados no corresponden a los valores reales actuales, los valores correctos de los perfiles están guardados" 
+                  name="GPU control switch">
+      <checkbox description="Si está activado, los ajustes siguientes se aplicarán en el arranque." 
+                name="Establecer voltajes de la GPU en el arranque" 
+                action="controlswitch GPU" 
+                label="Establecer en el arranque"/>
+    </settingsPane>' >> $XML
+
+echo "
+    <settingsPane description=\"Selecciona el Perfil que mejor se adapte a tu terminal\" name=\"GPU mV\">
+      <spinner description=\"Por Defecto: GPU mV: Stock\" name=\"GPU mV\" action=\"gpuvolt gpuvoltpredef\">
+             <spinnerItem name=\"GPU mV: Stock\" value=\"0\"/> 
+             <spinnerItem name=\"GPU mV: -25\" value=\"1\"/> 
+             <spinnerItem name=\"GPU mV: -50\" value=\"2\"/> 
+             <spinnerItem name=\"GPU mV: -75\" value=\"3\"/> 
+             <spinnerItem name=\"GPU mV: -100\" value=\"4\"/> 
+      </spinner>
+    </settingsPane>
+" >> $XML
+echo "
+    <settingsPane description=\"Selecciona el Perfil que mejor se adapte a tu terminal\" name=\"GPU freq\">
+      <spinner description=\"Por Defecto: GPU freq: 160/266/350/440/533\" name=\"GPU freq\" action=\"gpufreq gpufreqpredef\">
+             <spinnerItem name=\"GPU freq: 160/266/350/400/440\" value=\"1\"/> 
+             <spinnerItem name=\"GPU freq: 160/266/350/440/533\" value=\"0\"/> 
+             <spinnerItem name=\"GPU freq: 266/350/440/533/640\" value=\"2\"/> 
+             <spinnerItem name=\"GPU freq: 350/440/533/640/666\" value=\"3\"/> 
+             <spinnerItem name=\"GPU freq: 440/533/600/640/700\" value=\"4\"/> 
+             <spinnerItem name=\"GPU freq: 533/600/640/700/733\" value=\"5\"/> 
+             <spinnerItem name=\"GPU freq: 600/640/700/733/750\" value=\"6\"/> 
+             <spinnerItem name=\"GPU freq: 640/700/733/750/800\" value=\"7\"/> 
+      </spinner>
+    </settingsPane>
+" >> $XML
+echo '
+  </settingsTab>
   <settingsTab name="Cargador">
     <settingsPane description="Interfaz desde donde podrá seleccionar entre varios perfiles de carga AC/USB, dependiendo del que seleccione la batería cargará mas lento o mas rápido."  
                   name="Información">
@@ -248,7 +284,7 @@ Recuerde que son 100 MB x 4, no abuse del ZRAM.">
     <settingsPane name="Swappiness" 
                   description="Un valor bajo significa que el kernel va a tratar de evitar el intercambio tanto como sea posible, por contra en un valor más alto intentará de usar el espacio de intercambio de un modo mas agresivo, en resumen: al bajar su valor, le indicamos que use mas caché y menos swap y al subirlo le estamos indicamos al sistema, que use menos Swap y mas caché y memoria RAM. un Valor 0 desactivaría el intercambio de memoria (swap o zram)">   
 
-      <seekBar  description="Por defecto: 80." 
+      <seekBar  description="Por defecto: 90." 
                 name="Virtual machine swappiness" 
                 action="generic /proc/sys/vm/swappiness"
                 unit="%" min="0" reversed="false" step="5" max="100"/>

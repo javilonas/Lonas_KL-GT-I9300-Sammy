@@ -20,6 +20,10 @@ case "${1}" in
     select_profile "$2"
     exit 0
     ;;
+  dump)
+    dump_profile "$2"
+    exit 0
+    ;;
   config)
     print_config
     ;;
