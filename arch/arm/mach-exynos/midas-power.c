@@ -589,12 +589,12 @@ static struct regulator_init_data max77686_buck4_data = {
 		.name = "vdd_g3d range",
 		.min_uV = 600000,
 #ifdef CONFIG_SLP
-		.max_uV = 1200000,
+		.max_uV = 1300000,
 #else
 #if defined(CONFIG_MACH_M3_JPN_DCM)
-		.max_uV = 1200000,
+		.max_uV = 1300000,
 #else
-		.max_uV = 1200000,
+		.max_uV = 1300000,
 #endif
 #endif
 		.boot_on = 1,
