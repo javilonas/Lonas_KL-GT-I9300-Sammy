@@ -1,7 +1,7 @@
 /*
- * Author Rem Sound: javilonas, 28.06.2013
+ * Author Rem Sound: javilonas, 14.01.2014
  *
- * Version 0.8
+ * Version 0.9
  *
  * Based on the source of Boeffla sound created by andip71
  * Código fuente orginal del Motor de sonido: https://github.com/andip71/boeffla-kernel-jb-u7-s3/tree/master/sound/soc/codecs
@@ -38,7 +38,7 @@ unsigned int Rem_sound_hook_wm8994_write(unsigned int reg, unsigned int value);
 
 // Rem sound general
 #define REM_SOUND_DEFAULT         0
-#define REM_SOUND_VERSION         "0.8"
+#define REM_SOUND_VERSION         "0.9"
 
 // Debug mode
 #define DEBUG_DEFAULT                 0
@@ -149,7 +149,7 @@ unsigned int Rem_sound_hook_wm8994_write(unsigned int reg, unsigned int value);
 #define SPEAKER_DEFAULT         61 /* 57 era el valor original por defecto */
 
 #define SPEAKER_MAX                 63
-#define SPEAKER_MIN                 57
+#define SPEAKER_MIN                 20 /* 57 era el valor original por defecto */
 
 // Microphone control
 #define MICLEVEL_GENERAL        28
