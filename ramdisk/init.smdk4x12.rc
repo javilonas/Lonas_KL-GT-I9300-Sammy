@@ -209,7 +209,7 @@ on boot
     chmod 0660 /dev/tspdrv
     chown system system /dev/tspdrv
 
-    write /proc/sys/vm/swappiness 130
+# write /proc/sys/vm/swappiness 130
 
 on fs
     mount_all /fstab.smdk4x12
