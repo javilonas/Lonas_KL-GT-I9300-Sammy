@@ -7,20 +7,6 @@
 /sbin/busybox mount -o remount,rw /system
 /sbin/busybox mount -t rootfs -o remount,rw rootfs
 
-if [ ! -f /system/xbin/busybox ]; then
-/sbin/busybox ln -s /sbin/busybox /system/xbin/busybox
-/sbin/busybox ln -s /sbin/busybox /system/xbin/pkill
-fi
-
-if [ ! -f /system/bin/busybox ]; then
-/sbin/busybox ln -s /sbin/busybox /system/bin/busybox
-/sbin/busybox ln -s /sbin/busybox /system/bin/pkill
-fi
-
-# Aplicar permisos 755
-/sbin/busybox chmod -R 755 /sbin
-/sbin/busybox chmod 755 /res/ext/*
-
 # Limpiador de otros kernel
 /res/ext/limpiador.sh
 
@@ -44,7 +30,7 @@ fi
 /res/ext/tweaks_build.sh
 
 # Iniciar Zram
-/res/ext/zram.sh
+#/res/ext/zram.sh
 
 # Iniciar libera_ram
 /res/ext/libera_ram.sh
