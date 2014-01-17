@@ -51,7 +51,7 @@ static void max77693_haptic_i2c(struct max77693_haptic_data *hap_data, bool en)
 	u8 value = hap_data->pdata->reg2;
 	u8 lscnfg_val = 0x00;
 
-	pr_debug("[VIB] %s %d\n", __func__, en);
+	//pr_debug("[VIB] %s %d\n", __func__, en);
 
 	if (en) {
 		value |= MOTOR_EN;
@@ -150,7 +150,7 @@ static void haptic_work(struct work_struct *work)
 	struct max77693_haptic_data *hap_data
 		= container_of(work, struct max77693_haptic_data, work);
 
-	pr_debug("[VIB] %s\n", __func__);
+	//pr_debug("[VIB] %s\n", __func__);
 	if (hap_data->timeout > 0) {
 		if (hap_data->running)
 			return;
@@ -388,7 +388,7 @@ static struct platform_driver max77693_haptic_driver = {
 
 static int __init max77693_haptic_init(void)
 {
-	pr_debug("[VIB] %s\n", __func__);
+	//pr_debug("[VIB] %s\n", __func__);
 	return platform_driver_register(&max77693_haptic_driver);
 }
 module_init(max77693_haptic_init);
