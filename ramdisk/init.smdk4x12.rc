@@ -343,10 +343,10 @@ service cpboot-daemon /sbin/cbd -d
 # create virtual SD card at /mnt/sdcard, based on the /data/media directory
 # daemon will drop to user/group system/media_rw after initializing
 # underlying files in /data/media will be created with user and group media_rw (1023)
-service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
-    class late_start
+service sdcard /res/busybox mount -t sdcardfs -o rw,nosuid,nodev,noatime,nodiratime,uid=1023,gid=1023 /data/media /mnt/shell/emulated
+    class core
+    user root
     oneshot
-
 
 #	-iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -N \
 service p2p_supplicant /system/bin/p2p_supplicant \
@@ -486,12 +486,6 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
 
 on property:ro.dumpstate.dmesg=1
     write /proc/sys/kernel/dmesg_restrict 0
-
-# Runtime Compcache
-service rtccd /system/bin/rtccd2 -a 100M
-    class core
-    user root
-    oneshot
 
 # Secure Storage startup
 service prepare-ssdaemon /system/bin/sh /system/bin/ss-presetup.sh
