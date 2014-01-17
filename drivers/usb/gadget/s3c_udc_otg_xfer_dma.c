@@ -26,6 +26,7 @@
 static u8 clear_feature_num;
 static int clear_feature_flag;
 static int set_conf_done;
+
 /* Bulk-Only Mass Storage Reset (class-specific request) */
 #define GET_MAX_LUN_REQUEST	0xFE
 #define BOT_RESET_REQUEST	0xFF
