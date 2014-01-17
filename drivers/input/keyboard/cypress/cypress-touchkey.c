@@ -1071,7 +1071,6 @@ void touchkey_update_func(struct work_struct *work)
 	       __func__, data[1], data[2]);
 #endif
 	tkey_i2c->update_status = TK_UPDATE_DOWN;
-	printk(KERN_DEBUG "[TouchKey] %s start\n", __func__);
 	touchkey_enable = 0;
 	while (retry--) {
 		if (ISSP_main(tkey_i2c) == 0) {
@@ -1154,11 +1153,8 @@ static ssize_t touchkey_led_control(struct device *dev,
 		return size;
 #endif
 	ret = sscanf(buf, "%d", &data);
-	if (ret != 1) {
-		printk(KERN_DEBUG "[TouchKey] %s, %d err\n",
-			__func__, __LINE__);
+	if (ret != 1)
 		return size;
-	}
 
 	if (data != 0 && data != 1) {
 		printk(KERN_DEBUG "[TouchKey] %s wrong cmd %x\n",
@@ -1410,8 +1406,6 @@ static ssize_t autocalibration_status(struct device *dev,
 	u8 data[6];
 	int ret;
 	struct touchkey_i2c *tkey_i2c = dev_get_drvdata(dev);
-
-	printk(KERN_DEBUG "[Touchkey] %s\n", __func__);
 
 	ret = i2c_touchkey_read(tkey_i2c->client, KEYCODE_REG, data, 6);
 	if ((data[5] & TK_BIT_AUTOCAL))
@@ -1836,7 +1830,6 @@ static int __init touchkey_init(void)
 
 static void __exit touchkey_exit(void)
 {
-	printk(KERN_DEBUG "[TouchKey] %s\n", __func__);
 	i2c_del_driver(&touchkey_i2c_driver);
 }
 
