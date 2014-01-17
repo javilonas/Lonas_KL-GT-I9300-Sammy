@@ -42,7 +42,7 @@ CONFIG_LOCALVERSION="Lonas-KL-5.2"
 VERSION_KL="Sammy"
 REVISION="RC"
 
-export KBUILD_BUILD_VERSION="3"
+export KBUILD_BUILD_VERSION="4"
 
 echo "ramfs_tmp = $RAMFS_TMP"
 
