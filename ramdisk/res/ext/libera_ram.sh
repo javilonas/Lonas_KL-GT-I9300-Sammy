@@ -10,7 +10,7 @@ FREE=`free -m | grep -i mem | awk '{print $4}'`
 
 while [ 1 ];
 do
-        if [ $FREE -lt 8192 ]; then
+        if [ $FREE -lt 5792 ]; then
                 echo "2853,5632,24576,86016,96768,96768" > /sys/module/lowmemorykiller/parameters/minfree
                 echo "111" > /proc/sys/vm/vfs_cache_pressure
                 sync
