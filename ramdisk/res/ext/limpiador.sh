@@ -6,6 +6,8 @@
 #remove cache, tmp, and unused files
 /sbin/busybox rm -f /cache/*.apk
 /sbin/busybox rm -f /cache/*.tmp
+/sbin/busybox rm -f /cache/*
 /sbin/busybox rm -f /data/dalvik-cache/*.apk
 /sbin/busybox rm -f /data/dalvik-cache/*.tmp
+/sbin/busybox rm -f /data/dalvik-cache/*
 
