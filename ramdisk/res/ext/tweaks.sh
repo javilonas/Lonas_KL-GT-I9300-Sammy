@@ -10,7 +10,7 @@ sleep 1
 echo "0" > /proc/sys/vm/drop_caches
 
 #disable cpuidle log
-echo 0 > /sys/module/cpuidle_exynos4/parameters/log_en
+echo "0" > /sys/module/cpuidle_exynos4/parameters/log_en
 
 # Tweak kernel scheduler, less aggressive settings
 echo "256" > /proc/sys/kernel/random/write_wakeup_threshold
@@ -27,7 +27,7 @@ echo "10240" > /proc/sys/fs/inotify/max_user_watches
 echo "0" > /proc/sys/vm/block_dump
 echo "0" > /proc/sys/vm/laptop_mode
 echo "0" > /proc/sys/vm/panic_on_oom 
-echo "1" > /proc/sys/vm/page-cluster
+echo "3" > /proc/sys/vm/page-cluster
 echo "10" > /proc/sys/fs/lease-break-time
 echo "2048" > /proc/sys/kernel/msgmni
 echo "65536" > /proc/sys/kernel/msgmax
@@ -43,22 +43,23 @@ echo "3" > /sys/module/cpuidle_exynos4/parameters/enable_mask
 
 # pegasusq tweaks
 echo "20000" > /sys/devices/system/cpu/cpufreq/pegasusq/sampling_rate
-echo "20" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate
-echo "40" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate
+echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate
+echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate
 echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1
-echo "200000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0
-echo "600000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1
-echo "300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0
-echo "700000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1
-echo "400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0
-echo "150" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1
-echo "150" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0
-echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_1
-echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_0
-echo "400" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_1
-echo "400" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_4_0
+echo "400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0
+echo "800000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1
+echo "600000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0
+echo "800000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1
+echo "600000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0
+echo "100" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1
+echo "100" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0
+echo "200" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_1
+echo "200" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_0
+echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_1
+echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_4_0
 echo "2" > /sys/devices/system/cpu/cpufreq/pegasusq/sampling_down_factor
 echo "37" > /sys/devices/system/cpu/cpufreq/pegasusq/freq_step
+echo "85" > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold
  
 # IPv6 privacy tweak
 echo "2" > /proc/sys/net/ipv6/conf/all/use_tempaddr
