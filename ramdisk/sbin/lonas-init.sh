@@ -8,7 +8,7 @@
 /sbin/busybox mount -t rootfs -o remount,rw rootfs
 
 # Limpiador de otros kernel
-/res/ext/limpiador.sh
+#/res/ext/limpiador.sh
 
 # Detectar y generar INIT.D
 /res/ext/init_d.sh
