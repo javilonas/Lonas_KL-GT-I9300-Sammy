@@ -972,11 +972,6 @@ on property:persist.sys.drs.enforce=1
 on property:persist.sys.drs.enforce=0
 	start auditd
 
-service autoroot-init /sbin/autoroot.sh
-    class core
-    user root
-    oneshot
-
 service lpcc-init /sbin/lpcc-init.sh
     class core
     user root
