@@ -44,6 +44,21 @@ REVISION="RTM"
 
 export KBUILD_BUILD_VERSION="1"
 
+chmod 644 $ROOTFS_PATH/*.rc
+chmod 750 $ROOTFS_PATH/init*
+chmod 640 $ROOTFS_PATH/fstab*
+chmod 644 $ROOTFS_PATH/default.prop
+chmod 771 $ROOTFS_PATH/data
+chmod 755 $ROOTFS_PATH/dev
+chmod 755 $ROOTFS_PATH/lib
+chmod 755 $ROOTFS_PATH/lib/modules
+chmod 644 $ROOTFS_PATH/lib/modules/*
+chmod 755 $ROOTFS_PATH/proc
+chmod 750 $ROOTFS_PATH/sbin
+chmod 750 $ROOTFS_PATH/sbin/*
+chmod 755 $ROOTFS_PATH/sys
+chmod 755 $ROOTFS_PATH/system
+
 echo "ramfs_tmp = $RAMFS_TMP"
 
 echo "#################### Eliminando build anterior ####################"
