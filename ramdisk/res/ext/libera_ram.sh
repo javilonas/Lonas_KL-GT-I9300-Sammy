@@ -10,16 +10,16 @@ FREE=`free -m | grep -i mem | awk '{print $4}'`
 
 while [ 1 ];
 do
-        if [ $FREE -lt 5792 ]; then
+        if [ $FREE -lt 2853 ]; then
                 sync
                 echo "2853,5632,24576,86016,96768,96768" > /sys/module/lowmemorykiller/parameters/minfree
                 echo "111" > /proc/sys/vm/vfs_cache_pressure
-                #echo "3" > /proc/sys/vm/drop_caches
+                echo "3" > /proc/sys/vm/drop_caches
         else
                 sync
                 echo "2853,5166,12288,21920,38678,73216" > /sys/module/lowmemorykiller/parameters/minfree
                 echo "111" > /proc/sys/vm/vfs_cache_pressure
-                #echo "3" > /proc/sys/vm/drop_caches
+                echo "3" > /proc/sys/vm/drop_caches
         fi
 sleep 3
 done
