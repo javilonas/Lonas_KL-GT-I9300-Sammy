@@ -547,6 +547,7 @@ static void exynos4_handler_tmu_state(struct work_struct *work)
 	static int auto_refresh_changed;
 	static int check_handle;
 	int trend = 0;
+	char *tmu_helper_argv[] = { "/sbin/tmu_helper.sh", NULL };
 
 	mutex_lock(&tmu_lock);
 
@@ -601,6 +602,9 @@ static void exynos4_handler_tmu_state(struct work_struct *work)
 			pr_debug("check_handle = %d\n", check_handle);
 			notify_change_of_tmu_state(info);
 			pr_info("normal: free cpufreq_limit & interrupt enable.\n");
+
+			pr_info("%s: executing /sbin/tmu_helper.sh\n", __func__);
+			call_usermodehelper(tmu_helper_argv[0], tmu_helper_argv, NULL, UMH_WAIT_EXEC);
 
 			/* clear to prevent from interfupt by peindig bit */
 			__raw_writel(INTCLEARALL,
