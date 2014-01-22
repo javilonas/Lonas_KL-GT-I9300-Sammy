@@ -37,27 +37,11 @@ export PATH
 # the rest of the system starts up.  Run any non-
 # timing critical tasks in a separate process to
 # prevent slowdown at boot.
-
-mount_need=false;
-echo "init:init.selinux_restore.sh: starting " > /dev/kmsg
-
-if [ ! -f /system/etc/selinux_restore ];then
-  setenforce 0 
+echo "init:init.selinux_restore_set.sh : starting " > /dev/kmsg
 # This should be the first command
 # remount system as read-write.
-  mount -o rw,remount,barrier=1 /system
-  mount_need=true;
-
-# Run restore context
-  restorecon -R /data
-  restorecon -R /cache
-  restorecon -R /system
-  echo "init: init.selinux_restore.sh: restorecon done" > /dev/kmsg
-fi
-
-if $mount_need ;then
-# This should be the last command
-# remount system as read-only.
-  mount -o ro,remount,barrier=1 /system
-# echo "mount -o ro,remount,barrier=1 /system" > /dev/kmsg
-fi
+mount -o rw,remount,barrier=1 /system
+touch /system/etc/selinux_restore
+chmod 664 /system/etc/selinux_restore
+mount -o ro,remount,barrier=1 /system
+echo "init:init.selinux_restore_set.sh : touch done " > /dev/kmsg
