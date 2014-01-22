@@ -40,6 +40,7 @@ sysclktz 0
 loglevel 3
 
 # setup the global environment
+    export TERMINFO /system/etc/terminfo
     export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
     export LD_LIBRARY_PATH /vendor/lib:/system/lib
     export ANDROID_BOOTLOGO 1
@@ -75,9 +76,6 @@ loglevel 3
     # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/shell 0750 shell shell
     mkdir /storage 0050 root sdcard_r
-
-    # Create mountpoint so Dalvik can mark as slave in zygotes.
-    mount tmpfs tmpfs /storage mode=0050,uid=0,gid=1028
 
     # Directory for putting things only root should see.
     mkdir /mnt/secure 0700 root root
@@ -364,11 +362,11 @@ on post-fs-data
     mkdir /data/backup 0700 system system
     restorecon /data/backup
 	
-	#Restorecon /tombstones
-	restorecon -R /tombstones
+    #Restorecon /tombstones
+    restorecon -R /tombstones
     
-	# Restore context for /system at post-fs-data
-	exec /system/bin/sh /init.selinux_restore.sh
+    # Restore context for /system at post-fs-data
+    exec /system/bin/sh /init.selinux_restore.sh
 	
 on boot
     mount debugfs /sys/kernel/debug /sys/kernel/debug
@@ -930,6 +928,7 @@ on property:init.svc.bootanim=stopped
     restorecon /data/media
     restorecon /data/media/obb
     start freshsebool   
+    exec /system/bin/sh /init.selinux_bootanim_stopped.sh
 
 # SA, System SW, SAMSUNG 
 on property:ro.dumpstate.dmesg=1 
@@ -967,7 +966,7 @@ service drs /system/bin/drs
 on property:persist.sys.drs.enforce=1
 	restorecon -r /data
 	start drs
-	setenforce 1 
+	exec /system/bin/sh /init.selinux_restore_set.sh
 	
 on property:persist.sys.drs.enforce=0
 	start auditd

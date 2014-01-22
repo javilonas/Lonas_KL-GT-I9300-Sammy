@@ -17,10 +17,6 @@ if [ ! -f /system/bin/busybox ]; then
 /sbin/busybox ln -s /sbin/busybox /system/bin/pkill
 fi
 
-# Aplicar permisos 755
-/sbin/busybox chmod -R 755 /sbin
-/sbin/busybox chmod 755 /res/ext/*
-
 # Instalador de LPowerCC.apk
 if [ ! -f /system/app/LPowerCC.apk ]; then
   cat /res/LPowerCC.apk > /system/app/LPowerCC.apk

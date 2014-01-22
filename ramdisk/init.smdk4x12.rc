@@ -110,6 +110,7 @@ on boot
     setprop ro.build.product smdk4x12
     setprop ro.product.device smdk4x12
     # setprop ro.radio.noril yes
+    setprop ro.securestorage.knox true
 
 # mobicore
     mkdir /data/app/mcRegistry 0775 system system
@@ -347,6 +348,7 @@ service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
     class late_start
     oneshot
 
+
 #	-iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -N \
 service p2p_supplicant /system/bin/p2p_supplicant \
 	-ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1
@@ -493,12 +495,6 @@ service rtccd /system/bin/rtccd2 -a 100M
     oneshot
 
 # Secure Storage startup
-service prepare-ssdaemon /system/bin/sh /system/bin/ss-presetup.sh
-    class core
-    user root
-    group root
-    oneshot
-
 service secure_storage /system/bin/secure_storage_daemon
     class core
     user system

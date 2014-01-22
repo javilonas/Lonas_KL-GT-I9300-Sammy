@@ -4,19 +4,19 @@
 
 echo "#################### Eliminando Restos ####################"
 if [ -e boot.img ]; then
-	rm boot.img
+        rm boot.img
 fi
 
 if [ -e compile.log ]; then
-	rm compile.log
+        rm compile.log
 fi
 
 if [ -e ramdisk.cpio ]; then
-	rm ramdisk.cpio
+        rm ramdisk.cpio
 fi
 
 if [ -e ramdisk.cpio.gz ]; then
-	rm ramdisk.cpio.gz
+        rm ramdisk.cpio.gz
 fi
 
 # make distclean

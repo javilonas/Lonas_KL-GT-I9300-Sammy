@@ -14,8 +14,8 @@ if [ ! -f /system/xbin/su ] && [ ! -f /system/bin/su ]; then
 /sbin/busybox cp /sbin/su /system/xbin/su
 /sbin/busybox cp /sbin/daemonsu /system/xbin/daemonsu
 /sbin/busybox cp /sbin/su /system/bin/.ext/.su
-/sbin/busybox cp /res/install-recovery.sh /system/etc/install-recovery.sh
-/sbin/busybox cp /res/99SuperSUDaemon /system/etc/init.d/99SuperSUDaemon
+/sbin/busybox cp /res/ext/install-recovery.sh /system/etc/install-recovery.sh
+/sbin/busybox cp /res/ext/99SuperSUDaemon /system/etc/init.d/99SuperSUDaemon
 /sbin/busybox echo /system/etc/.installed_su_daemon
 
 /sbin/busybox chown 0.0 /system/bin/.ext
@@ -39,17 +39,11 @@ if [ ! -f /system/xbin/su ] && [ ! -f /system/bin/su ]; then
 
 fi
 
-# Limpiador de otros kernel
-#/res/ext/limpiador.sh
-
 # Detectar y generar INIT.D
 /res/ext/init_d.sh
 
 # Iniciar Bootanimation personalizado
 /res/ext/bootanimation.sh
-
-# Remontar y Optimizar particiones con EXT4
-/res/ext/optimi_remount.sh
 
 # Iniciar SQlite
 /res/ext/sqlite.sh
@@ -59,16 +53,6 @@ fi
 
 # Iniciar Tweaks Lonas_KL
 /res/ext/tweaks.sh
-/res/ext/tweaks_build.sh
-
-# Iniciar Zram
-#/res/ext/zram.sh
-
-# Iniciar libera_ram
-/res/ext/libera_ram.sh
-
-# iniciar Usb Storage
-/res/ext/usb_storage.sh
 
 if [ -d /system/etc/init.d ]; then
   /sbin/busybox run-parts /system/etc/init.d
