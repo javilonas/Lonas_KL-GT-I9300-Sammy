@@ -411,7 +411,7 @@
 
 #line 1 "vendor/samsung/common/sepolicy/slsi_common/Exynos4/file_contexts"
 /dev/HPD	 u:object_r:hpd_device:s0
-/dev/akm8975	u:object_r:radio_device:s0
+/dev/akm8975	 u:object_r:radio_device:s0
 /dev/dun	 u:object_r:dun_device:s0
 /dev/exynos-mem 	u:object_r:graphics_device:s0
 /dev/fmradio 	u:object_r:fm_radio_device:s0
@@ -434,4 +434,8 @@
 /dev/block/mmcblk0p6    u:object_r:m9kefsblk_device:s0
 /dev/block/mmcblk0p7    u:object_r:paramblk_device:s0
 /dev/block/mmcblk0p8    u:object_r:bootblk_device:s0
-/dev/block/mmcblk0p9   u:object_r:recoveryblk_device:s0
+/dev/block/mmcblk0p9    u:object_r:recoveryblk_device:s0
+
+#############################
+## kernel hacks
+/sys/devices/system/cpu.*/cpufreq(/.*)? --  u:object_r:sysfs_writable:s0
