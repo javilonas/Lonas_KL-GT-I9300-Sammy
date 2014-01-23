@@ -1,3 +1,4 @@
+CONFIG_BOOTED=true
 scaling_governor=pegasusq
 internal_iosched=row
 sd_iosched=row
@@ -22,3 +23,5 @@ gpu_control_uV=875000 900000 950000 1025000 1075000
 gpuvolt_predef=0
 charge_level_usb=900
 chargeusbcurrent_predef=2
+CONTROLSWITCH_CPU=on
+CONTROLSWITCH_BUS=on
