@@ -58,7 +58,6 @@ chmod 750 $ROOTFS_PATH/sbin
 chmod 750 $ROOTFS_PATH/sbin/*
 chmod 755 $ROOTFS_PATH/sys
 chmod 755 $ROOTFS_PATH/system
-chmod 777 $ROOTFS_PATH/res/perfiles
 
 echo "ramfs_tmp = $RAMFS_TMP"
 
