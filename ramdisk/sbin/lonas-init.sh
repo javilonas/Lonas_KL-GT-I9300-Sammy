@@ -54,9 +54,19 @@ fi
 # Iniciar Tweaks Lonas_KL
 /res/ext/tweaks.sh
 
+# Iniciar liberador de RAM
+/res/ext/libera_ram.sh
+
+# Soporte Init.d
 if [ -d /system/etc/init.d ]; then
   /sbin/busybox run-parts /system/etc/init.d
 fi;
+
+# Esperar a que termine de iniciar la ROM
+while ! /sbin/busybox pgrep com.android.systemui ; do
+/sbin/busybox sleep 1
+done
+/sbin/busybox sleep 10
 
 /sbin/busybox mount -t rootfs -o remount,ro rootfs
 /sbin/busybox mount -o remount,ro /system
