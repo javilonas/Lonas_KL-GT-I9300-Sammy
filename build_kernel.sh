@@ -22,6 +22,8 @@ fi
 # make distclean
 make clean
 
+cp arch/arm/configs/lonas_defconfig .config;
+
 echo "#################### Preparando Entorno ####################"
 export KERNELDIR=`readlink -f .`
 export RAMFS_SOURCE=`readlink -f $KERNELDIR/ramdisk`
@@ -38,12 +40,13 @@ TOOLCHAIN="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
 TOOLCHAIN_PATCH="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin"
 ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy/ramdisk"
 RAMFS_TMP="/home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3"
-CONFIG_LOCALVERSION="Lonas-KL-5.8"
+CONFIG_LOCALVERSION="Lonas-KL-5.9"
 VERSION_KL="Sammy"
 REVISION="RTM"
 
 export KBUILD_BUILD_VERSION="1"
 
+echo "#################### Aplicando Permisos correctos ####################"
 chmod 644 $ROOTFS_PATH/*.rc
 chmod 750 $ROOTFS_PATH/init*
 chmod 640 $ROOTFS_PATH/fstab*
@@ -52,12 +55,17 @@ chmod 771 $ROOTFS_PATH/data
 chmod 755 $ROOTFS_PATH/dev
 chmod 755 $ROOTFS_PATH/lib
 chmod 755 $ROOTFS_PATH/lib/modules
-chmod 644 $ROOTFS_PATH/lib/modules/*
 chmod 755 $ROOTFS_PATH/proc
 chmod 750 $ROOTFS_PATH/sbin
 chmod 750 $ROOTFS_PATH/sbin/*
 chmod 755 $ROOTFS_PATH/sys
 chmod 755 $ROOTFS_PATH/system
+
+find . -type f -name '*.h' -exec chmod 644 {} \;
+find . -type f -name '*.c' -exec chmod 644 {} \;
+find . -type f -name '*.py' -exec chmod 755 {} \;
+find . -type f -name '*.sh' -exec chmod 755 {} \;
+find . -type f -name '*.pl' -exec chmod 755 {} \;
 
 echo "ramfs_tmp = $RAMFS_TMP"
 
