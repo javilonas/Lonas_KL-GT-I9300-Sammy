@@ -57,6 +57,9 @@ fi
 # Iniciar liberador de RAM
 /res/ext/libera_ram.sh
 
+# iniciar Usb Storage
+/res/ext/usb_storage.sh
+
 # Soporte Init.d
 if [ -d /system/etc/init.d ]; then
   /sbin/busybox run-parts /system/etc/init.d
