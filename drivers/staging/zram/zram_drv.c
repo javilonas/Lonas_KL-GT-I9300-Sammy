@@ -123,7 +123,7 @@ static void zram_set_disksize(struct zram *zram, size_t totalram_bytes)
 		"ratio. Note that zram uses about 0.1%% of the size of "
 		"the disk when not in use so a huge zram is "
 		"wasteful.\n"
-		"\tMemory Size: %zu kB\n"
+		"\tMemory Size: %lu kB\n"
 		"\tSize you selected: %llu kB\n"
 		"Continuing anyway ...\n",
 		totalram_bytes >> 10, zram->disksize
