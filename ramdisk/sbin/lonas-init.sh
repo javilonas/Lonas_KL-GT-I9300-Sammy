@@ -7,6 +7,16 @@
 /sbin/busybox mount -o remount,rw /system
 /sbin/busybox mount -t rootfs -o remount,rw rootfs
 
+if [ ! -f /system/xbin/busybox ]; then
+/sbin/busybox ln -s /sbin/busybox /system/xbin/busybox
+/sbin/busybox ln -s /sbin/busybox /system/xbin/pkill
+fi
+
+if [ ! -f /system/bin/busybox ]; then
+/sbin/busybox ln -s /sbin/busybox /system/bin/busybox
+/sbin/busybox ln -s /sbin/busybox /system/bin/pkill
+fi
+
 # Hacer root si no detecta bianrio SU
 if [ ! -f /system/xbin/su ] && [ ! -f /system/bin/su ]; then
 

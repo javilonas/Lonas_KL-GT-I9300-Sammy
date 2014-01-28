@@ -1,0 +1,44 @@
+#!/sbin/busybox sh
+
+XML=$CONFIG_XML
+
+echo "" > $XML
+
+echo '
+<settingsRoot>' >> $XML
+
+echo '
+  <settingsTab name="Perfiles uV">
+    <settingsPane description="Desde aquí podrás seleccionar perfiles con diferentes voltajes predefinidos por defecto, puedes elegir entre stock, normal, medio, extremo, máximo, supremo, megavolt y demente, selecciona el que mejor le siente a tu terminal, recuerda que si se te congela o reinicia necesitas un perfil mas bajo."  
+                  name="Información">
+    </settingsPane>' >> $XML
+echo '
+    <settingsPane description="Aplicar la configuración de arranque sólo si la que desea llega a ser estable, de lo contrario el equipo terminará en un Bucle de reinicios o directamente no arrancará." 
+                  name="PERFIL control switch">
+      <checkbox description="Si está activado, los ajustes siguientes se aplicarán en el arranque." 
+                name="Establecer Perfiles en el arranque" 
+                action="controlswitch PERFIL" 
+                label="Establecer en el arranque"/>
+    </settingsPane>' >> $XML
+
+echo "
+    <settingsPane description=\"Perfiles uV predefinidos\" name=\"Perfiles uV predefinidos\">
+      <spinner description=\"Perfiles uV predefinidos\" name=\"Perfiles uV predefinidos\" action=\"perfiles perfilpredef\">
+             <spinnerItem name=\"stock\" value=\"0\"/> 
+             <spinnerItem name=\"Normal\" value=\"1\"/> 
+             <spinnerItem name=\"Medio\" value=\"2\"/> 
+             <spinnerItem name=\"Extremo\" value=\"3\"/>
+             <spinnerItem name=\"Máximo\" value=\"4\"/>
+             <spinnerItem name=\"Supremo\" value=\"5\"/>
+             <spinnerItem name=\"Megavolt\" value=\"6\"/>
+             <spinnerItem name=\"Demente\" value=\"7\"/>
+      </spinner>
+    </settingsPane>
+" >> $XML
+
+echo '
+  </settingsTab>
+
+</settingsRoot>' >> $XML
+
+chmod 777 $XML
