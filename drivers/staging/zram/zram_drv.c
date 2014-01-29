@@ -70,7 +70,7 @@ static int zram_major;
 struct zram *zram_devices;
 
 /* Module params (documentation at end) */
-static unsigned int zram_num_devices = 4;
+static unsigned int num_devices = 4;
 
 static void zram_stat64_add(struct zram *zram, u64 *v, u64 inc)
 {
@@ -741,13 +741,18 @@ static void destroy_device(struct zram *zram)
 		blk_cleanup_queue(zram->queue);
 }
 
+unsigned int zram_get_num_devices(void)
+{
+        return num_devices;
+}
+
 static int __init zram_init(void)
 {
 	int ret, dev_id;
 
-	if (zram_num_devices > max_num_devices) {
+	if (num_devices > max_num_devices) {
 		pr_warn("Invalid value for num_devices: %u\n",
-				zram_num_devices);
+				num_devices);
 		ret = -EINVAL;
 		goto out;
 	}
@@ -760,19 +765,19 @@ static int __init zram_init(void)
 	}
 
 	/* Allocate the device array and initialize each one */
-	zram_devices = kzalloc(zram_num_devices * sizeof(struct zram), GFP_KERNEL);
+	zram_devices = kzalloc(num_devices * sizeof(struct zram), GFP_KERNEL);
 	if (!zram_devices) {
 		ret = -ENOMEM;
 		goto unregister;
 	}
 
-	for (dev_id = 0; dev_id < zram_num_devices; dev_id++) {
+	for (dev_id = 0; dev_id < num_devices; dev_id++) {
 		ret = create_device(&zram_devices[dev_id], dev_id);
 		if (ret)
 			goto free_devices;
 	}
 
-		pr_info("Created %u device(s) ...\n", zram_num_devices);
+		pr_info("Created %u device(s) ...\n", num_devices);
 
 	return 0;
 
@@ -791,7 +796,7 @@ static void __exit zram_exit(void)
 	int i;
 	struct zram *zram;
 
-	for (i = 0; i < zram_num_devices; i++) {
+	for (i = 0; i < num_devices; i++) {
 		zram = &zram_devices[i];
 
 		get_disk(zram->disk);
@@ -807,8 +812,8 @@ static void __exit zram_exit(void)
 	pr_debug("Cleanup done!\n");
 }
 
-module_param(zram_num_devices, uint, S_IRUGO);
-MODULE_PARM_DESC(zram_num_devices, "Number of zram devices");
+module_param(num_devices, uint, S_IRUGO);
+MODULE_PARM_DESC(num_devices, "Number of zram devices");
 
 module_init(zram_init);
 module_exit(zram_exit);
