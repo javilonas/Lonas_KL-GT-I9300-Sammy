@@ -254,8 +254,6 @@ static int zram_bvec_read(struct zram *zram, struct bio_vec *bvec,
 
 	if (zram->table[index].size == PAGE_SIZE) {
 		memcpy(uncmem, cmem, PAGE_SIZE);
-		ret = LZO_E_OK;
-	} else {
 		ret = DECOMPRESS(cmem, zram->table[index].size,
 				    uncmem, &clen);
 	}
