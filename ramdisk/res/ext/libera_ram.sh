@@ -10,7 +10,7 @@ while [ 1 ];
 do
         if [ $FREE -lt 8192 ]; then
                 sync
-                echo "3" > /proc/sys/vm/drop_caches
+                echo "2853,5632,24576,86016,96768,96768" > /sys/module/lowmemorykiller/parameters/minfree
         fi
 sleep 3600
 done
