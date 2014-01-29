@@ -153,6 +153,10 @@ loglevel 3
 # This is needed by any process that uses socket tagging.
     chmod 0644 /dev/xt_qtaguid
 
+# ko files for exfat
+    insmod /lib/modules/exfat_core.ko
+    insmod /lib/modules/exfat_fs.ko
+
 on fs
 # mount mtd partitions
     # Mount /system rw first to give the filesystem a chance to save a checkpoint
@@ -678,22 +682,6 @@ on boot
 
     class_start core
     class_start main
-
-# Iniciar Zram
-    chmod 0664 /sys/class/lmk/lowmemorykiller/lmk_state
-    chown system system /sys/class/lmk/lowmemorykiller/lmk_state
-    chmod 0664 /sys/block/zram0/disksize
-    chown system system /sys/block/zram0/disksize
-    write /sys/block/zram0/disksize 104857600
-#   write /sys/block/zram0/disksize 209715200
-#   write /sys/block/zram0/disksize 314572800
-#   write /sys/block/zram0/disksize 419430400
-#   write /sys/block/zram0/disksize 512040000
-#   write /sys/block/zram0/disksize 629145600
-#   write /sys/block/zram0/disksize 734003200
-#   write /sys/block/zram0/disksize 838860800
-    chmod 0664 /sys/block/zram0/initstate
-    chown system system /sys/block/zram0/initstate
 
 on nonencrypted
     class_start late_start
