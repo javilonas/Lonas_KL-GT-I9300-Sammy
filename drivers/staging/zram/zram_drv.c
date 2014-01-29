@@ -61,8 +61,9 @@ static int lz4_decompress_(
 #define DECOMPRESS(s, sl, d, dl)	\
 	lz4_decompress_(s, sl, d, dl)
 #else
-#error either CONFIG_ZRAM_LZOor CONFIG_ZRAM_LZ4 must be defined
+#error either CONFIG_ZRAM_LZO or CONFIG_ZRAM_LZ4 must be defined
 #endif
+
 
 /* Globals */
 static int zram_major;
