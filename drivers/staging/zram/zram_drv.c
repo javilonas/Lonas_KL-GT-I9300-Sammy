@@ -256,7 +256,7 @@ out_cleanup:
 static int zram_bvec_write(struct zram *zram, struct bio_vec *bvec, u32 index,
 			   int offset)
 {
-	int ret;
+	int ret = 0;
 	size_t clen;
 	unsigned long handle;
 	struct page *page;
@@ -301,9 +301,8 @@ static int zram_bvec_write(struct zram *zram, struct bio_vec *bvec, u32 index,
         }
 
 	if (page_zero_filled(uncmem)) {
-                kunmap_atomic(user_mem);
-                if (is_partial_io(bvec))
-                        kfree(uncmem);
+                if (!is_partial_io(bvec))
+                        kunmap_atomic(user_mem);
 		zram->stats.pages_zero++;
 		zram_set_flag(zram, index, ZRAM_ZERO);
 		ret = 0;
