@@ -676,29 +676,21 @@ static ssize_t reset_store(struct device *dev,
                 return -ENOMEM;
 
 	/* Do not reset an active device! */
-        if (bdev->bd_holders) {
-                ret = -EBUSY;
-                goto out;
+	if (bdev->bd_holders)
+		return -EBUSY;
 
 	ret = kstrtou16(buf, 10, &do_reset);
 	if (ret)
-		goto out;
+		return ret;
 
-        if (!do_reset) {
-                ret = -EINVAL;
-                goto out;
-        }
+	if (!do_reset)
+		return -EINVAL;
 
 	/* Make sure all pending I/O is finished */
 	fsync_bdev(bdev);
-        bdput(bdev);
 
 	zram_reset_device(zram, true);
 	return len;
-
-out:
-        bdput(bdev);
-        return ret;
 }
 
 static void __zram_make_request(struct zram *zram, struct bio *bio, int rw)
