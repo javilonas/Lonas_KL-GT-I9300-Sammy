@@ -1,6 +1,6 @@
 #!/sbin/busybox sh
 #
-# libera memoria cada hora si esta está por debajo de 8192 kbytes
+# libera memoria y pagecache cada 3 horas si esta está por debajo de 8192 kbytes
 # 
 
 /sbin/busybox renice 19 `pidof libera_ram.sh`
@@ -10,7 +10,8 @@ while [ 1 ];
 do
         if [ $FREE -lt 8192 ]; then
                 sync
+                echo "1" > /proc/sys/vm/drop_caches
                 echo "2853,5632,24576,86016,96768,96768" > /sys/module/lowmemorykiller/parameters/minfree
         fi
-sleep 3600
+sleep 10800
 done
