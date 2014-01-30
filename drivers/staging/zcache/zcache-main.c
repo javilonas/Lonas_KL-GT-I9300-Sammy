@@ -1705,9 +1705,7 @@ static int zcache_new_pool(uint16_t cli_id, uint32_t flags)
 	atomic_inc(&cli->refcount);
 	pool = kmalloc(sizeof(struct tmem_pool), GFP_KERNEL);
 	if (pool == NULL) {
-		pr_info("zcache: pool creation failed: out of memory\n");
 		goto out;
-	}
 
 	for (poolid = 0; poolid < MAX_POOLS_PER_CLIENT; poolid++)
 		if (cli->tmem_pools[poolid] == NULL)
