@@ -201,6 +201,21 @@ echo "
 " >> $XML
 echo '
   </settingsTab>
+  <settingsTab name="USB - SDCARD">
+    <settingsPane description="Configuraciones y opciones disponibles para el USB y la sdcard."  
+                  name="Información">
+    </settingsPane>' >> $XML
+
+echo "
+    <settingsPane description=\"Cambie el modo de conexión USB. Puede dejarlo como predeterminado o forzarlo a modo de almacenamiento masivo (verá sus sdcards como discos) o MTP.\" name=\"USB - SDCARD\">
+      <spinner description=\"\" name=\"Modo USB\" action=\"usb-mode usb_modepredef\">
+             <spinnerItem name=\"Modo MTP\" value=\"0\"/>
+             <spinnerItem name=\"Modo Almacenamiento Masivo\" value=\"1\"/>  
+      </spinner>
+    </settingsPane>
+" >> $XML
+echo '
+  </settingsTab>
   <settingsTab name="Cargador">
     <settingsPane description="Interfaz desde donde podrá seleccionar entre varios perfiles de carga AC/USB, dependiendo del que seleccione la batería cargará mas lento o mas rápido."  
                   name="Información">

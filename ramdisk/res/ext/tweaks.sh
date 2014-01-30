@@ -117,3 +117,12 @@ echo "0" > /sys/module/xt_qtaguid/parameters/debug_mask
 /sbin/busybox mount -t debugfs none /sys/kernel/debug
 echo NO_NORMALIZED_SLEEPER > /sys/kernel/debug/sched_features
 
+# Fix para problemas Con aplicaciones
+/sbin/busybox setprop ro.kernel.android.checkjni 0
+# Incremento de memoria ram
+/sbin/busybox setprop dalvik.vm.heapsize 148m
+# Salvar bateria ahorrando en el wifi 
+/sbin/busybox setprop wifi.supplicant_scan_interval 310
+/sbin/busybox setprop ro.ril.disable.power.collapse 0
+/sbin/busybox setprop pm.sleep_mode 1
+
