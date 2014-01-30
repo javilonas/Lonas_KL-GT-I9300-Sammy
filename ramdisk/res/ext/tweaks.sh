@@ -94,6 +94,7 @@ echo "0" > $i/queue/add_random
 echo "0" > $i/queue/rotational
 echo "8192" > $i/queue/nr_requests
 echo "0" > $i/queue/iostats
+echo "1" > $i/queue/rq_affinity
 echo "1" > $i/queue/iosched/back_seek_penalty
 echo "2" > $i/queue/iosched/slice_idle
 echo "1" > $i/queue/iosched/low_latency
