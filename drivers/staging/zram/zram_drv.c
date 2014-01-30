@@ -619,8 +619,7 @@ static void zram_init_device(struct zram *zram, struct zram_meta *meta)
 		"\tMemory Size: %lu kB\n"
 		"\tSize you selected: %llu kB\n"
 		"Continuing anyway ...\n",
-		(totalram_pages << PAGE_SHIFT) >> 10, zram->disksize >> 10
-		);
+		(totalram_pages << PAGE_SHIFT) >> 10, zram->disksize >> 10);
 	}
 
 	/* zram devices sort of resembles non-rotational disks */
