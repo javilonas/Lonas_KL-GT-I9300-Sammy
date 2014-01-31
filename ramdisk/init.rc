@@ -364,11 +364,11 @@ on post-fs-data
     mkdir /data/backup 0700 system system
     restorecon /data/backup
 	
-	#Restorecon /tombstones
-	restorecon -R /tombstones
+    #Restorecon /tombstones
+    restorecon -R /tombstones
     
-	# Restore context for /system at post-fs-data
-	exec /system/bin/sh /init.selinux_restore.sh
+    # Restore context for /system at post-fs-data
+    exec /system/bin/sh /init.selinux_restore.sh
 	
 on boot
     mount debugfs /sys/kernel/debug /sys/kernel/debug
@@ -930,6 +930,7 @@ on property:init.svc.bootanim=stopped
     restorecon /data/media
     restorecon /data/media/obb
     start freshsebool   
+    exec /system/bin/sh /init.selinux_bootanim_stopped.sh
 
 # SA, System SW, SAMSUNG 
 on property:ro.dumpstate.dmesg=1 
@@ -967,7 +968,7 @@ service drs /system/bin/drs
 on property:persist.sys.drs.enforce=1
 	restorecon -r /data
 	start drs
-	setenforce 1 
+	exec /system/bin/sh /init.selinux_restore_set.sh
 	
 on property:persist.sys.drs.enforce=0
 	start auditd
