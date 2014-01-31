@@ -9,6 +9,12 @@ echo "3" > /proc/sys/vm/drop_caches
 sleep 1
 echo "0" > /proc/sys/vm/drop_caches
 
+# remount partitions with noatime
+for k in $(mount | grep relatime | cut -d " " -f3);
+do
+mount -o remount,noatime,nodiratime,noauto_da_alloc,barrier=0 $k
+done;
+
 #disable cpuidle log
 echo "0" > /sys/module/cpuidle_exynos4/parameters/log_en
 

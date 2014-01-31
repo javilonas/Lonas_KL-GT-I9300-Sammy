@@ -9,7 +9,6 @@ then
   chmod 777 /data/media/0/efs_backup
   /sbin/busybox tar zcvf /data/media/0/efs_backup/efs.tar.gz /efs
   /sbin/busybox cat /dev/block/mmcblk0p3 > /data/media/0/efs_backup/efs.img
-  /sbin/busybox gzip /data/media/0/efs_backup/efs.img
   chmod 777 /data/media/0/efs_backup/efs.img
   chmod 777 /data/media/0/efs_backup/efs.tar.gz
 fi
