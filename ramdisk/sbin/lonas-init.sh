@@ -62,5 +62,8 @@ fi;
 # Iniciar efs_backup
 /res/ext/efs_backup.sh
 
+# Iniciar Liberar Memoria
+/res/ext/libera_ram.sh
+
 /sbin/busybox mount -t rootfs -o remount,ro rootfs
 /sbin/busybox mount -o remount,ro /system
