@@ -40,7 +40,6 @@ sysclktz 0
 loglevel 3
 
 # setup the global environment
-    export TERMINFO /system/etc/terminfo
     export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
     export LD_LIBRARY_PATH /vendor/lib:/system/lib
     export ANDROID_BOOTLOGO 1
@@ -152,10 +151,6 @@ loglevel 3
 # Allow everybody to read the xt_qtaguid resource tracking misc dev.
 # This is needed by any process that uses socket tagging.
     chmod 0644 /dev/xt_qtaguid
-
-# ko files for exfat
-    insmod /lib/modules/exfat_core.ko
-    insmod /lib/modules/exfat_fs.ko
 
 on fs
 # mount mtd partitions
@@ -977,11 +972,6 @@ on property:persist.sys.drs.enforce=1
 	
 on property:persist.sys.drs.enforce=0
 	start auditd
-
-service lperfil-init /sbin/lperfil-init.sh
-    class core
-    user root
-    oneshot
 
 service lpcc-init /sbin/lpcc-init.sh
     class core

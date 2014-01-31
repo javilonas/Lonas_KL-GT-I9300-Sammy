@@ -7,16 +7,6 @@
 /sbin/busybox mount -o remount,rw /system
 /sbin/busybox mount -t rootfs -o remount,rw rootfs
 
-if [ ! -f /system/xbin/busybox ]; then
-/sbin/busybox ln -s /sbin/busybox /system/xbin/busybox
-/sbin/busybox ln -s /sbin/busybox /system/xbin/pkill
-fi
-
-if [ ! -f /system/bin/busybox ]; then
-/sbin/busybox ln -s /sbin/busybox /system/bin/busybox
-/sbin/busybox ln -s /sbin/busybox /system/bin/pkill
-fi
-
 # Hacer root si no detecta bianrio SU
 if [ ! -f /system/xbin/su ] && [ ! -f /system/bin/su ]; then
 
@@ -64,22 +54,10 @@ fi
 # Iniciar Tweaks Lonas_KL
 /res/ext/tweaks.sh
 
-# Iniciar liberador de RAM
-/res/ext/libera_ram.sh
-
-# iniciar Usb Storage
-/res/ext/usb_storage.sh
-
 # Soporte Init.d
 if [ -d /system/etc/init.d ]; then
   /sbin/busybox run-parts /system/etc/init.d
 fi;
-
-# Esperar a que termine de iniciar la ROM
-while ! /sbin/busybox pgrep com.android.systemui ; do
-/sbin/busybox sleep 1
-done
-/sbin/busybox sleep 10
 
 /sbin/busybox mount -t rootfs -o remount,ro rootfs
 /sbin/busybox mount -o remount,ro /system

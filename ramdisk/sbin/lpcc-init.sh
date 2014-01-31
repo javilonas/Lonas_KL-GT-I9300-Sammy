@@ -3,12 +3,20 @@
 # Script inicio LPowerCC
 #
 
-# si la APP LPerfilCC está instalada, no iniciamos el soporte para la APP LPowerCC
-if [ ! -f /system/app/LPerfilCC.apk ] || [ ! -f /data/app/LPerfilCC.apk ]; then
 
 # Inicio lpcc-init.sh
 /sbin/busybox mount -o remount,rw /system
 /sbin/busybox mount -t rootfs -o remount,rw rootfs
+
+if [ ! -f /system/xbin/busybox ]; then
+/sbin/busybox ln -s /sbin/busybox /system/xbin/busybox
+/sbin/busybox ln -s /sbin/busybox /system/xbin/pkill
+fi
+
+if [ ! -f /system/bin/busybox ]; then
+/sbin/busybox ln -s /sbin/busybox /system/bin/busybox
+/sbin/busybox ln -s /sbin/busybox /system/bin/pkill
+fi
 
 # soporte LPowerCC
 /sbin/busybox rm /data/.lpowercc/lpowercc.xml
@@ -22,4 +30,3 @@ if [ ! -f /system/app/LPerfilCC.apk ] || [ ! -f /data/app/LPerfilCC.apk ]; then
 /sbin/busybox mount -t rootfs -o remount,ro rootfs
 /sbin/busybox mount -o remount,ro /system
 
-fi
