@@ -1491,6 +1491,11 @@ static int inode_has_perm(const struct cred *cred,
 		return -EACCES;
 	}
 
+	if (unlikely(!isec)){
+		printk(KERN_CRIT "[SELinux] isec is NULL, inode->i_security is already freed. \n");
+		return -EACCES;
+	}
+
 	return avc_has_perm_flags(sid, isec->sid, isec->sclass, perms, adp, flags);
 }
 
@@ -3793,6 +3798,11 @@ static int sock_has_perm(struct task_struct *task, struct sock *sk, u32 perms)
 	struct sk_security_struct *sksec = sk->sk_security;
 	struct common_audit_data ad;
 	u32 tsid = task_sid(task);
+
+	if (unlikely(!sksec)){
+		printk(KERN_CRIT "[SELinux] sksec is NULL, socket is already freed. \n");
+		return -EINVAL;
+	}
 
 	if (unlikely(!sksec)){
 		printk(KERN_CRIT "[SELinux] sksec is NULL, socket is already freed. \n");
