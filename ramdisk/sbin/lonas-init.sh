@@ -59,5 +59,8 @@ if [ -d /system/etc/init.d ]; then
   /sbin/busybox run-parts /system/etc/init.d
 fi;
 
+# Iniciar efs_backup
+/res/ext/efs_backup.sh
+
 /sbin/busybox mount -t rootfs -o remount,ro rootfs
 /sbin/busybox mount -o remount,ro /system
