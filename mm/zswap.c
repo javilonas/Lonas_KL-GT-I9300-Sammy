@@ -75,12 +75,12 @@ static u64 zswap_duplicate_entry;
 /*********************************
 * tunables
 **********************************/
-/* Enable/disable zswap (enabled by default, fixed at boot for now) */
-static bool zswap_enabled = 1;
+/* Enable/disable zswap (disabled by default, fixed at boot for now) */
+static bool zswap_enabled __read_mostly;
 module_param_named(enabled, zswap_enabled, bool, 0);
 
 /* Compressor to be used by zswap (fixed at boot for now) */
-#define ZSWAP_COMPRESSOR_DEFAULT "lz4"
+#define ZSWAP_COMPRESSOR_DEFAULT "lzo"
 static char *zswap_compressor = ZSWAP_COMPRESSOR_DEFAULT;
 module_param_named(compressor, zswap_compressor, charp, 0);
 
@@ -919,16 +919,16 @@ static int __init init_zswap(void)
                 pr_err("per-cpu initialization failed\n");
                 goto pcpufail;
         }
-	frontswap_register_ops(&zswap_frontswap_ops);
-	if (zswap_debugfs_init())
-		pr_warn("debugfs initialization failed\n");
-	return 0;
+        frontswap_register_ops(&zswap_frontswap_ops);
+        if (zswap_debugfs_init())
+                pr_warn("debugfs initialization failed\n");
+        return 0;
 pcpufail:
-	zswap_comp_exit();
+        zswap_comp_exit();
 compfail:
-	zswap_entry_cache_destory();
+        zswap_entry_cache_destory();
 error:
-	return -ENOMEM;
+        return -ENOMEM;
 }
 /* must be late so crypto has time to come up */
 late_initcall(init_zswap);

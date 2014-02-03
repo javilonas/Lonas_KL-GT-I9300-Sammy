@@ -54,19 +54,30 @@ fi
 # Iniciar Tweaks Lonas_KL
 /res/ext/tweaks.sh
 
-# Iniciar zram
-/res/ext/zram.sh
+# Iniciar zswap
+/res/ext/zswap.sh
 
 # Soporte Init.d
 if [ -d /system/etc/init.d ]; then
   /sbin/busybox run-parts /system/etc/init.d
 fi;
 
+
+# Now wait for the rom to finish booting up
+# (by checking for any android process)
+while ! /sbin/busybox pgrep android.process.acore ; do
+  /sbin/busybox sleep 1
+done
+  /sbin/busybox sleep 10
+
 # Iniciar efs_backup
 /res/ext/efs_backup.sh
 
 # Iniciar Liberar Memoria
 /res/ext/libera_ram.sh
+
+# Iniciar MTP/adb
+/res/ext/usb_mtp.sh
 
 /sbin/busybox mount -t rootfs -o remount,ro rootfs
 /sbin/busybox mount -o remount,ro /system

@@ -91,9 +91,9 @@ echo "6144 87380 524288" > /proc/sys/net/ipv4/tcp_rmem;
 LOOP=`ls -d /sys/block/loop*`
 RAM=`ls -d /sys/block/ram*`
 MMC=`ls -d /sys/block/mmc*`
-ZRM=`ls -d /sys/block/zram*`
+ZSWA=`ls -d /sys/block/vnswap*`
 
-for i in $LOOP $RAM $MMC $ZRM
+for i in $LOOP $RAM $MMC $ZSWA
 do 
 echo "row" > $i/queue/scheduler
 echo "0" > $i/queue/add_random
@@ -128,8 +128,12 @@ echo NO_NORMALIZED_SLEEPER > /sys/kernel/debug/sched_features
 /sbin/busybox setprop ro.kernel.android.checkjni 0
 # Incremento de memoria ram
 /sbin/busybox setprop dalvik.vm.heapsize 148m
-# Salvar bateria ahorrando en el wifi 
-/sbin/busybox setprop wifi.supplicant_scan_interval 310
-/sbin/busybox setprop ro.ril.disable.power.collapse 0
-/sbin/busybox setprop pm.sleep_mode 1
+# workaround for non working default.prop
+/sbin/busybox setprop ro.adb.secure 0
+/sbin/busybox setprop ro.secure 0
+/sbin/busybox setprop ro.allow.mock.location 0
+/sbin/busybox setprop ro.debuggable 1
+/sbin/busybox setprop sys.usb.config mtp,adb
+/sbin/busybox setprop persist.sys.usb.config mtp,adb
+/sbin/busybox setprop sys.usb.state mtp,adb
 
