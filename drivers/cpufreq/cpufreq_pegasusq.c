@@ -830,6 +830,8 @@ define_one_global_rw(hotplug_lock);
 define_one_global_rw(dvfs_debug);
 define_one_global_ro(cpucore_table);
 
+static int cpu_util[4];
+
 static struct attribute *dbs_attributes[] = {
 	&sampling_rate_min.attr,
 	&sampling_rate.attr,
@@ -1065,10 +1067,10 @@ static int check_down(void)
 
 static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 {
-	unsigned int max_load_freq;
 
 	struct cpufreq_policy *policy;
 	unsigned int j;
+	unsigned int max_load = 0;
 	int num_hist = hotplug_history->num_hist;
 	int max_hotplug_rate = max(dbs_tuners_ins.cpu_up_rate,
 				   dbs_tuners_ins.cpu_down_rate);
@@ -1080,16 +1082,12 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 	hotplug_history->usage[num_hist].rq_avg = get_nr_run_avg();
 	++hotplug_history->num_hist;
 
-	/* Get Absolute Load - in terms of freq */
-	max_load_freq = 0;
-
 	for_each_cpu(j, policy->cpus) {
 		struct cpu_dbs_info_s *j_dbs_info;
 		cputime64_t cur_wall_time, cur_idle_time, cur_iowait_time;
 		cputime64_t prev_wall_time, prev_idle_time, prev_iowait_time;
 		unsigned int idle_time, wall_time, iowait_time;
-		unsigned int load, load_freq;
-		int freq_avg;
+		unsigned int load_cpu;
 
 		j_dbs_info = &per_cpu(od_cpu_dbs_info, j);
 		prev_wall_time = j_dbs_info->prev_cpu_wall;
@@ -1134,16 +1132,12 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		if (unlikely(!wall_time || wall_time < idle_time))
 			continue;
 
-		load = 100 * (wall_time - idle_time) / wall_time;
-		hotplug_history->usage[num_hist].load[j] = load;
+		load_cpu = 100 * (wall_time - idle_time) / wall_time;
+		hotplug_history->usage[num_hist].load[j] = load_cpu;
+                cpu_util[j] = load_cpu;
 
-		freq_avg = __cpufreq_driver_getavg(policy, j);
-		if (freq_avg <= 0)
-			freq_avg = policy->cur;
-
-		load_freq = load * freq_avg;
-		if (load_freq > max_load_freq)
-			max_load_freq = load_freq;
+    		if (load_cpu > max_load)
+		    max_load = load_cpu;
 	}
 
 	/* Check for CPU hotplug */
@@ -1162,7 +1156,7 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		up_threshold = UP_THRESHOLD_AT_MIN_FREQ;
 	}
 
-	if (max_load_freq > up_threshold * policy->cur) {
+	if (max_load > dbs_tuners_ins.up_threshold) {
 		int inc = (policy->max * dbs_tuners_ins.freq_step) / 100;
 		int target = min(policy->max, policy->cur + inc);
 		/* If switching to max speed, apply sampling_down_factor */
@@ -1186,15 +1180,13 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 	 * policy. To be safe, we focus DOWN_DIFFERENTIAL points under
 	 * the threshold.
 	 */
-	if (max_load_freq <
-	    (dbs_tuners_ins.up_threshold - dbs_tuners_ins.down_differential) *
-	    policy->cur) {
+	if (max_load <
+	    dbs_tuners_ins.up_threshold - dbs_tuners_ins.down_differential) {
 		unsigned int freq_next;
 		unsigned int down_thres;
+		unsigned int count = 0;
 
-		freq_next = max_load_freq /
-			(dbs_tuners_ins.up_threshold -
-			 dbs_tuners_ins.down_differential);
+		freq_next = max_load * policy->max / 100;
 
 		/* No longer fully busy, reset rate_mult */
 		this_dbs_info->rate_mult = 1;
@@ -1206,9 +1198,17 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		down_thres = UP_THRESHOLD_AT_MIN_FREQ
 			- dbs_tuners_ins.down_differential;
 
-		if (freq_next < FREQ_FOR_RESPONSIVENESS
-			&& (max_load_freq / freq_next) > down_thres)
+		if (freq_next < FREQ_FOR_RESPONSIVENESS) {
+		    unsigned int j;
+		    int online = num_online_cpus();
+		    for_each_cpu(j, policy->cpus) {
+			if (cpu_util[j] > down_thres)
+			    count =+ 1;
+		    }
+
+		    if (count > 1 || count == online)
 			freq_next = FREQ_FOR_RESPONSIVENESS;
+		}
 
 		if (policy->cur == freq_next)
 			return;
