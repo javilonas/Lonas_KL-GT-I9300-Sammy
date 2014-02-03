@@ -417,6 +417,8 @@ config ZSWAP
 	depends on FRONTSWAP && CRYPTO
 	select CRYPTO_LZO
 	select ZSMALLOC_NEW
+	select ZBUD
+	select VNSWAP
 	default n
 	help
 	  Zswap is a backend for the frontswap mechanism in the VMM.
@@ -426,6 +428,16 @@ config ZSWAP
 	  from this compressed store much faster than most tradition
 	  swap devices resulting in reduced I/O and faster performance
 	  for many workloads.
+
+config ZBUD
+	tristate
+	default n
+	help
+	  A special purpose allocator for storing compressed pages.
+	  It is designed to store up to two compressed pages per physical
+	  page.  While this design limits storage density, it has simple and
+	  deterministic reclaim properties that make it preferable to a higher
+	  density approach when reclaim will be used.
 
 config DISABLE_LUMPY_RECLAIM
 	bool "Disable lumpy reclaim"
