@@ -494,100 +494,103 @@ static int zswap_get_swap_cache_page(swp_entry_t entry,
  */
 static int zswap_writeback_entry(struct zbud_pool *pool, unsigned long handle)
 {
-        struct zswap_header *zhdr;
-        swp_entry_t swpentry;
-        struct zswap_tree *tree;
-        pgoff_t offset;
-        struct zswap_entry *entry;
-        struct page *page;
-        u8 *src, *dst;
-        unsigned int dlen;
-        int ret, refcount;
-        struct writeback_control wbc = {
-                .sync_mode = WB_SYNC_NONE,
-        };
+	struct zswap_header *zhdr;
+	swp_entry_t swpentry;
+	struct zswap_tree *tree;
+	pgoff_t offset;
+	struct zswap_entry *entry;
+	struct page *page;
+	u8 *src, *dst;
+	unsigned int dlen;
+	int ret, refcount;
+	struct writeback_control wbc = {
+		.sync_mode = WB_SYNC_NONE,
+	};
 
-        /* extract swpentry from data */
-        zhdr = zbud_map(pool, handle);
-        swpentry = zhdr->swpentry; /* here */
-        zbud_unmap(pool, handle);
-        tree = zswap_trees[swp_type(swpentry)];
-        offset = swp_offset(swpentry);
-        BUG_ON(pool != tree->pool);
+	/* extract swpentry from data */
+	zhdr = zbud_map(pool, handle);
+	swpentry = zhdr->swpentry; /* here */
+	zbud_unmap(pool, handle);
+	tree = zswap_trees[swp_type(swpentry)];
+	offset = swp_offset(swpentry);
+	BUG_ON(pool != tree->pool);
 
-        /* find and ref zswap entry */
-        spin_lock(&tree->lock);
-        entry = zswap_rb_search(&tree->rbroot, offset);
-        if (!entry) {
-                /* entry was invalidated */
-                spin_unlock(&tree->lock);
-                return 0;
-        }
-        zswap_entry_get(entry);
-        spin_unlock(&tree->lock);
-        BUG_ON(offset != entry->offset);
+	/* find and ref zswap entry */
+	spin_lock(&tree->lock);
+	entry = zswap_rb_search(&tree->rbroot, offset);
+	if (!entry) {
+		/* entry was invalidated */
+		spin_unlock(&tree->lock);
+		return 0;
+	}
+	zswap_entry_get(entry);
+	spin_unlock(&tree->lock);
+	BUG_ON(offset != entry->offset);
 
-        /* try to allocate swap cache page */
-        switch (zswap_get_swap_cache_page(swpentry, &page)) {
-        case ZSWAP_SWAPCACHE_NOMEM: /* no memory */
-                ret = -ENOMEM;
-                goto fail;
+	/* try to allocate swap cache page */
+	switch (zswap_get_swap_cache_page(swpentry, &page)) {
+	case ZSWAP_SWAPCACHE_NOMEM: /* no memory */
+		ret = -ENOMEM;
+		goto fail;
 
-        case ZSWAP_SWAPCACHE_EXIST: /* page is unlocked */
-                /* page is already in the swap cache, ignore for now */
-                page_cache_release(page);
-                ret = -EEXIST;
-                goto fail;
+	case ZSWAP_SWAPCACHE_EXIST: /* page is unlocked */
+		/* page is already in the swap cache, ignore for now */
+		page_cache_release(page);
+		ret = -EEXIST;
+		goto fail;
 
-        case ZSWAP_SWAPCACHE_NEW: /* page is locked */
-                /* decompress */
-                dlen = PAGE_SIZE;
-                src = (u8 *)zbud_map(tree->pool, entry->handle) +
-                        sizeof(struct zswap_header);
-                dst = kmap_atomic(page);
-                ret = zswap_comp_op(ZSWAP_COMPOP_DECOMPRESS, src,
-                                entry->length, dst, &dlen);
-                kunmap_atomic(dst);
-                zbud_unmap(tree->pool, entry->handle);
-                BUG_ON(ret);
-                BUG_ON(dlen != PAGE_SIZE);
+	case ZSWAP_SWAPCACHE_NEW: /* page is locked */
+		/* decompress */
+		dlen = PAGE_SIZE;
+		src = (u8 *)zbud_map(tree->pool, entry->handle) +
+			sizeof(struct zswap_header);
+		dst = kmap_atomic(page);
+		ret = zswap_comp_op(ZSWAP_COMPOP_DECOMPRESS, src,
+				entry->length, dst, &dlen);
+		kunmap_atomic(dst);
+		zbud_unmap(tree->pool, entry->handle);
+		BUG_ON(ret);
+		BUG_ON(dlen != PAGE_SIZE);
 
-                /* page is up to date */
-                SetPageUptodate(page);
-        }
+		/* page is up to date */
+		SetPageUptodate(page);
+	}
 
-        /* start writeback */
-        __swap_writepage(page, &wbc, end_swap_bio_write);
-        page_cache_release(page);
-        zswap_written_back_pages++;
+	/* move it to the tail of the inactive list after end_writeback */
+	SetPageReclaim(page);
 
-        spin_lock(&tree->lock);
+	/* start writeback */
+	__swap_writepage(page, &wbc, end_swap_bio_write);
+	page_cache_release(page);
+	zswap_written_back_pages++;
 
-        /* drop local reference */
-        zswap_entry_put(entry);
-        /* drop the initial reference from entry creation */
-        refcount = zswap_entry_put(entry);
+	spin_lock(&tree->lock);
 
-        /*
-         * There are three possible values for refcount here:
-         * (1) refcount is 1, load is in progress, unlink from rbtree,
-         *     load will free
-         * (2) refcount is 0, (normal case) entry is valid,
-         *     remove from rbtree and free entry
-         * (3) refcount is -1, invalidate happened during writeback,
-         *     free entry
-         */
-        if (refcount >= 0) {
-                /* no invalidate yet, remove from rbtree */
-                rb_erase(&entry->rbnode, &tree->rbroot);
-        }
-        spin_unlock(&tree->lock);
-        if (refcount <= 0) {
-                /* free the entry */
-                zswap_free_entry(tree, entry);
-                return 0;
-        }
-        return -EAGAIN;
+	/* drop local reference */
+	zswap_entry_put(entry);
+	/* drop the initial reference from entry creation */
+	refcount = zswap_entry_put(entry);
+
+	/*
+	 * There are three possible values for refcount here:
+	 * (1) refcount is 1, load is in progress, unlink from rbtree,
+	 *     load will free
+	 * (2) refcount is 0, (normal case) entry is valid,
+	 *     remove from rbtree and free entry
+	 * (3) refcount is -1, invalidate happened during writeback,
+	 *     free entry
+	 */
+	if (refcount >= 0) {
+		/* no invalidate yet, remove from rbtree */
+		rb_erase(&entry->rbnode, &tree->rbroot);
+	}
+	spin_unlock(&tree->lock);
+	if (refcount <= 0) {
+		/* free the entry */
+		zswap_free_entry(tree, entry);
+		return 0;
+	}
+	return -EAGAIN;
 
 fail:
         spin_lock(&tree->lock);
