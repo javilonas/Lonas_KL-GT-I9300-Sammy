@@ -44,7 +44,7 @@ CONFIG_LOCALVERSION="Lonas-KL-5.9"
 VERSION_KL="Sammy"
 REVISION="RTM"
 
-export KBUILD_BUILD_VERSION="2"
+export KBUILD_BUILD_VERSION="3"
 
 echo "#################### Aplicando Permisos correctos ####################"
 chmod 644 $ROOTFS_PATH/*.rc
