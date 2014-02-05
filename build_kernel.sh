@@ -21,6 +21,7 @@ fi
 
 # make distclean
 make clean
+rm Module.symvers
 
 cp arch/arm/configs/lonas_defconfig .config;
 
@@ -40,11 +41,11 @@ TOOLCHAIN="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
 TOOLCHAIN_PATCH="/home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin"
 ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy/ramdisk"
 RAMFS_TMP="/home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3"
-CONFIG_LOCALVERSION="Lonas-KL-5.9"
+CONFIG_LOCALVERSION="Lonas-KL-6.0"
 VERSION_KL="Sammy"
 REVISION="RTM"
 
-export KBUILD_BUILD_VERSION="3"
+export KBUILD_BUILD_VERSION="1"
 
 echo "#################### Aplicando Permisos correctos ####################"
 chmod 644 $ROOTFS_PATH/*.rc
