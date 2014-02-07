@@ -549,6 +549,9 @@ static ssize_t cpufreq_min_limit_store(struct kobject *kobj,
 			printk(KERN_ERR "%s: Unlock request is ignored\n",
 				__func__);
 	} else { /* Lock request */
+                if (val < 1400000) {
+                        val = 1000000;
+
 		if (get_cpufreq_level((unsigned int)val, &cpufreq_level)
 			== VALID_LEVEL) {
 			if (cpufreq_min_limit_val != -1)
@@ -566,6 +569,7 @@ static ssize_t cpufreq_min_limit_store(struct kobject *kobj,
 		} else /* Invalid lock request --> No action */
 			printk(KERN_ERR "%s: Lock request is invalid\n",
 				__func__);
+                }
 	}
 
 	ret = n;
