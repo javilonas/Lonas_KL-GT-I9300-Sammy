@@ -193,7 +193,7 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/i386/ -e s/sun4u/sparc64/ \
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 export KBUILD_BUILDHOST := $(SUBARCH)
 ARCH		?= arm
-CROSS_COMPILE	= /home/lonas/android/omni/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin/arm-eabi-
+CROSS_COMPILE	= /home/lonas/Kernel_Lonas/toolchains/android-ndk-r9c/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86/bin/arm-linux-androideabi-
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -245,8 +245,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = ccache gcc
 HOSTCXX      = ccache g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O4 -fomit-frame-pointer
-HOSTCXXFLAGS = -O4
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer
+HOSTCXXFLAGS = -O2
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -370,7 +370,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Wno-format-security -Wno-array-bounds \
 		   -fno-delete-null-pointer-checks -fno-schedule-insns2 -ffast-math \
  		   -mtune=cortex-a9 -march=armv7-a -mcpu=cortex-a9 -mfpu=neon -marm \
-		   -munaligned-access -fno-pic
+		   -munaligned-access -fno-pic -fno-builtin-memcpy
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -563,7 +563,7 @@ all: vmlinux
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os
 else
-KBUILD_CFLAGS	+= -O4
+KBUILD_CFLAGS	+= -O2
 endif
 
 ifdef CONFIG_CC_CHECK_WARNING_STRICTLY
