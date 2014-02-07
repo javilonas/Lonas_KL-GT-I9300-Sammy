@@ -1757,6 +1757,7 @@ SYSCALL_DEFINE1(swapoff, const char __user *, specialfile)
   	spin_lock(&swap_lock);
   	p->flags = 0;
   	spin_unlock(&swap_lock);
+
 	err = 0;
 	atomic_inc(&proc_poll_event);
 	wake_up_interruptible(&proc_poll_wait);
