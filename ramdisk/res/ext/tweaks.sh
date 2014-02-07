@@ -33,7 +33,7 @@ echo "10240" > /proc/sys/fs/inotify/max_user_watches
 echo "0" > /proc/sys/vm/block_dump
 echo "0" > /proc/sys/vm/laptop_mode
 echo "0" > /proc/sys/vm/panic_on_oom 
-echo "8" > /proc/sys/vm/page-cluster
+echo "1" > /proc/sys/vm/page-cluster
 echo "10" > /proc/sys/fs/lease-break-time
 echo "2048" > /proc/sys/kernel/msgmni
 echo "65536" > /proc/sys/kernel/msgmax
