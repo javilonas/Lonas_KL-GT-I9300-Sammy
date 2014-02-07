@@ -1385,17 +1385,36 @@ struct vm_struct *__get_vm_area_caller(unsigned long size, unsigned long flags,
  */
 struct vm_struct *get_vm_area(unsigned long size, unsigned long flags)
 {
+#ifdef CONFIG_ENABLE_VMALLOC_SAVING
+	return __get_vm_area_node(size, 1, flags, PAGE_OFFSET, VMALLOC_END,
+				-1, GFP_KERNEL, __builtin_return_address(0));
+#else
 	return __get_vm_area_node(size, 1, flags, VMALLOC_START, VMALLOC_END,
 				-1, GFP_KERNEL, __builtin_return_address(0));
+#endif
+
 }
 
 struct vm_struct *get_vm_area_caller(unsigned long size, unsigned long flags,
 				void *caller)
 {
-	return __get_vm_area_node(size, 1, flags, VMALLOC_START, VMALLOC_END,
+#ifdef CONFIG_ENABLE_VMALLOC_SAVING
+	return __get_vm_area_node(size, 1, flags, PAGE_OFFSET, VMALLOC_END,
 						-1, GFP_KERNEL, caller);
-}
-
+#else
+	return __get_vm_area_node(size, 1, flags, VMALLOC_START, VMALLOC_END,
+				-1, GFP_KERNEL, __builtin_return_address(0));
+#endif
+ }
+  
+  /**
+   *	find_vm_area  -  find a continuous kernel virtual area
+   *	@addr:		base address
+   *
+   *	Search for the kernel VM area starting at @addr, and return it.
+   *	It is up to the caller to do all required locking to keep the returned
+   *	pointer valid.
+   */
 static struct vm_struct *find_vm_area(const void *addr)
 {
 	struct vmap_area *va;
