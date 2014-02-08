@@ -20,7 +20,7 @@ echo "0" > /sys/module/cpuidle_exynos4/parameters/log_en
 
 # Tweak kernel scheduler, less aggressive settings
 echo "256" > /proc/sys/kernel/random/write_wakeup_threshold
-echo "128" > /proc/sys/kernel/random/read_wakeup_threshold
+echo "256" > /proc/sys/kernel/random/read_wakeup_threshold
 echo "18000000" > /proc/sys/kernel/sched_latency_ns
 echo "3000000" > /proc/sys/kernel/sched_wakeup_granularity_ns
 echo "1500000" > /proc/sys/kernel/sched_min_granularity_ns
@@ -37,7 +37,7 @@ echo "8" > /proc/sys/vm/page-cluster
 echo "10" > /proc/sys/fs/lease-break-time
 echo "2048" > /proc/sys/kernel/msgmni
 echo "65536" > /proc/sys/kernel/msgmax
-echo "500 512000 64 2048" > /proc/sys/kernel/sem
+echo "512 512000 128 2048" > /proc/sys/kernel/sem
 echo "268435456" > /proc/sys/kernel/shmmax
 echo "524288" > /proc/sys/kernel/threads-max
 echo "1" > /proc/sys/vm/oom_kill_allocating_task
@@ -123,11 +123,33 @@ echo "0" > /sys/module/xt_qtaguid/parameters/debug_mask
 # Otros Misc tweaks
 /sbin/busybox mount -t debugfs none /sys/kernel/debug
 echo NO_NORMALIZED_SLEEPER > /sys/kernel/debug/sched_features
+echo NO_GENTLE_FAIR_SLEEPERS > /sys/kernel/debug/sched_features
+echo NO_START_DEBIT > /sys/kernel/debug/sched_features
+echo NO_WAKEUP_PREEMPT > /sys/kernel/debug/sched_features
+echo NEXT_BUDDY > /sys/kernel/debug/sched_features
+echo ARCH_POWER > /sys/kernel/debug/sched_features
+echo SYNC_WAKEUPS > /sys/kernel/debug/sched_features
+echo HRTICK > /sys/kernel/debug/sched_features
 
 # Fix para problemas Con aplicaciones
 /sbin/busybox setprop ro.kernel.android.checkjni 0
+
 # Incremento de memoria ram
+/sbin/busybox setprop dalvik.vm.heapstartsize 6m
+/sbin/busybox setprop dalvik.vm.heapgrowthlimit 48m
 /sbin/busybox setprop dalvik.vm.heapsize 148m
+
+/sbin/busybox setprop video.accelerate.hw 1
+/sbin/busybox setprop persist.sys.use_dithering 0
+/sbin/busybox setprop debug.egl.profiler 1
+/sbin/busybox setprop debug.egl.hw 1
+/sbin/busybox setprop debug.composition.type gpu
+/sbin/busybox setprop persist.sys.ui.hw 1
+/sbin/busybox setprop debug.sf.hw 1
+/sbin/busybox setprop windowsmgr.max_events_per_sec 130
+
+/sbin/busybox setprop ro.HOME_APP_ADJ -17
+
 # workaround for non working default.prop
 /sbin/busybox setprop ro.adb.secure 0
 /sbin/busybox setprop ro.secure 0
