@@ -224,14 +224,6 @@ config ARM_PATCH_PHYS_VIRT_16BIT
 config ARCH_HIBERNATION_POSSIBLE
 	def_bool y
 
-config ARCH_RANDOM
-	bool "SOC specific random number generation"
-	help
-	 Allow the kernel to use an architecture specific implementation for
-	 random number generation
-
-	 If unsure, say N
-
 source "init/Kconfig"
 
 source "kernel/Kconfig.freezer"
