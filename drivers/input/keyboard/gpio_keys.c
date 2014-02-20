@@ -17,21 +17,19 @@
 #include <linux/sched.h>
 #include <linux/pm.h>
 #include <linux/slab.h>
-#include <linux/syscalls.h>
 #include <linux/sysctl.h>
 #include <linux/proc_fs.h>
 #include <linux/delay.h>
 #include <linux/platform_device.h>
 #include <linux/input.h>
 #include <linux/gpio_keys.h>
-#include <linux/wakelock.h>
 #include <linux/workqueue.h>
 #include <linux/gpio.h>
 #include <linux/irqdesc.h>
 #ifdef CONFIG_FAST_BOOT
 #include <linux/fake_shut_down.h>
+#include <linux/wakelock.h>
 #endif
-#include <../kernel/power/power.h>
 
 extern struct class *sec_class;
 
@@ -67,18 +65,6 @@ struct gpio_keys_drvdata {
 	struct gpio_button_data data[0];
 	/* WARNING: this area can be expanded. Do NOT add any member! */
 };
-
-static void sync_system(struct work_struct *work);
-static DECLARE_WORK(sync_system_work, sync_system);
-
-static void sync_system(struct work_struct *work)
-{
-	pr_info("%s +\n", __func__);
-	wake_lock(&sync_wake_lock);
-	sys_sync();
-	wake_unlock(&sync_wake_lock);
-	pr_info("%s -\n", __func__);
-}
 
 /*
  * SYSFS interface for enabling/disabling keys and switches:
@@ -720,14 +706,8 @@ static void gpio_keys_report_event(struct gpio_button_data *bdata)
 		input_event(input, type, button->code, !!state);
 		input_sync(input);
 
-		if (button->code == KEY_POWER) {
+		if (button->code == KEY_POWER)
 			printk(KERN_DEBUG"[keys]PWR %d\n", !!state);
-			if (!!state == 1) {
-				/* sys_sync(); */
-				pr_info("%s: KEY_POWER pressed, calling sys_sync()\n", __func__);
-				queue_work(sync_work_queue, &sync_system_work);
-			}
-		}
 	}
 }
 
