@@ -8,12 +8,12 @@
 
 #include "hpfs_fn.h"
 
-__le32 *hpfs_map_dnode_bitmap(struct super_block *s, struct quad_buffer_head *qbh)
+unsigned *hpfs_map_dnode_bitmap(struct super_block *s, struct quad_buffer_head *qbh)
 {
 	return hpfs_map_4sectors(s, hpfs_sb(s)->sb_dmap, qbh, 0);
 }
 
-__le32 *hpfs_map_bitmap(struct super_block *s, unsigned bmp_block,
+unsigned int *hpfs_map_bitmap(struct super_block *s, unsigned bmp_block,
 			 struct quad_buffer_head *qbh, char *id)
 {
 	secno sec;
