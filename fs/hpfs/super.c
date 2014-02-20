@@ -658,7 +658,7 @@ static int hpfs_fill_super(struct super_block *s, void *options, int silent)
 		root->i_mtime.tv_nsec = 0;
 		root->i_ctime.tv_sec = local_to_gmt(s, le32_to_cpu(de->creation_date));
 		root->i_ctime.tv_nsec = 0;
-		hpfs_i(root)->i_ea_size = le32_to_cpu(de->ea_size);
+		hpfs_i(root)->i_ea_size = le16_to_cpu(de->ea_size);
 		hpfs_i(root)->i_parent_dir = root->i_ino;
 		if (root->i_size == -1)
 			root->i_size = 2048;
