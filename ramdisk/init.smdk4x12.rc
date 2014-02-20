@@ -110,7 +110,6 @@ on boot
     setprop ro.build.product smdk4x12
     setprop ro.product.device smdk4x12
     # setprop ro.radio.noril yes
-    setprop ro.securestorage.knox true
 
 # mobicore
     mkdir /data/app/mcRegistry 0775 system system
@@ -495,6 +494,12 @@ on property:ro.dumpstate.dmesg=1
 #    oneshot
 
 # Secure Storage startup
+service prepare-ssdaemon /system/bin/sh /system/bin/ss-presetup.sh
+    class core
+    user root
+    group root
+    oneshot
+
 service secure_storage /system/bin/secure_storage_daemon
     class core
     user system

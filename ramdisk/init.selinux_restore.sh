@@ -49,11 +49,14 @@ if [ ! -f /system/etc/selinux_restore ];then
   mount_need=true;
 
 # Run restore context
-  restorecon -R /data
   restorecon -R /cache
   restorecon -R /system
+  restorecon -R /data
   echo "init: init.selinux_restore.sh: restorecon done" > /dev/kmsg
 fi
+
+touch /system/etc/selinux_restore
+chmod 664 /system/etc/selinux_restore
 
 if $mount_need ;then
 # This should be the last command
@@ -61,3 +64,4 @@ if $mount_need ;then
   mount -o ro,remount,barrier=1 /system
 # echo "mount -o ro,remount,barrier=1 /system" > /dev/kmsg
 fi
+

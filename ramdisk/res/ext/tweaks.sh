@@ -150,12 +150,3 @@ echo HRTICK > /sys/kernel/debug/sched_features
 
 /sbin/busybox setprop ro.HOME_APP_ADJ -17
 
-# workaround for non working default.prop
-/sbin/busybox setprop ro.adb.secure 0
-/sbin/busybox setprop ro.secure 0
-/sbin/busybox setprop ro.allow.mock.location 0
-/sbin/busybox setprop ro.debuggable 1
-/sbin/busybox setprop sys.usb.config mtp,adb
-/sbin/busybox setprop persist.sys.usb.config mtp,adb
-/sbin/busybox setprop sys.usb.state mtp,adb
-
