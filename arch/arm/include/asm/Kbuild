@@ -1,5 +1,3 @@
 include include/asm-generic/Kbuild.asm
 
 header-y += hwcap.h
-
-generic-y += unaligned.h
