@@ -19,7 +19,7 @@
 #include <linux/platform_device.h>
 #include <linux/miscdevice.h>
 
-#include <linux/sysfs_helpers.h>
+//#include <linux/sysfs_helpers.h>
 #include "gpu_control.h"
 
 #define GPU_MAX_CLOCK 800
