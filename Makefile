@@ -245,8 +245,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = ccache gcc
 HOSTCXX      = ccache g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer
-HOSTCXXFLAGS = -O2
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O4 -fomit-frame-pointer
+HOSTCXXFLAGS = -O4
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -369,8 +369,12 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security -Wno-array-bounds \
 		   -fno-delete-null-pointer-checks -fno-schedule-insns2 -ffast-math \
- 		   -mtune=cortex-a9 -march=armv7-a -mcpu=cortex-a9 -mfpu=neon -marm \
-		   -munaligned-access
+ 		   -mtune=cortex-a9 -march=armv7-a -mcpu=cortex-a9 -mfpu=neon-vfpv4 -marm \
+		   -munaligned-access -fgcse-lm -fgcse-sm -fsched-spec-load \
+		   -fforce-addr -ffast-math -fsingle-precision-constant \
+		   -ftree-vectorize -mvectorize-with-neon-quad -funroll-loops \
+		   -fno-pic -fno-builtin-memcpy -fno-inline -fno-tree-loop-distribute-patterns
+
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -563,7 +567,7 @@ all: vmlinux
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os
 else
-KBUILD_CFLAGS	+= -O2
+KBUILD_CFLAGS	+= -O4
 endif
 
 ifdef CONFIG_CC_CHECK_WARNING_STRICTLY

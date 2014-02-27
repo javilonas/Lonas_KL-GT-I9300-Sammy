@@ -187,7 +187,7 @@ echo "
 " >> $XML
 echo "
     <settingsPane description=\"Selecciona el Perfil que mejor se adapte a tu terminal\" name=\"GPU freq\">
-      <spinner description=\"Por Defecto: GPU freq: 160/266/350/440/533\" name=\"GPU freq\" action=\"gpufreq gpufreqpredef\">
+      <spinner description=\"Por Defecto: GPU freq: 266/350/440/533/640\" name=\"GPU freq\" action=\"gpufreq gpufreqpredef\">
              <spinnerItem name=\"GPU freq: 160/266/350/400/440\" value=\"1\"/> 
              <spinnerItem name=\"GPU freq: 160/266/350/440/533\" value=\"0\"/> 
              <spinnerItem name=\"GPU freq: 266/350/440/533/640\" value=\"2\"/> 
@@ -323,7 +323,7 @@ echo '
     <settingsPane name="Dirty Writeback Centisecs" 
                   description="Esto le indica al kernel cada cuantos segundos debe escribir los datos al disco. El valor por defecto es de 1500, que equivale a 1,5 segundos. Este parámetro puede influir bastante en rendimiento y gasto de batería, así que ojo con el">
      
-      <seekBar  description="Por defecto: 1500." 
+      <seekBar  description="Por defecto: 3000." 
                 name="Dirty Writeback Centisecs" 
                 action="generic /proc/sys/vm/dirty_writeback_centisecs"
                 unit="%" min="0" reversed="false" step="1" max="6000"/>

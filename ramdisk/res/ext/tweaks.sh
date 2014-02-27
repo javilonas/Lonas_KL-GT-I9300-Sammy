@@ -19,27 +19,27 @@ done;
 echo "0" > /sys/module/cpuidle_exynos4/parameters/log_en
 
 # Tweak kernel scheduler, less aggressive settings
-echo "256" > /proc/sys/kernel/random/write_wakeup_threshold
-echo "256" > /proc/sys/kernel/random/read_wakeup_threshold
-echo "18000000" > /proc/sys/kernel/sched_latency_ns
-echo "3000000" > /proc/sys/kernel/sched_wakeup_granularity_ns
-echo "1500000" > /proc/sys/kernel/sched_min_granularity_ns
+echo "384" > /proc/sys/kernel/random/write_wakeup_threshold
+echo "384" > /proc/sys/kernel/random/read_wakeup_threshold
+echo "500000" > /proc/sys/kernel/sched_min_granularity_ns
+echo "1000000" > /proc/sys/kernel/sched_latency_ns
+echo "100000" > /proc/sys/kernel/sched_wakeup_granularity_ns
 
 # Miscellaneous tweaks
 echo "524288" > /proc/sys/fs/file-max
-echo "32000" > /proc/sys/fs/inotify/max_queued_events
-echo "256" > /proc/sys/fs/inotify/max_user_instances
-echo "10240" > /proc/sys/fs/inotify/max_user_watches
+echo "33000" > /proc/sys/fs/inotify/max_queued_events
+echo "384" > /proc/sys/fs/inotify/max_user_instances
+echo "10496" > /proc/sys/fs/inotify/max_user_watches
 echo "0" > /proc/sys/vm/block_dump
-echo "0" > /proc/sys/vm/laptop_mode
+echo "5" > /proc/sys/vm/laptop_mode
 echo "0" > /proc/sys/vm/panic_on_oom 
 echo "8" > /proc/sys/vm/page-cluster
 echo "10" > /proc/sys/fs/lease-break-time
-echo "2048" > /proc/sys/kernel/msgmni
-echo "65536" > /proc/sys/kernel/msgmax
+echo "65636" > /proc/sys/kernel/msgmni
+echo "65636" > /proc/sys/kernel/msgmax
 echo "512 512000 128 2048" > /proc/sys/kernel/sem
-echo "268435456" > /proc/sys/kernel/shmmax
-echo "524288" > /proc/sys/kernel/threads-max
+echo "268535456" > /proc/sys/kernel/shmmax
+echo "525288" > /proc/sys/kernel/threads-max
 echo "1" > /proc/sys/vm/oom_kill_allocating_task
  
 # Tweaks internos
@@ -49,16 +49,16 @@ echo "3" > /sys/module/cpuidle_exynos4/parameters/enable_mask
 
 # pegasusq tweaks
 echo "20000" > /sys/devices/system/cpu/cpufreq/pegasusq/sampling_rate
-echo "20" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate
-echo "40" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate
+echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate
+echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate
 echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1
-echo "200000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0
-echo "600000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1
-echo "300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0
-echo "700000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1
-echo "400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0
-echo "150" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1
-echo "150" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0
+echo "400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0
+echo "800000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1
+echo "600000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0
+echo "800000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1
+echo "600000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0
+echo "200" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1
+echo "200" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0
 echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_1
 echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_0
 echo "400" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_1
@@ -81,12 +81,12 @@ echo "2" > /proc/sys/net/ipv4/tcp_synack_retries;
 echo "5" > /proc/sys/net/ipv4/tcp_keepalive_probes;
 echo "10" > /proc/sys/net/ipv4/tcp_keepalive_intvl;
 echo "10" > /proc/sys/net/ipv4/tcp_fin_timeout;
-echo "524288" > /proc/sys/net/core/wmem_max;
-echo "524288" > /proc/sys/net/core/rmem_max;
-echo "262144" > /proc/sys/net/core/rmem_default;
-echo "262144" > /proc/sys/net/core/wmem_default;
-echo "6144 87380 524288" > /proc/sys/net/ipv4/tcp_wmem;
-echo "6144 87380 524288" > /proc/sys/net/ipv4/tcp_rmem;
+echo "524488" > /proc/sys/net/core/wmem_max;
+echo "524488" > /proc/sys/net/core/rmem_max;
+echo "262244" > /proc/sys/net/core/rmem_default;
+echo "262244" > /proc/sys/net/core/wmem_default;
+echo "6244 87480 524488" > /proc/sys/net/ipv4/tcp_wmem;
+echo "6244 87480 524488" > /proc/sys/net/ipv4/tcp_rmem;
 
 LOOP=`ls -d /sys/block/loop*`
 RAM=`ls -d /sys/block/ram*`

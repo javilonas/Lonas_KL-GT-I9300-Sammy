@@ -1189,7 +1189,7 @@ int l2cap_chan_connect(struct l2cap_chan *chan)
 	struct hci_conn *hcon;
 	struct hci_dev *hdev;
 	__u8 auth_type;
-	int err;
+	int err = 0;
 
 	BT_DBG("%s -> %s psm 0x%2.2x", batostr(src), batostr(dst),
 							chan->psm);
@@ -1527,7 +1527,7 @@ static inline int l2cap_skbuff_fromiovec(struct sock *sk, struct msghdr *msg, in
 {
 	struct l2cap_conn *conn = l2cap_pi(sk)->chan->conn;
 	struct sk_buff **frag;
-	int err, sent = 0;
+	int err = 0, sent = 0;
 
 	if (memcpy_fromiovec(skb_put(skb, count), msg->msg_iov, count))
 		return -EFAULT;
@@ -1560,7 +1560,7 @@ struct sk_buff *l2cap_create_connless_pdu(struct l2cap_chan *chan, struct msghdr
 	struct sock *sk = chan->sk;
 	struct l2cap_conn *conn = chan->conn;
 	struct sk_buff *skb;
-	int err, count, hlen = L2CAP_HDR_SIZE + 2;
+	int err = 0, count = 0, hlen = L2CAP_HDR_SIZE + 2;
 	struct l2cap_hdr *lh;
 
 	BT_DBG("sk %p len %d", sk, (int)len);
@@ -1590,7 +1590,7 @@ struct sk_buff *l2cap_create_basic_pdu(struct l2cap_chan *chan, struct msghdr *m
 	struct sock *sk = chan->sk;
 	struct l2cap_conn *conn = chan->conn;
 	struct sk_buff *skb;
-	int err, count, hlen = L2CAP_HDR_SIZE;
+	int err = 0, count = 0, hlen = L2CAP_HDR_SIZE;
 	struct l2cap_hdr *lh;
 
 	BT_DBG("sk %p len %d", sk, (int)len);

@@ -178,6 +178,10 @@ config DECOMPRESS_LZO
 	select LZO_DECOMPRESS
 	tristate
 
+config DECOMPRESS_LZ4
+	select LZ4_DECOMPRESS
+	tristate
+
 config LZ4_COMPRESS
 	tristate
 
@@ -191,10 +195,6 @@ config LZ4HC_COMPRESS
 #
 config GENERIC_ALLOCATOR
 	boolean
-
-config DECOMPRESS_LZ4
-	select LZ4_DECOMPRESS
-	tristate
 
 #
 # reed solomon support is select'ed if needed
