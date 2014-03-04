@@ -182,6 +182,9 @@ echo "
              <spinnerItem name=\"GPU mV: -50\" value=\"2\"/> 
              <spinnerItem name=\"GPU mV: -75\" value=\"3\"/> 
              <spinnerItem name=\"GPU mV: -100\" value=\"4\"/> 
+             <spinnerItem name=\"GPU mV: +25\" value=\"5\"/> 
+             <spinnerItem name=\"GPU mV: +50\" value=\"6\"/> 
+             <spinnerItem name=\"GPU mV: +75\" value=\"7\"/> 
       </spinner>
     </settingsPane>
 " >> $XML
