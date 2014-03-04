@@ -41,7 +41,7 @@ TOOLCHAIN="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9c/toolchains/arm-li
 TOOLCHAIN_PATCH="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9c/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86/bin"
 ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy/ramdisk"
 RAMFS_TMP="/home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3"
-CONFIG_LOCALVERSION="Lonas-KL-6.3"
+export KERNEL_VERSION="Lonas-KL-6.3"
 VERSION_KL="Sammy"
 REVISION="RTM"
 
@@ -92,8 +92,8 @@ $TOOLCHAIN_PATCH/arm-linux-androideabi-strip --strip-unneeded $KERNELDIR/ramdisk
 #unzip /home/lonas/Kernel_Lonas/proprietary-modules/proprietary-modules.zip -d $KERNELDIR/ramdisk/lib/modules
 
 echo "#################### Update Ramdisk ####################"
-rm -f $KERNELDIR/releasetools/tar/$CONFIG_LOCALVERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.tar
-rm -f $KERNELDIR/releasetools/zip/$CONFIG_LOCALVERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.zip
+rm -f $KERNELDIR/releasetools/tar/$KERNEL_VERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.tar
+rm -f $KERNELDIR/releasetools/zip/$KERNEL_VERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.zip
 cp -f $KERNELDIR/arch/arm/boot/zImage .
 
 rm -rf $RAMFS_TMP
@@ -130,10 +130,10 @@ cp boot.img $KERNELDIR/releasetools/tar
 
 cd $KERNELDIR
 cd releasetools/zip
-zip -0 -r $CONFIG_LOCALVERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.zip *
+zip -0 -r $KERNEL_VERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.zip *
 cd ..
 cd tar
-tar cf $CONFIG_LOCALVERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.tar boot.img && ls -lh $CONFIG_LOCALVERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.tar
+tar cf $KERNEL_VERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.tar boot.img && ls -lh $KERNEL_VERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.tar
 
 echo "#################### Eliminando restos ####################"
 
