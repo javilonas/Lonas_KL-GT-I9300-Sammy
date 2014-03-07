@@ -51,11 +51,17 @@ fi
 # Iniciar Zipalign
 /res/ext/zipalign.sh
 
+# Remontar y Optimizar particiones con EXT4
+/res/ext/optimi_remount.sh
+
 # Iniciar Tweaks Lonas_KL
 /res/ext/tweaks.sh
 
 # Iniciar zswap
 /res/ext/zswap.sh
+
+# Iniciar Sensor
+/res/ext/sensors.sh
 
 # Soporte Init.d
 if [ -d /system/etc/init.d ]; then
