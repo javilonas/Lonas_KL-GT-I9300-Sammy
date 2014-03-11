@@ -134,7 +134,7 @@ static int __devinit exynos_rng_probe(struct platform_device *pdev)
 	return hwrng_register(&exynos_rng->rng);
 }
 
-static int __devexit exynos_rng_remove(struct platform_device *pdev)
+static int __exit exynos_rng_remove(struct platform_device *pdev)
 {
 	struct exynos_rng *exynos_rng = platform_get_drvdata(pdev);
 
@@ -173,7 +173,7 @@ static struct platform_driver exynos_rng_driver = {
 		.pm	= &exynos_rng_pm_ops,
 	},
 	.probe		= exynos_rng_probe,
-	.remove		= __devexit_p(exynos_rng_remove),
+	.remove		= __exit_p(exynos_rng_remove),
 };
 
 static int __init exynos_rng_mod_init(void)
