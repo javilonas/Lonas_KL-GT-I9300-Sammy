@@ -472,6 +472,8 @@ extern void *devres_remove(struct device *dev, dr_release_t release,
 			   dr_match_t match, void *match_data);
 extern int devres_destroy(struct device *dev, dr_release_t release,
 			  dr_match_t match, void *match_data);
+extern int devres_release(struct device *dev, dr_release_t release,
+			  dr_match_t match, void *match_data);
 
 /* devres group */
 extern void * __must_check devres_open_group(struct device *dev, void *id,
@@ -483,6 +485,14 @@ extern int devres_release_group(struct device *dev, void *id);
 /* managed kzalloc/kfree for device drivers, no kmalloc, always use kzalloc */
 extern void *devm_kzalloc(struct device *dev, size_t size, gfp_t gfp);
 extern void devm_kfree(struct device *dev, void *p);
+
+void __iomem *devm_ioremap_resource(struct device *dev, struct resource *res);
+void __iomem *devm_request_and_ioremap(struct device *dev,
+			struct resource *res);
+
+/* allows to add/remove a custom action to devres stack */
+int devm_add_action(struct device *dev, void (*action)(void *), void *data);
+void devm_remove_action(struct device *dev, void (*action)(void *), void *data);
 
 struct device_dma_parameters {
 	/*

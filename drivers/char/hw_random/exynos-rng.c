@@ -176,7 +176,18 @@ static struct platform_driver exynos_rng_driver = {
 	.remove		= __devexit_p(exynos_rng_remove),
 };
 
-module_platform_driver(exynos_rng_driver);
+static int __init exynos_rng_mod_init(void)
+{
+	return platform_driver_register(&exynos_rng_driver);
+}
+
+static void __exit exynos_rng_mod_exit(void)
+{
+	platform_driver_unregister(&exynos_rng_driver);
+}
+
+module_init(exynos_rng_mod_init);
+module_exit(exynos_rng_mod_exit);
 
 MODULE_DESCRIPTION("EXYNOS 4 H/W Random Number Generator driver");
 MODULE_AUTHOR("Jonghwa Lee <jonghwa3.lee@samsung.com>");
