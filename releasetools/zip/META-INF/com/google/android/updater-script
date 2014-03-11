@@ -3,7 +3,7 @@ ui_print(" ");
 ui_print("   ##########################################   ");
 ui_print("   #          KERNEL MADE IN SPAIN          #   ");
 ui_print("   #   http://www.esp-desarrolladores.com   #   ");
-ui_print("   #             Lonas-KL v.6.5             #   ");
+ui_print("   #             Lonas-KL v.6.6             #   ");
 ui_print("   ##########################################   ");
 ui_print(" ");
 ui_print(" ");
@@ -45,7 +45,7 @@ ui_print(" ");
 ui_print(" - Flasheando kernel Lonas-KL ");
 ui_print(" ");
 ui_print(" ");
-ui_print(" - Version: [Lonas-KL v.6.5] ");
+ui_print(" - Version: [Lonas-KL v.6.6] ");
 ui_print(" ");
 ui_print(" ");
 assert(package_extract_file("boot.img", "/tmp/boot.img"),
