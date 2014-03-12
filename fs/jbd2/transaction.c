@@ -1082,10 +1082,7 @@ int jbd2_journal_dirty_metadata(handle_t *handle, struct buffer_head *bh)
 		 * once a transaction -bzzz
 		 */
 		jh->b_modified = 1;
-		if (handle->h_buffer_credits <= 0) {
-			ret = -ENOSPC;
-			goto out_unlock_bh;
-		}
+		J_ASSERT_JH(jh, handle->h_buffer_credits > 0);
 		handle->h_buffer_credits--;
 	}
 
