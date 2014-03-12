@@ -41,7 +41,7 @@ TOOLCHAIN="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9c/toolchains/arm-li
 TOOLCHAIN_PATCH="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9c/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86/bin"
 ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy/ramdisk"
 RAMFS_TMP="/home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3"
-export KERNEL_VERSION="Lonas-KL-6.6"
+export KERNEL_VERSION="Lonas-KL-6.7"
 VERSION_KL="Sammy"
 REVISION="RTM"
 
@@ -86,9 +86,9 @@ make ARCH=arm CROSS_COMPILE=$TOOLCHAIN lonas_defconfig
 
 make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN || exit -1
 
-mkdir -p $KERNELDIR/ramdisk/lib/modules
-find . -name '*.ko' -exec cp -av {} $KERNELDIR/ramdisk/lib/modules/ \;
-$TOOLCHAIN_PATCH/arm-linux-androideabi-strip --strip-unneeded $KERNELDIR/ramdisk/lib/modules/*.ko
+mkdir -p $ROOTFS_PATH/lib/modules
+find . -name '*.ko' -exec cp -av {} $ROOTFS_PATH/lib/modules/ \;
+$TOOLCHAIN_PATCH/arm-linux-androideabi-strip --strip-unneeded $ROOTFS_PATH/lib/modules/*.ko
 #unzip /home/lonas/Kernel_Lonas/proprietary-modules/proprietary-modules.zip -d $KERNELDIR/ramdisk/lib/modules
 
 echo "#################### Update Ramdisk ####################"
