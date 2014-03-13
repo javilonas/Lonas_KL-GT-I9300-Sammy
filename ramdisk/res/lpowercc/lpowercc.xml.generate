@@ -392,30 +392,19 @@ echo '
                   label="Activar LED-Fading"/>
   
      </settingsPane>
-     <settingsPane name="Mdnie Hijack" 
-                    description="si este perfil está activo, tiene que desactivar el perfil Sharpen (stock)"> 
-  
-        <checkbox description="Por defecto: Desactivado"
-                  name="Hijack" 
-                  action="generic01 /sys/class/mdnie/mdnie/hijack"
-                  label="Activar Hijack"/>
-  
-     </settingsPane>
-     <settingsPane name="Mdnie Sharpen (stock)" 
-                    description="si este perfil está activo, tiene que desactivar el perfil Hijack"> 
-  
-        <checkbox description="Por defecto: Activado"
-                  name="Sharpen" 
-                  action="generic01 /sys/class/mdnie/mdnie/sharpen"
-                  label="Activar Sharpen"/>
-  
-     </settingsPane>
-    <settingsPane description="Selecciona el Perfil que mejor se adapte a tu vista" name="MDNIE HIJACK">
+    <settingsPane description="Seleccione el modo de pantalla deseado, Mdnie Hijack o Mdnie Sharpen" name="MDNIE SELECTOR">
+      <spinner description="Por Defecto: Hijack" name="MDNIE HIJACK-SHARPEN" action="hijack-sharpen hijack-sharpenpredef">
+             <spinnerItem name="Hijack" value="0"/> 
+             <spinnerItem name="Sharpen" value="1"/> 
+      </spinner>
+    </settingsPane>
+    <settingsPane description="Selecciona el Perfil que mejor se adapte a tu vista, Si tiene seleccionado el modo SHARPEN estos perfiles no funcionarán." name="MDNIE HIJACK">
       <spinner description="Por Defecto: Natural" name="MDNIE" action="mdnie mdniepredef">
              <spinnerItem name="Natural" value="0"/> 
              <spinnerItem name="Standard" value="1"/> 
       </spinner>
     </settingsPane>
+
   </settingsTab>
 </settingsRoot>' >> $XML
 
