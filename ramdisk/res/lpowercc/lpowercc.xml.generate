@@ -435,6 +435,28 @@ echo '
 
 
     </settingsPane>
+
+    <settingsPane description="Utiliza mDNIe para evitar el brillo de la retroiluminación y disminuir el resplandor del brillo mediante la reducción de los valores de luminancia de los canales RGB. Esto permite reducir el brillo mínimo mas allá de los valores por defecto."
+                name="Brillo Pantalla Digital">
+
+
+       <seekBar  description="La cantidad de luminancia que se cepilló de los componentes del canal de color."
+                name="Reducción de brillo"
+                action="generic /sys/class/misc/mdnie/brightness_reduction"
+                unit="" min="0" reversed="false" step="1" max="128"/>
+
+
+      <seekBar  description="El conductor contraluz Stock ignora los valores de brillo por debajo de 20 (0-255) y los valores por debajo de ese punto no tienen ningún efecto sobre el brillo. El punto de toma de posesión es el punto de la curva del brillo cuando la reducción del brillo digital toma efecto. La reducción del brillo se pondera linealmente desde el valor configurado completo a cero en el rango de cero brigtness al punto de adquisición. Si el punto de toma de control está más allá de 20, a continuación, tanto de hardware como de reducción de brillo digital se llevan a cabo. Esto puede ayudar con tener una curva de brillo menos brusca causada por la reducción digital."
+                name="Punto de toma de posesión"
+                action="generic /sys/class/misc/mdnie/brightness_takeover_point"
+                unit="" min="0" reversed="false" step="1" max="64"/>
+
+      <seekBar  description="Delta positiva que se aplica sobre el brillo del sistema. Sólo se utiliza para la lógica de reducción digital durante la activación del brillo automático de la ROM stock, se puede utilizar para iluminar de nuevo el valor de reducción al cambiar el valor de brillo interpretado sin sacrificar el brillo mínimo en el modo manual."
+                name="Entrada Delta de brillo automático"
+                action="generic /sys/class/misc/mdnie/brightness_input_delta"
+                unit="" min="0" reversed="false" step="1" max="64"/>
+
+    </settingsPane>
   </settingsTab>
 </settingsRoot>' >> $XML
 
