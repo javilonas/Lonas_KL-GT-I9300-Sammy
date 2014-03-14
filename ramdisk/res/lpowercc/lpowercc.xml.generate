@@ -457,6 +457,21 @@ echo '
                 unit="" min="0" reversed="false" step="1" max="64"/>
 
     </settingsPane>
+
+    <settingsPane description="Trabaja exclusivamente en el reproductor de vídeo stock."
+                name="Control DNR y HDR">
+
+      <checkbox  description="" 
+                name="Alternador de reducción del Ruido Digital"
+                action="generic01 /sys/class/misc/mdnie/hook_control/s_digital_noise_reduction"
+                label="Reducción de ruido digital para la reproducción de vídeo"/>
+
+      <checkbox  description="" 
+                name="Alternador de alto rango dinámico"
+                action="generic01 /sys/class/misc/mdnie/hook_control/s_high_dynamic_range"
+                label="Alternador HDR para reproducción de vídeo"/>
+
+    </settingsPane>
   </settingsTab>
 </settingsRoot>' >> $XML
 
