@@ -504,6 +504,51 @@ echo '
 
     </settingsPane>
 
+    <settingsPane description="Saturación Chroma trabaja en el espacio de color HSL, modificando la saturación va a diluir el color con el blanco u oscurecer con negro. Las variaciones en el chroma se logran mediante la adición de diferentes cantidades de un gris neutro del mismo valor que el color que desea modificar."
+                name="Control de saturación Chroma">
+
+
+      <checkbox  description="Los ajustes de fábrica anulan los controles." 
+                name="Configuración de fábrica saturación Chroma" 
+                action="generic01 /sys/class/misc/mdnie/hook_control/s_factory_chroma_saturation"
+                label="interruptor de Configuración de fábrica"/>
+
+      <seekBar  description="Saturación peso / multiplicadores para RGB/YCM aumento chroma"
+                name="Peso saturación Chroma"
+                action="generic-offset B /sys/class/misc/mdnie/hook_control/cs_weight"
+                unit="" min="-16" reversed="false" step="1" max="32"/>
+
+      <seekBar  description=""
+                name="Aumento de rojo"
+                action="generic-offset B /sys/class/misc/mdnie/hook_control/cs_red"
+                unit="" min="-16" reversed="false" step="1" max="32"/>
+
+      <seekBar  description=""
+                name="Aumento de verde"
+                action="generic-offset B /sys/class/misc/mdnie/hook_control/cs_green"
+                unit="" min="-16" reversed="false" step="1" max="32"/>
+
+      <seekBar  description=""
+                name="Aumento de azul"
+                action="generic-offset B /sys/class/misc/mdnie/hook_control/cs_blue"
+                unit="" min="-16" reversed="false" step="1" max="32"/>
+
+      <seekBar  description=""
+                name="Aumento de amarillo"
+                action="generic-offset B /sys/class/misc/mdnie/hook_control/cs_yellow"
+                unit="" min="-16" reversed="false" step="1" max="32"/>
+
+      <seekBar  description=""
+                name="Aumento de Cian"
+                action="generic-offset B /sys/class/misc/mdnie/hook_control/cs_cyan"
+                unit="" min="-16" reversed="false" step="1" max="32"/>
+
+      <seekBar  description=""
+                name="Aumento de Magenta"
+                action="generic-offset B /sys/class/misc/mdnie/hook_control/cs_magenta"
+                unit="" min="-16" reversed="false" step="1" max="32"/>
+
+    </settingsPane>
   </settingsTab>
 </settingsRoot>' >> $XML
 
