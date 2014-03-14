@@ -376,9 +376,9 @@ echo '
    <settingsTab name="Pantalla">
 
     <settingsPane name="Touch Boost" 
-                  description="Touch Boost nos permitirá mantener por defecto la fecuencia de 600 Mhz al pulsar la pantalla, de modo que puede verse un ahorro mayor en la batería, pero también puede probocar algún que otro lag.">
+                  description="Touch Boost nos permitirá mantener por defecto la fecuencia de 600 Mhz al pulsar la pantalla, de modo que puede verse un ahorro mayor en la batería, pero también puede provocar algún que otro lag.">
     
-     <checkbox  description="Activar touch boost configurable en frecuencias o desactivar para los steps variables" 
+     <checkbox  description="Activar touch boost a 600 MHz fijos o desactivar para los steps variables (Stock)" 
                 name="Touch Boost Switch" 
                 action="generic01 /sys/class/misc/touchboost_switch/touchboost_switch"
                 label="Activar touch boost"/>
