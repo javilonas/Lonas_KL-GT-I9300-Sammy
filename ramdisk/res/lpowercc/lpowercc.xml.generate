@@ -273,16 +273,6 @@ echo '
 
     </settingsPane>
 
-    <settingsPane name="ZSWAP" 
-                  description="Desde aquí podrá aumentar o disminuir el tamaño de ZSWAP, un valor 0 desactiva ZSWAP.">
-
-      <seekBar  description="Por defecto: 400 MB." 
-                name="ZSWAP" 
-                action="zswap"
-                unit="mB" min="0" reversed="false" step="100" max="1500"/>      
-
-    </settingsPane>
-
     <settingsPane name="Swappiness" 
                   description="Un valor bajo significa que el kernel va a tratar de evitar el intercambio tanto como sea posible, por contra en un valor más alto intentará de usar el espacio de intercambio de un modo mas agresivo, en resumen: al bajar su valor, le indicamos que use mas caché y menos swap y al subirlo le estamos indicamos al sistema, que use menos Swap y mas caché y memoria RAM. un Valor 0 desactivaría el intercambio de memoria (swap o zram)">   
 

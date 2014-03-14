@@ -1,6 +1,5 @@
 CONFIG_BOOTED=true
 swappiness=90
-zswap_size=400
 scaling_governor=pegasusq
 internal_iosched=row
 sd_iosched=row
