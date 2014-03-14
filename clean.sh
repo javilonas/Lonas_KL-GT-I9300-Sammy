@@ -23,6 +23,12 @@ fi
 # make distclean
 make clean
 
+# clean ccache
+read -t 5 -p "clean ccache, 5sec timeout (y/n)?"
+if [ "$REPLY" == "y" ]; then
+	ccache -C
+fi
+
 echo "ramfs_tmp = $RAMFS_TMP"
 
 echo "#################### Eliminando build anterior ####################"
