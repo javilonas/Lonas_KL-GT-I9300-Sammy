@@ -549,6 +549,23 @@ echo '
                 unit="" min="-16" reversed="false" step="1" max="32"/>
 
     </settingsPane>
+
+    <settingsPane description="Los cambios de temperatura de color blanco"
+                name="Blanco - Control temperatura de color">
+
+      <checkbox  description="" 
+                name="Interruptor principal Temperatura de color" 
+                action="generic01 /sys/class/misc/mdnie/hook_control/s_MCM"
+                label="Interruptor del Control de la temperatura de color"/>
+
+
+      <seekBar  description="El punto de partida es 6500K."
+                name="Temperatura de color"
+                action="generic-offset B /sys/class/misc/mdnie/hook_control/mcm_temperature"
+                unit="00K" min="-20" reversed="false" step="1" max="20"/>
+
+
+    </settingsPane>
   </settingsTab>
 </settingsRoot>' >> $XML
 
