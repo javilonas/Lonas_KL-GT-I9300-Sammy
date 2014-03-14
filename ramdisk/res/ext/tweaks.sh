@@ -144,12 +144,12 @@ echo HRTICK > /sys/kernel/debug/sched_features
 
 /sbin/busybox setprop ro.HOME_APP_ADJ -17
 
-# Habilita el renderizado 
+# Habilitar Renderizado 
 /sbin/busybox setprop debug.enabletr true
 
 # Desactivar fast Dormancy
 /sbin/busybox setprop ro.semc.enable.fast_dormancy false
 
-# Teimpo de escaneado wifi (ahorra batería)
+# Tiempo de escaneado wifi (ahorra + batería)
 /sbin/busybox setprop wifi.supplicant_scan_interval 480
 
