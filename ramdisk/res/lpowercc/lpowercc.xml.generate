@@ -472,6 +472,38 @@ echo '
                 label="Alternador HDR para reproducción de vídeo"/>
 
     </settingsPane>
+
+    <settingsPane description=""
+                name="Control realce del borde digital">
+
+      <checkbox  description="" 
+                name="El interruptor maestro mejora el margen digital de la interfaz de usuario" 
+                action="maskvalue 1 /sys/class/misc/mdnie/hook_control/s_edge_enhancement"
+                label="Interruptor para mejorar los bordes para la interfaz de usuario"/>
+
+      <checkbox  description="" 
+                name="Interruptor general realza los bordes del vídeo Digital" 
+                action="maskvalue 2 /sys/class/misc/mdnie/hook_control/s_edge_enhancement"
+                label="Toggle realce de bordes para la reproducción de vídeo"/>
+
+      <seekBar  description=""
+                name="Amount"
+                action="generic-offset B /sys/class/misc/mdnie/hook_control/de_positive_e"
+                unit="" min="-128" reversed="false" step="1" max="128"/>
+
+      <seekBar  description=""
+                name="Radius"
+                action="generic-offset B /sys/class/misc/mdnie/hook_control/de_positive_f"
+                unit="" min="-128" reversed="false" step="1" max="128"/>
+
+      <seekBar  description=""
+                name="Threshold"
+                action="generic-offset B /sys/class/misc/mdnie/hook_control/de_positive_f"
+                unit="" min="-128" reversed="false" step="1" max="128"/>
+
+
+    </settingsPane>
+
   </settingsTab>
 </settingsRoot>' >> $XML
 
