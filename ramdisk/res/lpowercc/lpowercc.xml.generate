@@ -324,7 +324,7 @@ echo '
     </settingsPane>
 
     <settingsPane name="Dirty Writeback Centisecs" 
-                  description="Esto le indica al kernel cada cuantos segundos debe escribir los datos al disco. El valor por defecto es de 1500, que equivale a 1,5 segundos. Este parámetro puede influir bastante en rendimiento y gasto de batería, así que ojo con el">
+                  description="Esto le indica al kernel cada cuantos segundos debe escribir los datos al disco. El valor por defecto es de 2800, que equivale a 2,8 segundos. Este parámetro puede influir bastante en rendimiento y gasto de batería, así que ojo con el">
      
       <seekBar  description="Por defecto: 2800." 
                 name="Dirty Writeback Centisecs" 
