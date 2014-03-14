@@ -20,20 +20,20 @@ echo "1000000" > /proc/sys/kernel/sched_latency_ns
 echo "100000" > /proc/sys/kernel/sched_wakeup_granularity_ns
 
 # Miscellaneous tweaks
-echo "524288" > /proc/sys/fs/file-max
-echo "33000" > /proc/sys/fs/inotify/max_queued_events
-echo "384" > /proc/sys/fs/inotify/max_user_instances
-echo "10496" > /proc/sys/fs/inotify/max_user_watches
+echo "524488" > /proc/sys/fs/file-max
+echo "33200" > /proc/sys/fs/inotify/max_queued_events
+echo "584" > /proc/sys/fs/inotify/max_user_instances
+echo "10696" > /proc/sys/fs/inotify/max_user_watches
 echo "0" > /proc/sys/vm/block_dump
 echo "5" > /proc/sys/vm/laptop_mode
 echo "0" > /proc/sys/vm/panic_on_oom 
 echo "8" > /proc/sys/vm/page-cluster
 echo "10" > /proc/sys/fs/lease-break-time
-echo "65636" > /proc/sys/kernel/msgmni
-echo "65636" > /proc/sys/kernel/msgmax
+echo "65836" > /proc/sys/kernel/msgmni
+echo "65836" > /proc/sys/kernel/msgmax
 echo "512 512000 128 2048" > /proc/sys/kernel/sem
-echo "268535456" > /proc/sys/kernel/shmmax
-echo "525288" > /proc/sys/kernel/threads-max
+echo "268535656" > /proc/sys/kernel/shmmax
+echo "525488" > /proc/sys/kernel/threads-max
 echo "1" > /proc/sys/vm/oom_kill_allocating_task
  
 # Tweaks internos
@@ -75,12 +75,12 @@ echo "2" > /proc/sys/net/ipv4/tcp_synack_retries;
 echo "5" > /proc/sys/net/ipv4/tcp_keepalive_probes;
 echo "10" > /proc/sys/net/ipv4/tcp_keepalive_intvl;
 echo "10" > /proc/sys/net/ipv4/tcp_fin_timeout;
-echo "524488" > /proc/sys/net/core/wmem_max;
-echo "524488" > /proc/sys/net/core/rmem_max;
-echo "262244" > /proc/sys/net/core/rmem_default;
-echo "262244" > /proc/sys/net/core/wmem_default;
-echo "6244 87480 524488" > /proc/sys/net/ipv4/tcp_wmem;
-echo "6244 87480 524488" > /proc/sys/net/ipv4/tcp_rmem;
+echo "524688" > /proc/sys/net/core/wmem_max;
+echo "524688" > /proc/sys/net/core/rmem_max;
+echo "262444" > /proc/sys/net/core/rmem_default;
+echo "262444" > /proc/sys/net/core/wmem_default;
+echo "6544 87680 524688" > /proc/sys/net/ipv4/tcp_wmem;
+echo "6544 87680 524688" > /proc/sys/net/ipv4/tcp_rmem;
 
 LOOP=`ls -d /sys/block/loop*`
 RAM=`ls -d /sys/block/ram*`
