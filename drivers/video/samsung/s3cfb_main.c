@@ -406,19 +406,6 @@ static ssize_t s3c_fb_vsync_time(struct device *dev,
 static DEVICE_ATTR(vsync_time, S_IRUGO, s3c_fb_vsync_time, NULL);
 #endif
 
-static ssize_t s3c_fb_vsync_time(struct device *dev,
-                struct device_attribute *attr, char *buf)
-{
-	struct s3cfb_global *fbdev[1];
-	fbdev[0] = fbfimd->fbdev[0];
-
-    	return snprintf(buf, PAGE_SIZE, "%llu",
-			((fbdev[0] != 0) ?
-			ktime_to_ns(fbdev[0]->vsync_info.timestamp) : 0));
-}
-
-static DEVICE_ATTR(vsync_time, S_IRUGO, s3c_fb_vsync_time, NULL);
-
 static ssize_t vsync_event_show(struct device *dev,
 	struct device_attribute *attr, char *buf)
 {
@@ -447,26 +434,8 @@ static int s3cfb_wait_for_vsync_thread(void *data)
 				fbdev->vsync_info.timestamp) &&
 				fbdev->vsync_info.active);
 
-OLDMALI {
-	SAMSUNGROM {
-                        char *envp[2];
-                        char buf[64];
-                        snprintf(buf, sizeof(buf), "VSYNC=%llu",
-                                        ktime_to_ns(fbdev->vsync_info.timestamp));
-                        envp[0] = buf;
-                        envp[1] = NULL;
-                        kobject_uevent_env(&fbdev->dev->kobj, KOBJ_CHANGE,
-                                                        envp);
-	}
-}
-		SAMSUNGROM {
 		sysfs_notify(&fbdev->fb[pdata->default_win]->dev->kobj,
 				NULL, "vsync_event");
-		}
-
-		AOSPROM {
-                sysfs_notify(&fbdev->dev->kobj, NULL, "vsync_time");
-		}
 	}
 
 	return 0;

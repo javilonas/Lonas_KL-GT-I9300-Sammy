@@ -29,9 +29,6 @@ struct mhs_context {
 };
 
 //TODO Replace this with a proper notifier chain in the future
-#ifdef CONFIG_SND_REM
-extern void set_mic_level(void);
-#endif
 #ifdef CONFIG_FB_S5P_MDNIE_CONTROL
 extern void do_mdnie_refresh(struct work_struct *work);
 #endif
@@ -47,9 +44,6 @@ void mhs_set_status(enum mhs_type type, bool status)
 #endif
 					break;
 		case MHS_CAMERA_STREAM:	mhs_ctx.camera_stream = status;
-#ifdef CONFIG_SND_REM
-					set_mic_level(); //TODO see above
-#endif
 					break;
 		default:		return;
 	}
