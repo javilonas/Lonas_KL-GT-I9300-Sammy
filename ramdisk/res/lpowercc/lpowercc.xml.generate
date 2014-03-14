@@ -414,8 +414,26 @@ echo '
     <settingsPane description="Selecciona el Perfil que mejor se adapte a tu vista" name="MDNIE HIJACK">
       <spinner description="Por Defecto: Natural" name="MDNIE" action="mdnie mdniepredef">
              <spinnerItem name="Natural" value="0"/> 
-             <spinnerItem name="Standard" value="1"/> 
+             <spinnerItem name="Estandard" value="1"/> 
       </spinner>
+    </settingsPane>
+
+   <settingsPane description="Motor de control de Imagen móvil Digital Natural. El processador de imagen de samsung controla virtualmente cualquier manipulación de imágenes. Todos los interruptores principales de control si se dejan activados, se niega el valor de la secuencia de ajustes de samsung. La secuencia principal tiene SCR y CS activados por defecto."
+                name="Controles Globales">
+
+
+      <checkbox  description="El registro intercepta actos como un gancho y permite la captura de un nuevo escenario y su modificación a través de controles delta. Si un escenario no tiene un ajuste (registro) en su secuencia de base, entonces no puede ser modificado por el gancho."
+                name="Interceptar registro" 
+                action="generic01 /sys/class/misc/mdnie/hook_intercept"
+                label="Habilitar registro gancho"/>
+
+
+      <checkbox  description="La habilitación de la Secuencia Maestra desactivará e ignorará los perfiles y escenarios de Samsung, se desactivarán los controles de la ROM."
+                name="Secuencia Maestra" 
+                action="generic01 /sys/class/misc/mdnie/sequence_intercept"
+                label="Activar secuencia maestra"/>
+
+
     </settingsPane>
   </settingsTab>
 </settingsRoot>' >> $XML
