@@ -1426,6 +1426,7 @@ extern void setup_per_cpu_pageset(void);
 extern void zone_pcp_update(struct zone *zone);
 
 /* page_alloc.c */
+extern int min_free_kbytes;
 extern int extra_free_kbytes;
 
 /* nommu.c */
