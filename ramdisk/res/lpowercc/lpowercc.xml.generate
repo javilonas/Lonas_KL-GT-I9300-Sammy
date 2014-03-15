@@ -324,9 +324,9 @@ echo '
     </settingsPane>
 
     <settingsPane name="Dirty Writeback Centisecs" 
-                  description="Esto le indica al kernel cada cuantos segundos debe escribir los datos al disco. El valor por defecto es de 2800, que equivale a 2,8 segundos. Este parámetro puede influir bastante en rendimiento y gasto de batería, así que ojo con el">
+                  description="Esto le indica al kernel cada cuantos segundos debe escribir los datos al disco. El valor por defecto es de 1800, que equivale a 1,2 segundos. Este parámetro puede influir bastante en rendimiento y gasto de batería, así que ojo con el">
      
-      <seekBar  description="Por defecto: 2800." 
+      <seekBar  description="Por defecto: 1200." 
                 name="Dirty Writeback Centisecs" 
                 action="generic /proc/sys/vm/dirty_writeback_centisecs"
                 unit="%" min="0" reversed="false" step="1" max="6000"/>
@@ -356,7 +356,7 @@ echo '
     <settingsPane name="Android Logger" 
                   description="Android Logger es una herramienta útil para los desarrolladores para probar y depurar sus aplicaciones, pero se puede desactivar en el uso normal, esto puede darle un mejor rendimiento, por defecto viene activado">
 
-      <checkbox description="Se recomienda desactivar Logger Android si no lo necesita. NOTA: Después de desactivar hay que reiniciar" 
+      <checkbox description="Se recomienda desactivar Logger Android si no lo necesita. NOTA: Después de activar/desactivar hay que reiniciar" 
                 name="Activar Android Logger" 
                 action="generic01 /sys/kernel/logger_mode/logger_mode" 
                 label="Activar Android logger"/>

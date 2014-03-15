@@ -15,8 +15,8 @@ echo "0" > /sys/module/cpuidle_exynos4/parameters/log_en
 # Tweak kernel scheduler, less aggressive settings
 echo "384" > /proc/sys/kernel/random/write_wakeup_threshold
 echo "384" > /proc/sys/kernel/random/read_wakeup_threshold
-echo "500000" > /proc/sys/kernel/sched_min_granularity_ns
-echo "1000000" > /proc/sys/kernel/sched_latency_ns
+echo "200000" > /proc/sys/kernel/sched_min_granularity_ns
+echo "400000" > /proc/sys/kernel/sched_latency_ns
 echo "100000" > /proc/sys/kernel/sched_wakeup_granularity_ns
 
 # Miscellaneous tweaks
@@ -31,7 +31,7 @@ echo "8" > /proc/sys/vm/page-cluster
 echo "10" > /proc/sys/fs/lease-break-time
 echo "65836" > /proc/sys/kernel/msgmni
 echo "65836" > /proc/sys/kernel/msgmax
-echo "512 512000 128 2048" > /proc/sys/kernel/sem
+echo "512 512000 256 2048" > /proc/sys/kernel/sem
 echo "268535656" > /proc/sys/kernel/shmmax
 echo "525488" > /proc/sys/kernel/threads-max
 echo "1" > /proc/sys/vm/oom_kill_allocating_task
@@ -92,7 +92,7 @@ do
 echo "row" > $i/queue/scheduler
 echo "0" > $i/queue/add_random
 echo "0" > $i/queue/rotational
-echo "8192" > $i/queue/nr_requests
+echo "8448" > $i/queue/nr_requests
 echo "0" > $i/queue/iostats
 echo "1" > $i/queue/rq_affinity
 echo "1" > $i/queue/iosched/back_seek_penalty
@@ -144,12 +144,9 @@ echo HRTICK > /sys/kernel/debug/sched_features
 
 /sbin/busybox setprop ro.HOME_APP_ADJ -17
 
-# Habilita el renderizado 
-/sbin/busybox setprop debug.enabletr true
-
 # Desactivar fast Dormancy
 /sbin/busybox setprop ro.semc.enable.fast_dormancy false
 
-# Teimpo de escaneado wifi (ahorra batería)
+# Tiempo de escaneado wifi (ahorra + batería)
 /sbin/busybox setprop wifi.supplicant_scan_interval 480
 
