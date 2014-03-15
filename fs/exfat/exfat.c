@@ -1480,8 +1480,6 @@ INT32 ffsReadDir(struct inode *inode, DIR_ENTRY_T *dir_entry)
 
 			if (type == TYPE_UNUSED)
 				break;
-			else if (num_alloced < 0)
-				return FFS_MEDIAERR;
 
 			if ((type != TYPE_FILE) && (type != TYPE_DIR))
 				continue;
