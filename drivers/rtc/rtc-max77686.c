@@ -801,6 +801,8 @@ static int max77686_rtc_init_reg(struct max77686_rtc_info *info)
 		data_alm2[RTC_WEEKDAY]);
 #endif
 
+	info->rtc_24hr_mode = 1;
+
 	max77686_rtc_update(info, MAX77686_RTC_READ);
 
 	ret = max77686_read_reg(info->rtc, MAX77686_RTC_CONTROL, &buf);
@@ -878,7 +880,6 @@ static int __devinit max77686_rtc_probe(struct platform_device *pdev)
 #if defined(CONFIG_RTC_POWER_OFF) || defined(CONFIG_RTC_ALARM_BOOT)
 	info->irq2 = max77686->irq_base + MAX77686_RTCIRQ_RTCA2;
 #endif
-	info->rtc_24hr_mode = 1;
 
 	platform_set_drvdata(pdev, info);
 
