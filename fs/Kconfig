@@ -271,6 +271,10 @@ menu "Partition Types"
 
 source "fs/partitions/Kconfig"
 
+config ASYNC_FSYNC
+	bool "asynchronous fsync"
+	default y
+
 endmenu
 endif
 
