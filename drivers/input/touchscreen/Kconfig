@@ -1118,4 +1118,8 @@ config TOUCHSCREEN_GESTURES
           Definition of the gesture paths and reporting of the
           detections are available through sysfs entries.
 
+
+config TOUCHSCREEN_SWEEP2WAKE
+        tristate "Sweep2Wake for touchscreens"
+        default n
 endif
