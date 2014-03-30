@@ -28,7 +28,8 @@
 #include <linux/input/sweep2wake.h>
 
 /* Tuneables */
-#define DEBUG                   0
+#define S2W_DEBUG               0
+#define S2W_DEFAULT             0
 #define S2W_Y_LIMIT             2350
 #define S2W_X_MAX               1540
 #define S2W_X_B1                500
@@ -37,7 +38,7 @@
 #define S2W_PWRKEY_DUR          60
 
 /* Resources */
-int s2w_switch = 1;
+int s2w_switch = S2W_DEFAULT;
 bool scr_suspended = false, exec_count = true;
 bool scr_on_touch = false, barrier[2] = {false, false};
 static struct input_dev * sweep2wake_pwrdev;
@@ -92,7 +93,7 @@ void detect_sweep2wake(int x, int y, bool st)
 {
         int prevx = 0, nextx = 0;
         bool single_touch = st;
-#if DEBUG
+#if S2W_DEBUG
         pr_info("[sweep2wake]: x,y(%4d,%4d) single:%s\n",
                 x, y, (single_touch) ? "true" : "false");
 #endif
