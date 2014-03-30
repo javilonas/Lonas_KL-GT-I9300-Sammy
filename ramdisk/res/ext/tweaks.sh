@@ -75,12 +75,12 @@ echo "2" > /proc/sys/net/ipv4/tcp_synack_retries;
 echo "5" > /proc/sys/net/ipv4/tcp_keepalive_probes;
 echo "10" > /proc/sys/net/ipv4/tcp_keepalive_intvl;
 echo "10" > /proc/sys/net/ipv4/tcp_fin_timeout;
-echo "524688" > /proc/sys/net/core/wmem_max;
-echo "524688" > /proc/sys/net/core/rmem_max;
-echo "262444" > /proc/sys/net/core/rmem_default;
-echo "262444" > /proc/sys/net/core/wmem_default;
-echo "6544 87680 524688" > /proc/sys/net/ipv4/tcp_wmem;
-echo "6544 87680 524688" > /proc/sys/net/ipv4/tcp_rmem;
+echo "524388" > /proc/sys/net/core/wmem_max;
+echo "524388" > /proc/sys/net/core/rmem_max;
+echo "262144" > /proc/sys/net/core/rmem_default;
+echo "262144" > /proc/sys/net/core/wmem_default;
+echo "6144 87380 524388" > /proc/sys/net/ipv4/tcp_wmem;
+echo "6144 87380 524388" > /proc/sys/net/ipv4/tcp_rmem;
 
 LOOP=`ls -d /sys/block/loop*`
 RAM=`ls -d /sys/block/ram*`
