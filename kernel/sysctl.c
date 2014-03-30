@@ -96,6 +96,7 @@ extern int suid_dumpable;
 extern char core_pattern[];
 extern unsigned int core_pipe_limit;
 extern int pid_max;
+extern int wmark_min_kbytes, wmark_low_kbytes, wmark_high_kbytes;
 extern int min_free_order_shift;
 extern int pid_max_min, pid_max_max;
 extern int sysctl_drop_caches;
@@ -989,12 +990,42 @@ static struct ctl_table kern_table[] = {
 	},
 #endif
 	{
+		.procname	= "wmark_min_kbytes",
+		.data		= &wmark_min_kbytes,
+		.maxlen		= sizeof(wmark_min_kbytes),
+		.mode		= 0644,
+		.proc_handler	= wmark_min_kbytes_sysctl_handler,
+		.extra1		= &zero,
+		.extra2		= &wmark_low_kbytes,
+	},
+	{
+		.procname	= "wmark_low_kbytes",
+		.data		= &wmark_low_kbytes,
+		.maxlen		= sizeof(wmark_low_kbytes),
+		.mode		= 0644,
+		.proc_handler	= wmark_low_kbytes_sysctl_handler,
+		.extra1		= &wmark_min_kbytes,
+		.extra2		= &wmark_high_kbytes,
+	},
+	{
+		.procname	= "wmark_high_kbytes",
+		.data		= &wmark_high_kbytes,
+		.maxlen		= sizeof(wmark_high_kbytes),
+		.mode		= 0644,
+		.proc_handler	= wmark_high_kbytes_sysctl_handler,
+		.extra1		= &wmark_low_kbytes,
+	},
+	{
 		.procname	= "runtime_dependency",
 		.data		= &rt_dependency_state,
 		.maxlen		= sizeof(u64),
 		.mode		= 0644,
 		.proc_handler	= proc_rt_dependency_handler,
 	},
+  /*
+   * NOTE: do not add new entries to this table unless you have read
+   * Documentation/sysctl/ctl_unnumbered.txt
+   */
 	{ }
 };
 
