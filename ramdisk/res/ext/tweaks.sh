@@ -15,8 +15,8 @@ echo "0" > /sys/module/cpuidle_exynos4/parameters/log_en
 # Tweak kernel scheduler, less aggressive settings
 echo "384" > /proc/sys/kernel/random/write_wakeup_threshold
 echo "384" > /proc/sys/kernel/random/read_wakeup_threshold
-echo "200000" > /proc/sys/kernel/sched_min_granularity_ns
-echo "400000" > /proc/sys/kernel/sched_latency_ns
+echo "500000" > /proc/sys/kernel/sched_min_granularity_ns
+echo "1000000" > /proc/sys/kernel/sched_latency_ns
 echo "100000" > /proc/sys/kernel/sched_wakeup_granularity_ns
 
 # Miscellaneous tweaks
@@ -92,7 +92,7 @@ do
 echo "row" > $i/queue/scheduler
 echo "0" > $i/queue/add_random
 echo "0" > $i/queue/rotational
-echo "8448" > $i/queue/nr_requests
+echo "8192" > $i/queue/nr_requests
 echo "0" > $i/queue/iostats
 echo "1" > $i/queue/rq_affinity
 echo "1" > $i/queue/iosched/back_seek_penalty
