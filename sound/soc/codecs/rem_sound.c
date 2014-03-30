@@ -1,7 +1,7 @@
 /*
- * Author Rem Sound: javilonas, 14.01.2014
+ * Author Rem Sound: javilonas, 30.03.2014
  *
- * Version 0.9
+ * Version 1.0
  *
  * Based on the source of Boeffla sound created by andip71
  * Código fuente original del Motor de sonido: https://github.com/andip71/boeffla-kernel-jb-u7-s3/tree/master/sound/soc/codecs
@@ -48,46 +48,46 @@ static struct snd_soc_codec *codec;
 static struct wm8994_priv *wm8994;
 
 // internal rem sound variables
-static int rem_sound;                // rem sound master switch
+static int rem_sound;                          // rem sound master switch
 static int debug_level;                        // debug level for logging into kernel log
 
-static int headphone_l, headphone_r;        // headphone volume left/right
+static int headphone_l, headphone_r;           // headphone volume left/right
 
-static int speaker_l, speaker_r;                // speaker volume left/right
+static int speaker_l, speaker_r;               // speaker volume left/right
 
-static int speaker_tuning;          // activates speaker eq
+static int speaker_tuning;                     // activates speaker eq
 
-static int eq;                                   // activates headphone eq
+static int eq;                                 // activates headphone eq
 
 static int eq_gains[5];                        // gain information for headphone eq (speaker is static)
 
-static unsigned int eq_bands[5][4];        // frequency setup for headphone eq (speaker is static)
+static unsigned int eq_bands[5][4];            // frequency setup for headphone eq (speaker is static)
 
-static int dac_direct;                        // activate dac_direct for headphone eq
-static int dac_oversampling;        // activate 128bit oversampling for headphone eq
-static int fll_tuning;                        // activate fll tuning to avoid jitter
-static int stereo_expansion_gain;  // activate stereo expansion effect if greater than zero
-static int mono_downmix;       // activate mono downmix
-static int privacy_mode;                // activate privacy mode
+static int dac_direct;                         // activate dac_direct for headphone eq
+static int dac_oversampling;                   // activate 128bit oversampling for headphone eq
+static int fll_tuning;                         // activate fll tuning to avoid jitter
+static int stereo_expansion_gain;              // activate stereo expansion effect if greater than zero
+static int mono_downmix;                       // activate mono downmix
+static int privacy_mode;                       // activate privacy mode
 
-static int mic_level_general;        // microphone sensivity for general recording purposes
-static int mic_level_call;                // microphone sensivity for call only
+static int mic_level_general;                  // microphone sensivity for general recording purposes
+static int mic_level_call;                     // microphone sensivity for call only
 
-static unsigned int debug_register;                // current register to show in debug register interface
+static unsigned int debug_register;            // current register to show in debug register interface
 
 // internal state variables
-static bool is_call;                        // is currently a call active?
-static bool is_headphone;                // is headphone connected?
-static bool is_socket;                        // is something connected to the headphone socket?
+static bool is_call;                           // is currently a call active?
+static bool is_headphone;                      // is headphone connected?
+static bool is_socket;                         // is something connected to the headphone socket?
 #ifdef CONFIG_FM_RADIO
 static bool is_fmradio;                        // is stock fm radio app active?
 #endif
-static bool is_eq;                                // is an equalizer (headphone or speaker tuning) active?
-static bool is_eq_headphone;        // is equalizer for headphone or speaker currently?
-static bool is_mic_controlled;        // is microphone sensivity controlled by rem-sound or not?
-static bool is_mono_downmix;        // is mono downmix active?
+static bool is_eq;                             // is an equalizer (headphone or speaker tuning) active?
+static bool is_eq_headphone;                   // is equalizer for headphone or speaker currently?
+static bool is_mic_controlled;                 // is microphone sensivity controlled by rem-sound or not?
+static bool is_mono_downmix;                   // is mono downmix active?
 
-static int regdump_bank;                // current bank configured for register dump
+static int regdump_bank;                       // current bank configured for register dump
 static unsigned int regcache[REGDUMP_BANKS * REGDUMP_REGISTERS + 1];        // register cache to highlight changes in dump
 
 static int mic_level;                        // internal mic level
