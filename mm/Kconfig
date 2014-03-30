@@ -429,6 +429,7 @@ config ZSWAP
 	select CRYPTO_LZO
 	select ZBUD
 	select VNSWAP
+	select ANDROID_LOW_MEMORY_KILLER
 	default n
 	help
 	  Zswap is a backend for the frontswap mechanism in the VMM.
