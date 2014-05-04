@@ -525,7 +525,7 @@ xlate_to_uni(const unsigned char *name, int len, unsigned char *outname,
 	} else {
 		if (nls) {
 			for (i = 0, ip = name, op = outname, *outlen = 0;
-			     i < len && *outlen <= FAT_LFN_LEN;
+			     i < len && *outlen < FAT_LFN_LEN;
 			     *outlen += 1)
 			{
 				if (escape && (*ip == ':')) {
