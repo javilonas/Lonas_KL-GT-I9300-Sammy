@@ -41,7 +41,7 @@ TOOLCHAIN="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9d/toolchains/arm-li
 TOOLCHAIN_PATCH="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9d/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86/bin"
 ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy/ramdisk"
 RAMFS_TMP="/home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3"
-export KERNEL_VERSION="Lonas-KL-7.1"
+export KERNEL_VERSION="Lonas-KL-7.2"
 VERSION_KL="Sammy"
 REVISION="RTM"
 
