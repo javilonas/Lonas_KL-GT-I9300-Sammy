@@ -41,7 +41,7 @@ TOOLCHAIN="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9d/toolchains/arm-li
 TOOLCHAIN_PATCH="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9d/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86/bin"
 ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy/ramdisk"
 RAMFS_TMP="/home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3"
-export KERNEL_VERSION="Lonas-KL-7.2"
+export KERNEL_VERSION="Lonas-KL-7.3"
 VERSION_KL="Sammy"
 REVISION="RTM"
 
@@ -80,11 +80,11 @@ rm -rf $KERNELDIR/arch/arm/boot/zImage
 echo "#################### Make defconfig ####################"
 make ARCH=arm CROSS_COMPILE=$TOOLCHAIN lonas_defconfig
 
-# nice -n 10 make -j6 ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
+nice -n 10 make -j6 ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
 
 # make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
 
-make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN || exit -1
+# make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN || exit -1
 
 mkdir -p $ROOTFS_PATH/lib/modules
 find . -name '*.ko' -exec cp -av {} $ROOTFS_PATH/lib/modules/ \;
