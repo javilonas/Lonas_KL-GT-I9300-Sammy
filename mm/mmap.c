@@ -2265,7 +2265,7 @@ void exit_mmap(struct mm_struct *mm)
 		}
 	}
 
-	arch_exit_mmap(mm);
+	/*arch_exit_mmap(mm);*/
 
 	vma = mm->mmap;
 	if (!vma)	/* Can happen if dup_mmap() received an OOM */
